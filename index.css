@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+h1 {
+  color: Tomato;
+}
+
+h2 {
+  color: #1e90ff;
+}
+
+p {
+  color: rgb(60, 179, 113);
+}
+</style>
+</head>
+<body>
+
+<h1>Color Name</h1>
+<h2>Hex Value</h2>
+<p>RGB Value</p>
+
+</body>
+</html>
