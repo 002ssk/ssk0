@@ -492,7 +492,29 @@ input[type=submit]:hover {
   <input type="submit" value="Submit">
 </form>
 
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  counter-reset: section;
+}
 
+h2 {
+  counter-increment: section;
+}
+
+h2::before {
+  content: counter(section) ". ";
+}
+</style>
+</head>
+<body>
+
+<h1>CSS Counters</h1>
+<h2>HTML</h2>
+<h2>CSS</h2>
+<h2>JavaScript</h2>
 
 
 
