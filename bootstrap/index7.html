@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSK | IT Konsultatsioon ja Küberturvalisus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #1a1a1a;
+            --accent: #0066ff;
+            --text-light: #f4f4f4;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--text-light);
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 30, 80, 0.7), rgba(0, 30, 80, 0.7)), 
+                        url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: rgba(26, 26, 26, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--accent) !important;
+        }
+
+        .feature-card {
+            border: none;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            color: inherit;
+        }
+
+        .accent-line {
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent);
+            margin: 20px 0;
+        }
+
+        footer {
+            background-color: var(--dark-bg);
+            color: gray;
+            padding: 50px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand text-white fw-bold" href="#">SSK IT LAHENDUSED</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#teenused">Teenused</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#valdkonnad">Valdkonnad</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#kogemus">Kogemus</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#kontakt">Kontakt</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h1 class="display-2 fw-bold">Teie IT ja Küberturvalisuse Partner</h1>
+                    <p class="lead">Pakume maailmatasemel IT konsultatsiooni ja küberturvalisuse lahendusi.</p>
+                    <a href="#teenused" class="btn btn-outline-light btn-lg px-5 mt-4 rounded-0">Tutvu teenustega</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="teenused" class="py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="display-5">IT ja Küberturvalisus</h2>
+                    <div class="accent-line"></div>
+                    <p class="text-muted">SSK spetsialiseerub kaasaaegsete IT lahenduste ja küberturvalisuse teenuste pakkumises.</p>
+                    <p>Ükskõik, kas teie tarbeks on infrastruktuuri uuendamist, andmekaitse strateegia kujundamist või tööst tekkivate riskide vähendamist – meie meeskond on valmis.</p>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="img-fluid shadow" alt="IT turvalisus">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="valdkonnad" class="bg-light py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2>Meie Teenused</h2>
+                <p class="text-muted">Erinevad valdkonnad, millega me tegeleme päeva kaupa.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 feature-card p-4">
+                        <div>
+                            <h3>Küberturvalisuse Konsultatsioon</h3>
+                            <p class="text-muted small">Teie ettevõtte turvalisuse audit ja personaliseeritud turvastrateegia väljatöötamine.</p>
+                        </div>
+                        <a href="#" class="btn btn-sm btn-outline-dark mt-3 rounded-0">Loe lähemalt</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 feature-card p-4">
+                        <div>
+                            <h3>IT Infrastruktuuri Lahendused</h3>
+                            <p class="text-muted small">Serverid, pilveandmed ja võrgud – me rajaame teie äri jaoks tugeva IT aluse.</p>
+                        </div>
+                        <a href="#" class="btn btn-sm btn-outline-dark mt-3 rounded-0">Loe lähemalt</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 feature-card p-4">
+                        <div>
+                            <h3>Treeningu ja Teadlikkuse Tõstmine</h3>
+                            <p class="text-muted small">Koolita oma meeskonda küberturvalisuse parimad tavad ja riskitundlikkus.</p>
+                        </div>
+                        <a href="#" class="btn btn-sm btn-outline-dark mt-3 rounded-0">Loe lähemalt</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kogemus" class="py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="display-5">Meie Kogemus</h2>
+                    <div class="accent-line mx-auto"></div>
+                    <div class="col-md-8 mx-auto">
+                        <p class="lead">Rohkem kui 10 aasta teine IT ja küberturvalisuse valdkonnas on andnud meile teadmise ja praktika, mida vajate.</p>
+                        <p>SSK aitab ettevõtetel kõigist suurustest – käsitööõppe ettevõtetest kuni rahvusvahelistele korporatsioonidele – leida turvalised IT lahendused.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt" class="py-5 text-white" style="background-color: #0a1f40;">
+        <div class="container py-5 text-center">
+            <h2 class="mb-4">Alustage Täna</h2>
+            <p class="mb-4 fs-5">Kas teie IT turvalisus vaatab paranematusse? Võtke ühendust ja arutage oma vajadustest.</p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="mailto:info@ssk.ee" class="btn btn-primary btn-lg rounded-0 px-5">Saatke e-kiri</a>
+                <a href="#navbarNav" class="btn btn-outline-light btn-lg rounded-0 px-5">Tagasi üles</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container text-center">
+            <h5 class="text-white mb-3">SSK</h5>
+            <p>© 2026 SSK IT Lahendused. Teie turvalisus on meie prioriteet.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
