@@ -3,209 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSK | IT Konsultatsioon ja Küberturvalisus</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>AI Nõksud, AI Lõksud — Alustajast ajavõitjaks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
         :root {
-            --dark-bg: #1a1a1a;
             --accent: #0066ff;
-            --text-light: #f4f4f4;
         }
 
-        html {
-            scroll-behavior: smooth;
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8f9fa;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--text-light);
-            color: #333;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-        }
-
-        .hero-section {
-            background: linear-gradient(rgba(0, 30, 80, 0.7), rgba(0, 30, 80, 0.7)), 
-                        url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            color: white;
-            text-align: center;
+        h1, h2, h3, h4, h5 { 
+            font-family: 'Playfair Display', serif; 
         }
 
         .navbar {
-            background-color: rgba(26, 26, 26, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            background-color: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
         }
 
-        .nav-link {
-            color: white !important;
-            font-weight: 500;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
-            color: var(--accent) !important;
-        }
-
-        .feature-card {
-            border: none;
-            border-radius: 0;
-            transition: all 0.3s ease;
-            background: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            text-decoration: none;
-            color: inherit;
+        .hero {
+            min-height: 90vh;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            padding-top: 80px;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            color: inherit;
+        .book-cover {
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            border-radius: 12px;
+            max-width: 100%;
         }
 
         .accent-line {
-            width: 60px;
             height: 4px;
-            background-color: var(--accent);
+            width: 70px;
+            background: var(--accent);
             margin: 20px 0;
         }
 
-        footer {
-            background-color: var(--dark-bg);
-            color: gray;
-            padding: 50px 0;
+        .pricing-card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+            height: 100%;
+        }
+        .pricing-card.popular {
+            border: 3px solid var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,102,255,0.2);
+        }
+        .popular-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 6px 25px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg sticky-top">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand text-white fw-bold" href="#">SSK IT LAHENDUSED</a>
-            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand fw-bold fs-4 text-dark" href="#">AI Nõksud, AI Lõksud</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#teenused">Teenused</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#valdkonnad">Valdkonnad</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#kogemus">Kogemus</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#kontakt">Kontakt</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="#hind">Hind</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="#about">Raamatust</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="#sisu">Sisu</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="#arvamused">Arvamused</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <header class="hero-section">
+    <!-- Hero -->
+    <section class="hero">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <h1 class="display-2 fw-bold">Teie IT ja Küberturvalisuse Partner</h1>
-                    <p class="lead">Pakume maailmatasemel IT konsultatsiooni ja küberturvalisuse lahendusi.</p>
-                    <a href="#teenused" class="btn btn-outline-light btn-lg px-5 mt-4 rounded-0">Tutvu teenustega</a>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-1 fw-bold text-dark">AI Nõksud,<br>AI Lõksud</h1>
+                    <h2 class="display-5 text-muted mb-4">Alustajast ajavõitjaks</h2>
+                    
+                    <p class="lead text-secondary mb-4">
+                        Praktiline teejuht tehisintellekti maailma. 
+                        Õpi kasutama AI-d targalt, efektiivselt ja ohutult.
+                    </p>
+
+                    <div class="accent-line"></div>
+
+                    <a href="#hind" class="btn btn-dark btn-lg px-5 py-3 rounded-0 me-3">
+                        Osta raamat
+                    </a>
+                    <a href="#about" class="btn btn-outline-dark btn-lg px-5 py-3 rounded-0">
+                        Rohkem infot
+                    </a>
+                </div>
+
+                <!-- ÕIGE RAAMATU KAANEPILT -->
+                <div class="col-lg-6 text-center text-lg-end mt-5 mt-lg-0">
+                    <img src="https://rahvaraamat.ee/_next/image?url=https%3A%2F%2Fra-product-image.s3.eu-north-1.amazonaws.com%2Fa6%2F5b%2Fa65b856563351b2024a76b0ff04fcb93_origin_1.jpg&w=1920&q=90" 
+                         class="book-cover img-fluid" 
+                         alt="AI Nõksud AI Lõksud raamat">
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <section id="teenused" class="py-5">
+    <!-- Hind -->
+    <section id="hind" class="py-5 bg-white">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5">Vali oma pakett</h2>
+                <div class="accent-line mx-auto"></div>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card pricing-card h-100 text-center">
+                        <div class="card-body p-5">
+                            <h5>DIGITAALNE</h5>
+                            <h2 class="display-5 fw-bold my-3">€19.99</h2>
+                            <hr>
+                            <ul class="list-unstyled my-4">
+                                <li class="mb-3">✓ E-raamat (PDF + EPUB)</li>
+                                <li class="mb-3">✓ Kohe kättesaadav</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-dark w-100 py-3">Osta</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="card pricing-card popular h-100 position-relative text-center">
+                        <span class="popular-badge">Kõige populaarsem</span>
+                        <div class="card-body p-5">
+                            <h5 class="text-primary">KOMPLEKT</h5>
+                            <h2 class="display-5 fw-bold my-3 text-primary">€29</h2>
+                            <hr>
+                            <ul class="list-unstyled my-4">
+                                <li class="mb-3">✓ Paberraamat</li>
+                                <li class="mb-3">✓ E-raamat</li>
+                                <li class="mb-3">✓ Lisamaterjalid</li>
+                            </ul>
+                            <a href="https://rahvaraamat.ee/et/raamatud/infotehnoloogia/arvutid-ja-programmeerimine/ai-noksud-ai-loksud-alustajast-ajavoitjaks/2276604" 
+                               target="_blank" class="btn btn-dark w-100 py-3">Osta komplekt</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="card pricing-card h-100 text-center">
+                        <div class="card-body p-5">
+                            <h5>PABERRAAMAT</h5>
+                            <h2 class="display-5 fw-bold my-3">€24.99</h2>
+                            <hr>
+                            <ul class="list-unstyled my-4">
+                                <li class="mb-3">✓ Füüsiline raamat</li>
+                            </ul>
+                            <a href="https://rahvaraamat.ee/et/raamatud/infotehnoloogia/arvutid-ja-programmeerimine/ai-noksud-ai-loksud-alustajast-ajavoitjaks/2276604" 
+                               target="_blank" class="btn btn-outline-dark w-100 py-3">Osta paberraamat</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About the Book -->
+    <section id="about" class="py-5 bg-light">
         <div class="container py-5">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h2 class="display-5">IT ja Küberturvalisus</h2>
+                    <h2 class="display-5 fw-bold mb-4">Raamatust</h2>
                     <div class="accent-line"></div>
-                    <p class="text-muted">SSK spetsialiseerub kaasaaegsete IT lahenduste ja küberturvalisuse teenuste pakkumises.</p>
-                    <p>Ükskõik, kas teie tarbeks on infrastruktuuri uuendamist, andmekaitse strateegia kujundamist või tööst tekkivate riskide vähendamist – meie meeskond on valmis.</p>
+                    <p class="lead">
+                        Tehisintellekt (AI) on meie aja kõige suurem tehnoloogiline muutus ja selle mõju ühiskonnale hiiglaslik. 
+                        Juba täna kasutavad miljonid inimesed AI-d iga päev nii töö- kui ka eraasjus.
+                    </p>
+                    <p>
+                        Aga selleks, et saavutada paremaid tulemusi, on vaja eelteadmisi. See lihtsas ja arusaadavas keeles käsiraamat selgitabki, kuidas AI-ga ümber käia.
+                    </p>
+                    <p><strong>Saad teada:</strong></p>
+                    <ul>
+                        <li>kuidas AI-ga suhelda</li>
+                        <li>kuidas anda toimivaid käske</li>
+                        <li>kuidas vältida vigu</li>
+                        <li>kuidas tagada vastuste usaldusväärsus</li>
+                        <li>kuidas tagada turvalisus</li>
+                        <li>mis eristab edasijõudnud kasutajat algajast</li>
+                        <li>mida pidada silmas visuaalidega töötamise puhul</li>
+                    </ul>
+                    <p>
+                        Lisaks leiad siit hulga promptinäidiseid ja malle, mille saab kohe kasutusele võtta.
+                    </p>
+                    <p class="fst-italic">
+                        "Kui oled raamatu läbi töötanud, tead AI-ga suhtlemisest rohkem kui 95% inimestest."
+                    </p>
+                    <p><strong>— Tiiu Lumberg</strong></p>
                 </div>
+                <!-- Alumine pilt jäetud samaks nagu varem -->
                 <div class="col-lg-6 text-center">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="img-fluid shadow" alt="IT turvalisus">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" 
+                         class="book-cover img-fluid" 
+                         alt="AI Noksud AI Loksud raamat">
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="valdkonnad" class="bg-light py-5">
+    <!-- Sisu -->
+    <section id="sisu" class="py-5 bg-white">
         <div class="container py-5">
             <div class="text-center mb-5">
-                <h2>Meie Teenused</h2>
-                <p class="text-muted">Erinevad valdkonnad, millega me tegeleme päeva kaupa.</p>
+                <h2 class="display-5">Mida sa raamatust õpid?</h2>
+                <div class="accent-line mx-auto"></div>
             </div>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="card h-100 feature-card p-4">
-                        <div>
-                            <h3>Küberturvalisuse Konsultatsioon</h3>
-                            <p class="text-muted small">Teie ettevõtte turvalisuse audit ja personaliseeritud turvastrateegia väljatöötamine.</p>
-                        </div>
-                        <a href="#" class="btn btn-sm btn-outline-dark mt-3 rounded-0">Loe lähemalt</a>
+                    <div class="card h-100 border-0 shadow-sm p-4">
+                        <h5>1. Efektiivne Prompting</h5>
+                        <p>Kuidas kirjutada AI-le käske, mis annavad täpseid tulemusi.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card h-100 feature-card p-4">
-                        <div>
-                            <h3>IT Infrastruktuuri Lahendused</h3>
-                            <p class="text-muted small">Serverid, pilveandmed ja võrgud – me rajaame teie äri jaoks tugeva IT aluse.</p>
-                        </div>
-                        <a href="#" class="btn btn-sm btn-outline-dark mt-3 rounded-0">Loe lähemalt</a>
+                    <div class="card h-100 border-0 shadow-sm p-4">
+                        <h5>2. AI Lõksud ja Riskid</h5>
+                        <p>Kuidas vältida hallutsinatsioone ja turvariske.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card h-100 feature-card p-4">
-                        <div>
-                            <h3>Treeningu ja Teadlikkuse Tõstmine</h3>
-                            <p class="text-muted small">Koolita oma meeskonda küberturvalisuse parimad tavad ja riskitundlikkus.</p>
-                        </div>
-                        <a href="#" class="btn btn-sm btn-outline-dark mt-3 rounded-0">Loe lähemalt</a>
+                    <div class="card h-100 border-0 shadow-sm p-4">
+                        <h5>3. Praktilised Nõksud</h5>
+                        <p>Tekst, pildid, analüüs ja igapäevane kasutamine.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="kogemus" class="py-5">
+    <!-- Arvamused -->
+    <section id="arvamused" class="py-5 bg-light">
         <div class="container py-5">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h2 class="display-5">Meie Kogemus</h2>
-                    <div class="accent-line mx-auto"></div>
-                    <div class="col-md-8 mx-auto">
-                        <p class="lead">Rohkem kui 10 aasta teine IT ja küberturvalisuse valdkonnas on andnud meile teadmise ja praktika, mida vajate.</p>
-                        <p>SSK aitab ettevõtetel kõigist suurustest – käsitööõppe ettevõtetest kuni rahvusvahelistele korporatsioonidele – leida turvalised IT lahendused.</p>
+            <div class="text-center mb-5">
+                <h2 class="display-5">Mida lugejad ütlevad</h2>
+                <div class="accent-line mx-auto"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card card h-100 p-4 shadow-sm">
+                        <p class="fst-italic">"See raamat avas mulle silmad, kuidas AI-ga tegelikult töötada. Parimad praktikad ja lõksud, mida igaüks peaks teadma!"</p>
+                        <strong>— Priit Mägi, Tarkvaraarendaja</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card card h-100 p-4 shadow-sm">
+                        <p class="fst-italic">"Väga praktiline ja aus raamat. Soovitan kõigile, kes tahavad AI-st maksimumi võtta."</p>
+                        <strong>— Laura Kask, Sisuturundaja</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card card h-100 p-4 shadow-sm">
+                        <p class="fst-italic">"Lõpuks üks korralik eestikeelne raamat AI kohta. Just õige tase!"</p>
+                        <strong>— Martin Tamm, Ettevõtja</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card card h-100 p-4 shadow-sm">
+                        <p class="fst-italic">"Prompt-mallid on kullafondi väärilised. Kasutan neid iga päev."</p>
+                        <strong>— Kadi Raud, Turundusjuht</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card card h-100 p-4 shadow-sm">
+                        <p class="fst-italic">"Raamat on kirjutatud väga inimlikus keeles. Soovitan soojalt!"</p>
+                        <strong>— Andrus Peets, IT-juht</strong>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="kontakt" class="py-5 text-white" style="background-color: #0a1f40;">
-        <div class="container py-5 text-center">
-            <h2 class="mb-4">Alustage Täna</h2>
-            <p class="mb-4 fs-5">Kas teie IT turvalisus vaatab paranematusse? Võtke ühendust ja arutage oma vajadustest.</p>
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <a href="mailto:info@ssk.ee" class="btn btn-primary btn-lg rounded-0 px-5">Saatke e-kiri</a>
-                <a href="#navbarNav" class="btn btn-outline-light btn-lg rounded-0 px-5">Tagasi üles</a>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container text-center">
-            <h5 class="text-white mb-3">SSK</h5>
-            <p>© 2026 SSK IT Lahendused. Teie turvalisus on meie prioriteet.</p>
+    <footer class="bg-dark text-white py-5 text-center">
+        <div class="container">
+            <p>AI Nõksud, AI Lõksud • Tiiu Lumberg • 2025</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

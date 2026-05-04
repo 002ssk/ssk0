@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI nöksud, AI lõksud — raamatu tutvustus</title>
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --card: #ffffff;
+            --text: #111827;
+            --muted: #4b5563;
+            --accent: #0066ff;
+            --accent-dark: #0047b3;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+        header {
+            padding: 70px 0 50px;
+            text-align: center;
+        }
+        .badge {
+            display: inline-flex;
+            background: rgba(0, 102, 255, 0.12);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        .hero-title {
+            font-size: clamp(2.75rem, 5vw, 4.5rem);
+            line-height: 1.02;
+            margin: 0;
+        }
+        .hero-subtitle {
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-size: 1.15rem;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+        .hero-cta {
+            margin-top: 32px;
+            display: inline-flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-primary,
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: white;
+            color: var(--text);
+            border: 1px solid #d1d5db;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            border-color: #9ca3af;
+        }
+        .book-panel {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            align-items: center;
+            margin-top: 60px;
+        }
+        .book-card {
+            background: var(--card);
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.08);
+            position: relative;
+        }
+        .book-cover {
+            width: 100%;
+            max-width: 320px;
+            aspect-ratio: 2 / 3;
+            border-radius: 22px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            display: grid;
+            place-items: center;
+            padding: 32px;
+            font-size: 1rem;
+            line-height: 1.5;
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
+        }
+        .book-cover h2 {
+            margin: 0;
+            font-size: 1.45rem;
+            letter-spacing: 0.02em;
+        }
+        .book-cover p {
+            margin: 18px 0 0;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        .book-cover small {
+            display: block;
+            margin-top: 24px;
+            color: #94a3b8;
+        }
+        .book-info h3 {
+            margin-top: 0;
+            font-size: 1.25rem;
+        }
+        .book-info p {
+            color: var(--muted);
+            line-height: 1.9;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 22px;
+            padding: 26px;
+            border: 1px solid #e5e7eb;
+        }
+        .feature-card h4 {
+            margin: 0 0 14px;
+            font-size: 1.05rem;
+        }
+        .feature-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+        .section-block {
+            padding: 70px 0;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .section-header h2 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .section-header p {
+            margin: 16px auto 0;
+            max-width: 700px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+        .stats-grid {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .stat-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        .stat-card strong {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+        .stat-card span {
+            color: var(--muted);
+            display: block;
+            line-height: 1.8;
+        }
+        .footer {
+            padding: 40px 0 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+        @media (max-width: 900px) {
+            .book-panel {
+                grid-template-columns: 1fr;
+            }
+            .hero-title {
+                font-size: clamp(2.3rem, 8vw, 3.6rem);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <header>
+            <span class="badge">Uus väljaanne</span>
+            <h1 class="hero-title">AI nöksud, AI lõksud</h1>
+            <p class="hero-subtitle">Põhjalik ja lihtsalt loetav juhend Eesti lugejale, kuidas mõista tehisintellekti võimalusi ning vältida levinumaid lõkse.</p>
+            <div class="hero-cta">
+                <a class="btn-primary" href="https://rahvaraamat.ee/et/raamatud/infotehnoloogia/arvutid-ja-programmeerimine/ai-noksud-ai-loksud-alustajast-ajavoitjaks/2276604" target="_blank" rel="noopener">Vaata raamatu lehte</a>
+                <a class="btn-secondary" href="#info">Loe lähemalt</a>
+            </div>
+        </header>
+
+        <section class="book-panel">
+            <div class="book-card">
+                <div class="book-cover">
+                    <div>
+                        <h2>AI nöksud<br>AI lõksud</h2>
+                        <p>Alustajast ajavõitjaks</p>
+                        <small>Tehisintellekti kodune käsiraamat</small>
+                    </div>
+                </div>
+            </div>
+            <div class="book-info">
+                <h3>Miks see raamat on Eesti IT-huvilisele oluline?</h3>
+                <p>See raamat aitab sul mõista, kuidas AI töötab, millised on praktilised kasutusvõimalused ning kuidas vältida tavapäraseid eksimusi. Kujuta ette, et saad kiiresti ülevaate trendidest, tööriistadest ja strateegiatest, mis muudavad sind ajavõitjaks.</p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Lihtne ja praktiline</h4>
+                        <p>Selged näited ja samm-sammult juhised, mis sobivad nii algajale kui kogemustega arendajale.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Räägib AI võimalustest</h4>
+                        <p>Kuidas kasutada tehisintellekti igapäevastes tööprotsessides ja ettevõtte arendamisel.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Hoiatused AI lõksude eest</h4>
+                        <p>Saa teada, milliseid vigu vältida, et AI-projektid ei muutuks aja- ega raharaiskamiseks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="info" class="section-block">
+            <div class="section-header">
+                <h2>Mis teeb selle raamatu eriliseks?</h2>
+                <p>See pole pelgalt tehniline käsiraamat — see on arusaadav juhend, mis aitab sul mõelda AI-st strateegiliselt ja panna teooria tööle.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <strong>Õpitav</strong>
+                    <span>Saad teada, kuidas AI viib projekti algusest töövalmis lahenduseni.</span>
+                </div>
+                <div class="stat-card">
+                    <strong>Kiire</strong>
+                    <span>Loed olulise ülevaate ja praktilised näited vaid paari tunniga.</span>
+                </div>
+                <div class="stat-card">
+                    <strong>Turvaline</strong>
+                    <span>Saad teada, kuidas vältida tihti tehtavaid AI-põhiseid vigu ja eksitusi.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="section-header">
+                <h2>Kes sellest raamatusse naudib?</h2>
+                <p>Raamat on suunatud kõigile, kes tahavad AI kasutusele võtta ilma üleliigse keerukuseta.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Algajad</h4>
+                    <p>Tutvud AI mõistetega ja õpid esimeste sammudega ilma tehisintellekti müstifitseerimata.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Ettevõtjad</h4>
+                    <p>Saad selge ülevaate, kuidas AI aitab ettevõtte protsesse kiirendada ja väärtust suurendada.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>IT-spetsialistid</h4>
+                    <p>Praktilised nipid ja hoiatused sobivad hästi olemasolevate teadmiste laiendamiseks.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block" style="text-align: center;">
+            <h2>Osta oma eksemplar nüüd</h2>
+            <p style="max-width: 700px; margin: 16px auto 32px; color: var(--muted);">Kliki allolevale nupule, et minna raamatu lehele ja tellida see kiiresti.</p>
+            <a class="btn-primary" href="https://rahvaraamat.ee/et/raamatud/infotehnoloogia/arvutid-ja-programmeerimine/ai-noksud-ai-loksud-alustajast-ajavoitjaks/2276604" target="_blank" rel="noopener">Osta Rahva Raamatust</a>
+        </section>
+
+        <footer class="footer">
+            <p>AI nöksud, AI lõksud — ideaalne lugemine Eesti tehnoloogiahuvilisele.</p>
+        </footer>
+    </div>
+</body>
+</html>
