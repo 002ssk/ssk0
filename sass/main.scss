@@ -1,0 +1,141 @@
+@import 'variables';
+@import 'mixins';
+
+body {
+    font-family: $font-main;
+    margin: 0;
+    background-color: #0f1412; // Veel tumedam taust sügavuse jaoks
+    color: $text-light;
+    overflow-x: hidden; // Väldime horisontaalset kerimist
+}
+
+.header {
+    height: 70vh; // Madalam, et rõhutada sisu
+    background-color: $cool-green;
+    background-image: url('images/cat-header-stylized.png'), url('images/rock-texture.jpg'); // Kaks taustapilti
+    background-size: cover;
+    background-position: center bottom, center center;
+    @include flex-center;
+    position: relative;
+    box-shadow: 0 10px 30px $shadow-color;
+
+    &::after { // Küüniste jäljed päises
+        @include claw-marks;
+        left: -50px;
+        top: 20px;
+        height: 50%;
+    }
+
+    h1 {
+        font-size: 5rem;
+        color: $cool-copper;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        margin-bottom: 0;
+        text-shadow: 2px 2px 5px $shadow-color;
+    }
+
+    p {
+        font-size: 1.5rem;
+        margin-top: 10px;
+        font-weight: lighter;
+    }
+}
+
+.content {
+    padding: 60px 20px;
+    
+    // Info-kaart on nüüd "Fact Card"
+    .info-card {
+        background: $cool-green;
+        padding: 30px;
+        border-radius: $border-radius-hex;
+        border: 1px solid rgba($cool-copper, 0.2); // Peen piirjoon
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        max-width: 650px;
+        margin: 0 auto;
+        position: relative; // Vajalik pseudo-elementide jaoks
+        transition: transform 0.3s ease;
+
+        // "Cool" hover efekt
+        &:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+
+            &::before { // Küüniste jäljed tekivad hoveril
+                opacity: 0.3;
+                left: 10px;
+            }
+        }
+
+        &::before { // Esialgu peidetud küüniste jäljed
+            @include claw-marks;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 30%;
+        }
+
+        h2 {
+            color: $cool-copper;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            position: relative;
+
+            &::after { // Peen kuldne joon h2 all
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 50px;
+                height: 2px;
+                @include copper-gradient;
+            }
+        }
+
+        p {
+            line-height: 1.8;
+            color: rgba($text-light, 0.8);
+        }
+
+        // Kohandatud nupp
+        .btn-primary {
+            @include flex-center; // Nupp on ise flex-konteiner
+            @include copper-gradient;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px; // Ümar nupp
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 5px 15px $shadow-color;
+            position: relative;
+            overflow: hidden;
+
+            // Hoveril pulsseeriv smaragdroheline sära
+            &:hover {
+                box-shadow: 0 5px 25px $primary-glow;
+                opacity: 0.9;
+            }
+
+            // Nupu sisemine "kuma" pseudo-elemendiga
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+                transition: 0.5s;
+            }
+
+            &:hover::before {
+                left: 100%;
+            }
+        }
+    }
+}
