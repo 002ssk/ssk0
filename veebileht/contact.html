@@ -30,6 +30,7 @@
                 <form class="contact-form" action="https://formsubmit.co/siimsander.kool@gmail.com" method="POST">
                     <input type="hidden" name="_subject" value="Uus kontaktivormi sõnum">
                     <input type="hidden" name="_next" id="nextUrl" value="">
+                    <input type="hidden" name="_replyto" id="hiddenReplyTo" value="">
                     <input type="hidden" name="_captcha" value="false">
                     <div class="form-group">
                         <label for="name">Nimi</label>
@@ -75,6 +76,12 @@
             <p>&copy; 2024 HKT Hotell. Kõik õigused kaitstud.</p>
         </div>
     </footer>
-    <script>const nextUrlInput=document.getElementById('nextUrl'); if(nextUrlInput){nextUrlInput.value=window.location.href;}</script>
+    <script>
+        const nextUrlInput=document.getElementById('nextUrl');
+        const replyToInput=document.getElementById('hiddenReplyTo');
+        const emailField=document.getElementById('email');
+        if(nextUrlInput){nextUrlInput.value=window.location.href;}
+        if(replyToInput && emailField){replyToInput.value=emailField.value; emailField.addEventListener('input',()=>replyToInput.value=emailField.value);}
+    </script>
 </body>
 </html>
