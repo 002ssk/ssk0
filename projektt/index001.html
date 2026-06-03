@@ -192,14 +192,10 @@ footer p{color:var(--dim);font-size:.82rem;letter-spacing:1px}
 </div>
 </div>
 <div class="reveal reveal-delay-1">
-<form class="contact-form" id="contactForm" action="https://formsubmit.co/siimsander.kool@gmail.com" method="POST">
-<input type="hidden" name="_subject" value="Uus kontaktivormi sõnum">
-<input type="hidden" name="_next" id="nextUrl" value="">
-<input type="hidden" name="_replyto" id="hiddenReplyTo" value="">
-<input type="hidden" name="_captcha" value="false">
+<form class="contact-form" id="contactForm" method="POST">
 <div class="form-row">
-<div class="form-field"><label data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" name="name" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required></div>
-<div class="form-field"><label data-et="E-post" data-en="Email">E-post</label><input type="email" id="femail" name="email" placeholder="sinu@email.com" data-et="sinu@email.com" data-en="you@email.com" required></div>
+<div class="form-field"><label data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" name="from_name" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required></div>
+<div class="form-field"><label data-et="E-post" data-en="Email">E-post</label><input type="email" id="femail" name="reply_to" placeholder="sinu@email.com" data-et="sinu@email.com" data-en="you@email.com" required></div>
 </div>
 <div class="form-field"><label data-et="Teema" data-en="Subject">Teema</label><select id="fsubject" name="subject"><option value="" data-et="Vali teema..." data-en="Select a subject...">Vali teema...</option><option value="shoot" data-et="Pildistamise broneerimine" data-en="Book a shoot">Pildistamise broneerimine</option><option value="collab" data-et="Koostöö" data-en="Collaboration">Koostöö</option><option value="other" data-et="Muu" data-en="Other">Muu</option></select></div>
 <div class="form-field"><label data-et="Sõnum" data-en="Message">Sõnum</label><textarea id="fmessage" name="message" placeholder="..." data-et="..." data-en="..." required></textarea></div>
@@ -222,7 +218,11 @@ footer p{color:var(--dim);font-size:.82rem;letter-spacing:1px}
 <img class="lightbox-img" id="lbImg" src="" alt="">
 <div class="lightbox-counter" id="lbCounter"></div>
 </div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
+(function(){
+  emailjs.init('CKZ5XoAUAW3QS3QRK'); // Replace with your EmailJS public key
+})();
 const navItems=[{href:'#kodu',et:'Kodu',en:'Home'},{href:'#minust',et:'Minust',en:'About'},{href:'#galerii',et:'Galerii',en:'Gallery'},{href:'#kontakt',et:'Kontakt',en:'Contact'}];
 const galleryItems=[{src:'img/e46/e46 4k.jpeg',alt:'BMW E46'},{src:'img/erm 61 kristo.jpeg',alt:'BMW E61'},{src:'img/erm e61.jpeg',alt:'BMW E61'},{src:'img/e46/e46.jpeg',alt:'BMW E46'},{src:'img/e61 mägi.jpg',alt:'BMW E61'},{src:'img/e46/e46 sügis.jpeg',alt:'BMW E46 Sügis'},{src:'img/e46/parem tuli e46.jpeg',alt:'E46 Light'},{src:'img/e46/päike e46.jpeg',alt:'E46 Sun'},{src:'img/e46/sügis e46 veel.jpeg',alt:'E46 Autumn'},{src:'img/e46/tuli sügis e46.jpeg',alt:'E46 Light'},{src:'img/e46/vasak tuli e46.jpeg',alt:'E46 Light'},{src:'img/e46 rool.JPG',alt:'E46 Rool'},{src:'img/f10/f10 ihaste.jpeg',alt:'BMW F10'},{src:'img/f10/f10 pori.jpg',alt:'F10'},{src:'img/audi/audi a6 ilus taevas.jpeg',alt:'Audi A6'},{src:'img/lexus eeden parkla.png',alt:'Lexus'},{src:'img/golf.jpeg',alt:'Golf'},{src:'img/999syt.JPG',alt:'999syt'},{src:'img/mustang.jpeg',alt:'Mustang'},{src:'img/porcshe.jpeg',alt:'Porsche'},{src:'img/skyline.jpeg',alt:'Skyline'},{src:'img/001juk nissan.JPG',alt:'Nissan'},{src:'img/volks.JPG',alt:'Volkswagen'},{src:'img/kollane e46.JPG',alt:'Kollane E46'},{src:'img/velg/gren velg.jpeg',alt:'Wheel'},{src:'img/interior/m rool.jpeg',alt:'Interior'}];
 const langBtns=document.querySelectorAll('.lang-btn');
@@ -261,8 +261,24 @@ document.querySelectorAll('.gallery-item').forEach((item,i)=>item.addEventListen
 lbClose.addEventListener('click',closeLightbox);
 lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});
 document.addEventListener('keydown',e=>{if(!lightbox.classList.contains('open'))return;if(e.key==='Escape')closeLightbox();else if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1)});
-const nextUrlInput=document.getElementById('nextUrl'); if(nextUrlInput){nextUrlInput.value=window.location.href;}
-const replyToInput=document.getElementById('hiddenReplyTo'); const emailField=document.getElementById('femail'); if(replyToInput && emailField){replyToInput.value=emailField.value; emailField.addEventListener('input',()=>replyToInput.value=emailField.value);} 
+const contactForm=document.getElementById('contactForm');
+const formSuccess=document.getElementById('formSuccess');
+if(contactForm){
+  contactForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    emailjs.sendForm('service_mxvjmxa','template_of67dgj', this)
+      .then(function(){
+        if(formSuccess){
+          formSuccess.style.display='block';
+          formSuccess.textContent='✓  Sõnum saadetud! Vastan esimesel võimalusel.';
+        }
+        contactForm.reset();
+      }, function(error){
+        alert('Viga e-kirja saatmisel. Proovi hiljem uuesti.');
+        console.error('EmailJS error:', error);
+      });
+  });
+}
 </script>
 </body>
 </html>
