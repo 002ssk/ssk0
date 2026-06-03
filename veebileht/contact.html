@@ -29,7 +29,7 @@
                 <h1>Võta meiega ühendust</h1>
                 <form class="contact-form" action="https://formsubmit.co/siimsander.kool@gmail.com" method="POST">
                     <input type="hidden" name="_subject" value="Uus kontaktivormi sõnum">
-                    <input type="hidden" name="_next" value="index5.html">
+                    <input type="hidden" name="_next" id="nextUrl" value="">
                     <input type="hidden" name="_captcha" value="false">
                     <div class="form-group">
                         <label for="name">Nimi</label>
@@ -75,5 +75,6 @@
             <p>&copy; 2024 HKT Hotell. Kõik õigused kaitstud.</p>
         </div>
     </footer>
+    <script>const nextUrlInput=document.getElementById('nextUrl'); if(nextUrlInput){nextUrlInput.value=window.location.href;}</script>
 </body>
 </html>

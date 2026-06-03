@@ -194,7 +194,7 @@ footer p{color:var(--dim);font-size:.82rem;letter-spacing:1px}
 <div class="reveal reveal-delay-1">
 <form class="contact-form" id="contactForm" action="https://formsubmit.co/siimsander.kool@gmail.com" method="POST">
 <input type="hidden" name="_subject" value="Uus kontaktivormi sõnum">
-<input type="hidden" name="_next" value="../index.html">
+<input type="hidden" name="_next" id="nextUrl" value="">
 <input type="hidden" name="_captcha" value="false">
 <div class="form-row">
 <div class="form-field"><label data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" name="name" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required></div>
@@ -260,6 +260,7 @@ document.querySelectorAll('.gallery-item').forEach((item,i)=>item.addEventListen
 lbClose.addEventListener('click',closeLightbox);
 lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});
 document.addEventListener('keydown',e=>{if(!lightbox.classList.contains('open'))return;if(e.key==='Escape')closeLightbox();else if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1)});
+const nextUrlInput=document.getElementById('nextUrl'); if(nextUrlInput){nextUrlInput.value=window.location.href;}
 </script>
 </body>
 </html>
