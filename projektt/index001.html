@@ -192,13 +192,15 @@ footer p{color:var(--dim);font-size:.82rem;letter-spacing:1px}
 </div>
 </div>
 <div class="reveal reveal-delay-1">
-<form class="contact-form" id="contactForm" novalidate>
+<form class="contact-form" id="contactForm" action="https://formsubmit.co/siimsander.kool@gmail.com" method="POST">
+<input type="hidden" name="_subject" value="Uus kontaktivormi sõnum">
+<input type="hidden" name="_captcha" value="false">
 <div class="form-row">
-<div class="form-field"><label data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required></div>
-<div class="form-field"><label data-et="E-post" data-en="Email">E-post</label><input type="email" id="femail" placeholder="sinu@email.com" data-et="sinu@email.com" data-en="you@email.com" required></div>
+<div class="form-field"><label data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" name="name" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required></div>
+<div class="form-field"><label data-et="E-post" data-en="Email">E-post</label><input type="email" id="femail" name="_replyto" placeholder="sinu@email.com" data-et="sinu@email.com" data-en="you@email.com" required></div>
 </div>
-<div class="form-field"><label data-et="Teema" data-en="Subject">Teema</label><select id="fsubject"><option value="" data-et="Vali teema..." data-en="Select a subject...">Vali teema...</option><option value="shoot" data-et="Pildistamise broneerimine" data-en="Book a shoot">Pildistamise broneerimine</option><option value="collab" data-et="Koostöö" data-en="Collaboration">Koostöö</option><option value="other" data-et="Muu" data-en="Other">Muu</option></select></div>
-<div class="form-field"><label data-et="Sõnum" data-en="Message">Sõnum</label><textarea id="fmessage" placeholder="..." data-et="..." data-en="..." required></textarea></div>
+<div class="form-field"><label data-et="Teema" data-en="Subject">Teema</label><select id="fsubject" name="subject"><option value="" data-et="Vali teema..." data-en="Select a subject...">Vali teema...</option><option value="shoot" data-et="Pildistamise broneerimine" data-en="Book a shoot">Pildistamise broneerimine</option><option value="collab" data-et="Koostöö" data-en="Collaboration">Koostöö</option><option value="other" data-et="Muu" data-en="Other">Muu</option></select></div>
+<div class="form-field"><label data-et="Sõnum" data-en="Message">Sõnum</label><textarea id="fmessage" name="message" placeholder="..." data-et="..." data-en="..." required></textarea></div>
 <button type="submit" class="btn-submit" data-et="Saada sõnum" data-en="Send message">Saada sõnum</button>
 <div class="form-success" id="formSuccess" data-et="✓  Sõnum saadetud! Vastan esimesel võimalusel." data-en="✓  Message sent! I'll reply as soon as possible.">✓  Sõnum saadetud! Vastan esimesel võimalusel.</div>
 </form>
