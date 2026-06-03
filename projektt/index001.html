@@ -194,8 +194,8 @@ footer p{color:var(--dim);font-size:.82rem;letter-spacing:1px}
 <div class="reveal reveal-delay-1">
 <form class="contact-form" id="contactForm" method="POST">
 <div class="form-row">
-<div class="form-field"><label data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" name="from_name" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required></div>
-<div class="form-field"><label data-et="E-post" data-en="Email">E-post</label><input type="email" id="femail" name="reply_to" placeholder="sinu@email.com" data-et="sinu@email.com" data-en="you@email.com" required></div>
+<div class="form-field"><label data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" name="name" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required></div>
+<div class="form-field"><label data-et="E-post" data-en="Email">E-post</label><input type="email" id="femail" name="email" placeholder="sinu@email.com" data-et="sinu@email.com" data-en="you@email.com" required></div>
 </div>
 <div class="form-field"><label data-et="Teema" data-en="Subject">Teema</label><select id="fsubject" name="subject"><option value="" data-et="Vali teema..." data-en="Select a subject...">Vali teema...</option><option value="shoot" data-et="Pildistamise broneerimine" data-en="Book a shoot">Pildistamise broneerimine</option><option value="collab" data-et="Koostöö" data-en="Collaboration">Koostöö</option><option value="other" data-et="Muu" data-en="Other">Muu</option></select></div>
 <div class="form-field"><label data-et="Sõnum" data-en="Message">Sõnum</label><textarea id="fmessage" name="message" placeholder="..." data-et="..." data-en="..." required></textarea></div>
@@ -274,7 +274,8 @@ if(contactForm){
         }
         contactForm.reset();
       }, function(error){
-        alert('Viga e-kirja saatmisel. Proovi hiljem uuesti.');
+        const msg = error && (error.text || error.statusText || error.message) ? (error.text || error.statusText || error.message) : JSON.stringify(error);
+        alert('Viga e-kirja saatmisel: ' + msg + '\nVaata brauseri konsooli täpsema info jaoks.');
         console.error('EmailJS error:', error);
       });
   });
