@@ -188,7 +188,7 @@ footer p{color:var(--dim);font-size:.82rem;letter-spacing:1px}
 <div class="contact-social">
 <a href="https://www.instagram.com/siimsanderkool/" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
 <a href="https://www.facebook.com/siimsander.kool/" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-<a href="mailto:siimsander.kool@gmail.com" class="social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
+<a href="mailto:ssk.workss@gmail.com" class="social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
 </div>
 </div>
 <div class="reveal reveal-delay-1">
@@ -266,7 +266,8 @@ const formSuccess=document.getElementById('formSuccess');
 if(contactForm){
   contactForm.addEventListener('submit',function(e){
     e.preventDefault();
-    emailjs.sendForm('service_mxvjmxa','template_b1cga7p', this)
+    console.log('EmailJS sendForm', 'service_mxvjmxa', 'template_b1cga7p', 'CKZ5XoAUAW3QS3QRK');
+    emailjs.sendForm('service_mxvjmxa','template_b1cga7p', this, 'CKZ5XoAUAW3QS3QRK')
       .then(function(){
         if(formSuccess){
           formSuccess.style.display='block';
