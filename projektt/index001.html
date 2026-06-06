@@ -78,9 +78,9 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .reveal-delay-3{transition-delay:.3s}
 .section{padding:120px 0}
 .about-grid,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.about-image{position:relative;overflow:hidden}
+.about-image{position:relative;overflow:hidden;border-radius:28px}
 .about-image::before{content:'';position:absolute;top:-16px;left:-16px;width:60%;height:60%;border-top:1px solid var(--accent);border-left:1px solid var(--accent);opacity:.5;pointer-events:none}
-.about-image img{width:100%;height:480px;object-fit:cover;display:block;transition:.8s var(--ease)}
+.about-image img{width:100%;height:480px;object-fit:cover;display:block;transition:.8s var(--ease);border-radius:inherit}
 .about-image:hover img{transform:scale(1.04)}
 .section-label{font-size:.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
 .section-title{font-size:clamp(2.4rem,5vw,3.8rem);letter-spacing:2px;line-height:1;margin-bottom:24px}
@@ -251,7 +251,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
   emailjs.init('CKZ5XoAUAW3QS3QRK'); // Replace with your EmailJS public key
 })();
 const navItems=[{href:'#kodu',et:'Kodu',en:'Home'},{href:'#minust',et:'Minust',en:'About'},{href:'#galerii',et:'Galerii',en:'Gallery'},{href:'#kontakt',et:'Kontakt',en:'Contact'}];
-const galleryItems=[{src:'img/e46/e46 4k.jpeg',alt:'BMW E46'},{src:'img/erm 61 kristo.jpeg',alt:'BMW E61'},{src:'img/erm e61.jpeg',alt:'BMW E61'},{src:'img/e46/e46.jpeg',alt:'BMW E46'},{src:'img/e61 mägi.jpg',alt:'BMW E61'},{src:'img/e46/e46 sügis.jpeg',alt:'BMW E46 Sügis'},{src:'img/e46/parem tuli e46.jpeg',alt:'E46 Light'},{src:'img/e46/päike e46.jpeg',alt:'E46 Sun'},{src:'img/e46/sügis e46 veel.jpeg',alt:'E46 Autumn'},{src:'img/e46/tuli sügis e46.jpeg',alt:'E46 Light'},{src:'img/seitsmene rahinge.png',alt:'BMW seitsmene'},{src:'img/e46 rool.JPG',alt:'E46 Rool'},{src:'img/f10/f10 ihaste.jpeg',alt:'BMW F10'},{src:'img/f10/f10 pori.jpg',alt:'F10'},{src:'img/audi/audi a6 ilus taevas.jpeg',alt:'Audi A6'},{src:'img/lexus eeden parkla.png',alt:'Lexus'},{src:'img/golf.jpeg',alt:'Golf'},{src:'img/999syt.JPG',alt:'999syt'},{src:'img/mustang.jpeg',alt:'Mustang'},{src:'img/porcshe.jpeg',alt:'Porsche'},{src:'img/skyline.jpeg',alt:'Skyline'},{src:'img/001juk nissan.JPG',alt:'Nissan'},{src:'img/volks.JPG',alt:'Volkswagen'},{src:'img/kollane e46.JPG',alt:'Kollane E46'},{src:'img/velg/gren velg.jpeg',alt:'Wheel'},{src:'img/interior/m rool.jpeg',alt:'Interior'}];
+const galleryItems=[{src:'img/e46/e46 4k.jpeg',alt:'BMW E46'},{src:'img/erm 61 kristo.jpeg',alt:'BMW E61'},{src:'img/erm e61.jpeg',alt:'BMW E61'},{src:'img/e46/e46.jpeg',alt:'BMW E46'},{src:'img/e61 mägi.jpg',alt:'BMW E61'},{src:'img/e46/e46 sügis.jpeg',alt:'BMW E46 Sügis'},{src:'img/e46/parem tuli e46.jpeg',alt:'E46 Light'},{src:'img/e46/päike e46.jpeg',alt:'E46 Sun'},{src:'img/e46/sügis e46 veel.jpeg',alt:'E46 Autumn'},{src:'img/e46/tuli sügis e46.jpeg',alt:'E46 Light'},{src:'img/seitsmene rahinge.png',alt:'BMW seitsmene'},{src:'img/e46 rool.JPG',alt:'E46 Rool'},{src:'img/f10/f10 ihaste.jpeg',alt:'BMW F10'},{src:'img/f10/f10 pori.jpg',alt:'F10'},{src:'img/audi/audi a6 ilus taevas.jpeg',alt:'Audi A6'},{src:'img/lexus eeden parkla.png',alt:'Lexus'},{src:'img/golf.jpeg',alt:'Golf'},{src:'img/999syt.JPG',alt:'999syt'},{src:'img/mustang.jpeg',alt:'Mustang'},{src:'img/porcshe.jpeg',alt:'Porsche'},{src:'img/skyline.jpeg',alt:'Skyline'},{src:'img/001juk nissan.JPG',alt:'Nissan'},{src:'img/volks.JPG',alt:'Volkswagen'},{src:'img/volks.jpeg.PNG',alt:'Volkswagen'},{src:'img/kollane e46.JPG',alt:'Kollane E46'},{src:'img/velg/gren velg.jpeg',alt:'Wheel'},{src:'img/interior/m rool.jpeg',alt:'Interior'}];
 const langBtns=document.querySelectorAll('.lang-btn');
 const themeBtns=document.querySelectorAll('.theme-btn');
 const navbar=document.getElementById('navbar');
