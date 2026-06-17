@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PleaseFixMyCar.ee</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f13;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, #1a1060 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(99, 82, 210, 0.18);
+      border: 0.5px solid rgba(99, 82, 210, 0.4);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 11px;
+      color: #a89df0;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .hero h1 span { color: #7f77dd; }
+    .hero p {
+      font-size: 14px;
+      color: #6b6b7a;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    /* SELECT */
+    .select-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .select-wrap select {
+      width: 100%;
+      padding: 14px 44px 14px 16px;
+      font-size: 15px;
+      font-family: inherit;
+      background: #1a1a24;
+      border: 0.5px solid rgba(99, 82, 210, 0.35);
+      border-radius: 12px;
+      color: #e8e8f0;
+      cursor: pointer;
+      appearance: none;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .select-wrap select:focus { border-color: rgba(127, 119, 221, 0.7); }
+    .select-arrow {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #6b6b7a;
+      font-size: 16px;
+    }
+
+    /* MAIN */
+    main {
+      flex: 1;
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 1.25rem 2.5rem;
+    }
+
+    /* CAR HEADER */
+    .car-header {
+      padding: 1.5rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .car-icon {
+      width: 46px; height: 46px;
+      background: #1a1060;
+      border: 0.5px solid rgba(127, 119, 221, 0.4);
+      border-radius: 13px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .car-icon i { font-size: 22px; color: #7f77dd; }
+    .car-name { font-size: 18px; font-weight: 600; color: #e8e8f0; letter-spacing: -0.01em; }
+    .car-meta { font-size: 13px; color: #4a4a5a; margin-top: 3px; }
+    .divider { height: 0.5px; background: rgba(255,255,255,0.05); margin-bottom: 1.25rem; }
+
+    /* FAULT CARD */
+    .fault-card {
+      background: #16161f;
+      border: 0.5px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 0.875rem;
+      transition: border-color 0.2s;
+    }
+    .fault-card:hover { border-color: rgba(127, 119, 221, 0.3); }
+
+    .fault-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .fault-num {
+      width: 26px; height: 26px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .n1 { background: #1a1060; color: #a89df0; }
+    .n2 { background: #0e2a1a; color: #5dcaa5; }
+    .n3 { background: #2a1a0e; color: #ef9f27; }
+
+    .fault-name { font-size: 14px; font-weight: 500; color: #d8d8e8; line-height: 1.5; flex: 1; }
+
+    /* COST PILLS */
+    .cost-pill {
+      font-size: 10px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      white-space: nowrap; flex-shrink: 0;
+      letter-spacing: 0.04em; border: 0.5px solid;
+    }
+    .c-ok  { background: #0e2a1a; color: #5dcaa5; border-color: #0f6e56; }
+    .c-mid { background: #2a1f0a; color: #ef9f27; border-color: #854f0b; }
+    .c-bad { background: #2a1010; color: #f09595; border-color: #a32d2d; }
+    .c-rip { background: #3a0a0a; color: #e24b4a; border-color: #a32d2d; }
+
+    /* SEARCH ROW */
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #0f0f18;
+      border: 0.5px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 8px 10px 8px 12px;
+      margin-bottom: 0.875rem;
+    }
+    .search-icon { color: #4a4a5a; font-size: 14px; flex-shrink: 0; }
+    .search-term {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #a89df0;
+      flex: 1;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .copy-btn {
+      font-size: 11px; font-weight: 500;
+      padding: 5px 11px;
+      background: #1a1a2e;
+      border: 0.5px solid rgba(127, 119, 221, 0.35);
+      border-radius: 7px;
+      color: #7f77dd;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex; align-items: center; gap: 4px;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { background: #26215c; }
+
+    /* SHOPS */
+    .shops-label {
+      font-size: 11px; color: #4a4a5a;
+      margin-bottom: 7px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .shops { display: flex; flex-wrap: wrap; gap: 5px; }
+    .shop-a {
+      font-size: 11px; font-weight: 600;
+      padding: 5px 12px; border-radius: 20px;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: opacity 0.15s;
+      border: 0.5px solid;
+    }
+    .shop-a:hover { opacity: 0.7; }
+    .sa { background: #0d1e35; color: #6aa8e0; border-color: #185fa5; }
+    .sb { background: #0d2010; color: #78b84a; border-color: #3b6d11; }
+    .sc { background: #261a06; color: #d4953a; border-color: #854f0b; }
+    .sd { background: #25080a; color: #d67070; border-color: #a32d2d; }
+    .se { background: #082018; color: #3db890; border-color: #0f6e56; }
+    .sf { background: #191714; color: #928e84; border-color: #5f5e5a; }
+    .sg { background: #14102a; color: #9088d0; border-color: #534ab7; }
+
+    /* HIDDEN */
+    #tulemused { display: none; }
+    #tulemused.vis { display: block; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 12px;
+      color: #2e2e3a;
+      border-top: 0.5px solid rgba(255,255,255,0.04);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .hero { padding: 2rem 1.25rem 1.75rem; }
+      .hero h1 { font-size: 24px; }
+      .hero p { font-size: 13px; }
+
+      .fault-card { padding: 1rem; border-radius: 14px; }
+      .fault-top { flex-wrap: wrap; gap: 8px; }
+      .fault-name { font-size: 13px; }
+      .cost-pill { font-size: 10px; }
+
+      .search-row { flex-wrap: wrap; gap: 6px; }
+      .search-term { width: 100%; flex: unset; order: 2; }
+      .search-icon { display: none; }
+      .copy-btn { order: 3; width: 100%; justify-content: center; padding: 7px; }
+
+      .shops { gap: 4px; }
+      .shop-a { font-size: 10px; padding: 5px 10px; }
+
+      main { padding: 0 1rem 2rem; }
+      .car-name { font-size: 16px; }
+    }
+
+    @media (max-width: 380px) {
+      .hero h1 { font-size: 20px; }
+      .shop-a { font-size: 10px; padding: 4px 9px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-badge"><i class="ti ti-tool"></i> Auto diagnostika</div>
+    <h1>Please<span>Fix</span>MyCar.ee</h1>
+    <p>Leia oma auto tüüpvead ja võrdle varuosade hindu</p>
+    <div class="select-wrap">
+      <select id="autoValik" onchange="kuvaAndmed()">
+        <option value="">— Vali auto mudel —</option>
+        <option value="vw_passat_b6">Volkswagen Passat B6 (2005–2010)</option>
+        <option value="skoda_octavia_3">Škoda Octavia Mk3 (2013–2020)</option>
+        <option value="audi_a4_b8">Audi A4 B8 (2008–2015)</option>
+        <option value="bmw_3_e90">BMW 3. seeria E90 (2005–2013)</option>
+        <option value="volvo_v70_3">Volvo V70 Mk3 (2007–2016)</option>
+        <option value="toyota_avensis_3">Toyota Avensis T27 (2009–2018)</option>
+        <option value="ford_focus_3">Ford Focus Mk3 (2011–2018)</option>
+        <option value="opel_astra_j">Opel Astra J (2009–2015)</option>
+        <option value="honda_civic_8">Honda Civic 8. gen (2005–2011)</option>
+        <option value="subaru_legacy_5">Subaru Legacy 5. gen (2009–2014)</option>
+      </select>
+      <i class="ti ti-chevron-down select-arrow"></i>
+    </div>
+  </div>
+
+  <main>
+    <div id="tulemused">
+      <div class="car-header">
+        <div class="car-icon"><i class="ti ti-car"></i></div>
+        <div>
+          <div class="car-name" id="autoNimi"></div>
+          <div class="car-meta" id="autoMeta"></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div id="vigadeNimekiri"></div>
+    </div>
+  </main>
+
+  <footer>&copy; 2026 PleaseFixMyCar.ee &nbsp;&middot;&nbsp; Arendaja: Siim Sander Kool</footer>
+
+  <script>
+    const andmed = {
+      "vw_passat_b6": { nimi: "Volkswagen Passat B6", aasta: "2005–2010", vead: [
+        { viga: "Elektrilise seisupiduri mootori rike", kulu: "Odav – Keskmine", otsing: "Passat B6 seisupiduri mootor" },
+        { viga: "2.0 TDI õlipumba kuuskantvõlli kulumine", kulu: "Kallis", otsing: "Passat 2.0 TDI õlipumba võll" },
+        { viga: "Rooste teke ukselinkide ümbruses ja tiibadel", kulu: "Keskmine", otsing: "Passat B6 esitiib" }
+      ]},
+      "skoda_octavia_3": { nimi: "Škoda Octavia Mk3", aasta: "2013–2020", vead: [
+        { viga: "Veepumba ja termostaadi korpuse lekked", kulu: "Keskmine", otsing: "Octavia 3 veepump termostaat" },
+        { viga: "DSG käigukasti mehatroonika tõrked", kulu: "Kallis", otsing: "DSG mehatroonika" },
+        { viga: "Puutetundliku ekraani kummitusvajutused (Ghost touch)", kulu: "Keskmine", otsing: "Octavia 3 multimeedia ekraan" }
+      ]},
+      "audi_a4_b8": { nimi: "Audi A4 B8", aasta: "2008–2015", vead: [
+        { viga: "TFSI bensiinimootorite kolossaalne õlikulu", kulu: "Väga kallis", otsing: "Audi A4 B8 TFSI kolvirõngad" },
+        { viga: "Esisilla õõtshoobade puksid kuluvad kiiresti", kulu: "Keskmine", otsing: "Audi A4 B8 õõtshoobade komplekt" },
+        { viga: "Roolivõimendi voolikute ja pumba hääled/lekked", kulu: "Keskmine", otsing: "Audi A4 B8 roolivõimendi pump" }
+      ]},
+      "bmw_3_e90": { nimi: "BMW 3. seeria E90", aasta: "2005–2013", vead: [
+        { viga: "N47 diiselmootorite keti venimine ja purunemine", kulu: "Väga kallis", otsing: "BMW E90 N47 ketikomplekt" },
+        { viga: "FRM tulede mooduli läbipõlemine aku vahetusel", kulu: "Keskmine", otsing: "BMW E90 FRM moodul" },
+        { viga: "Õlilekked klapikambrikaane ja karteri tihenditest", kulu: "Keskmine", otsing: "BMW E90 klapikambrikaane tihend" }
+      ]},
+      "volvo_v70_3": { nimi: "Volvo V70 Mk3", aasta: "2007–2016", vead: [
+        { viga: "Generaatori rihma ja pinguti purunemine", kulu: "Kallis", otsing: "Volvo V70 lamerihma komplekt" },
+        { viga: "Elektrilise tagaluugi mootorite väsimine", kulu: "Keskmine", otsing: "Volvo V70 tagaluugi amortisaator" },
+        { viga: "Tagasilla puksid kuluvad — auto hakkab teel ujuma", kulu: "Keskmine", otsing: "Volvo V70 tagasilla puks" }
+      ]},
+      "toyota_avensis_3": { nimi: "Toyota Avensis T27", aasta: "2009–2018", vead: [
+        { viga: "Käsipiduri elektroonilise ajami rike", kulu: "Kallis", otsing: "Avensis T27 seisupiduri moodul" },
+        { viga: "Ksenoontulede reflektorite tuhmumine (valgus kaob)", kulu: "Keskmine", otsing: "Avensis T27 esituli" },
+        { viga: "Diiselmootorite plokikaanetihendi mured (2.2 D-4D)", kulu: "Kallis", otsing: "Avensis 2.2 D4D plokikaanetihend" }
+      ]},
+      "ford_focus_3": { nimi: "Ford Focus Mk3", aasta: "2011–2018", vead: [
+        { viga: "Powershift automaatkäigukasti jõnksumine ja rikked", kulu: "Väga kallis", otsing: "Ford Focus Powershift sidur" },
+        { viga: "1.0 EcoBoost jahutusvedeliku voolikute purunemine", kulu: "Kallis", otsing: "Ford Focus EcoBoost jahutusvoolik" },
+        { viga: "Roolilati elektroonika tõrked niiskuse tõttu", kulu: "Kallis", otsing: "Ford Focus Mk3 elektriline roolilatt" }
+      ]},
+      "opel_astra_j": { nimi: "Opel Astra J", aasta: "2009–2015", vead: [
+        { viga: "M32 manuaalkäigukasti laagrite kulumine", kulu: "Kallis", otsing: "Opel M32 käigukasti laagrid" },
+        { viga: "Jahutusvedeliku leke plastikosadest ja termostaadist", kulu: "Odav", otsing: "Opel Astra J termostaadi korpus" },
+        { viga: "Süütepooli rikked — mootor hakkab vahele jätma", kulu: "Odav", otsing: "Opel Astra J süütepool" }
+      ]},
+      "honda_civic_8": { nimi: "Honda Civic 8. gen", aasta: "2005–2011", vead: [
+        { viga: "I-SHIFT robotkäigukasti siduri ja ajami tõrked", kulu: "Kallis", otsing: "Honda Civic i-Shift sidurikomplekt" },
+        { viga: "Käsipiduri mehhanismi mittetoimimine", kulu: "Odav – Keskmine", otsing: "Honda Civic tagumine pidurisadul" },
+        { viga: "Armatuuri digitaalse ekraani pikslite kustumine", kulu: "Odav", otsing: "Honda Civic LCD ekraan" }
+      ]},
+      "subaru_legacy_5": { nimi: "Subaru Legacy 5. gen", aasta: "2009–2014", vead: [
+        { viga: "CVT Lineartronic automaatkäigukasti kulumine", kulu: "Väga kallis", otsing: "Subaru Legacy CVT hüdroplokk" },
+        { viga: "Poksermootorite väntvõlli purunemine (eriti diisli)", kulu: "Väga kallis", otsing: "Subaru 2.0D mootoriplokk" },
+        { viga: "Katalüsaatori ja hapnikuandurite veakoodid", kulu: "Keskmine", otsing: "Subaru Legacy lambda andur" }
+      ]}
+    };
+
+    const poed = [
+      { n: "Aeromotors", u: "https://aeromotors.ee",      c: "sa", ic: "ti-bolt" },
+      { n: "Alvadi",     u: "https://alvadi.ee",           c: "sb", ic: "ti-leaf" },
+      { n: "iParts",     u: "https://www.iparts.ee",       c: "sc", ic: "ti-package" },
+      { n: "Fixus",      u: "https://www.fixus.ee",        c: "sd", ic: "ti-tool" },
+      { n: "Autodoc",    u: "https://www.autodoc.ee",      c: "se", ic: "ti-truck" },
+      { n: "Forss",      u: "https://pood.forss.ee",       c: "sf", ic: "ti-building-store" },
+      { n: "Automaailm", u: "https://www.automaailm.ee",   c: "sg", ic: "ti-world" }
+    ];
+
+    const numCls = ["n1", "n2", "n3"];
+
+    function costCls(k) {
+      const l = k.toLowerCase();
+      if (l.startsWith("väga")) return "c-rip";
+      if (l.startsWith("kallis")) return "c-bad";
+      if (l.startsWith("kesk")) return "c-mid";
+      return "c-ok";
+    }
+
+    function kuvaAndmed() {
+      const v = document.getElementById("autoValik").value;
+      const r = document.getElementById("tulemused");
+      if (!v || !andmed[v]) { r.classList.remove("vis"); return; }
+
+      const a = andmed[v];
+      document.getElementById("autoNimi").textContent = a.nimi;
+      document.getElementById("autoMeta").textContent = a.aasta + " · " + a.vead.length + " tüüpviga leitud";
+
+      const list = document.getElementById("vigadeNimekiri");
+      list.innerHTML = "";
+
+      a.vead.forEach((f, i) => {
+        const d = document.createElement("div");
+        d.className = "fault-card";
+        const shops = poed.map(p =>
+          `<a href="${p.u}" target="_blank" rel="noopener" class="shop-a ${p.c}">
+            <i class="ti ${p.ic}" style="font-size:12px"></i>${p.n}
+          </a>`
+        ).join("");
+        const safe = f.otsing.replace(/'/g, "\\'");
+        d.innerHTML = `
+          <div class="fault-top">
+            <div class="fault-num ${numCls[i] || 'n1'}">${i + 1}</div>
+            <div class="fault-name">${f.viga}</div>
+            <span class="cost-pill ${costCls(f.kulu)}">${f.kulu}</span>
+          </div>
+          <div class="search-row">
+            <i class="ti ti-search search-icon"></i>
+            <span class="search-term">${f.otsing}</span>
+            <button class="copy-btn" onclick="doCopy(this, '${safe}')">
+              <i class="ti ti-copy" style="font-size:11px"></i>Kopeeri
+            </button>
+          </div>
+          <div class="shops-label">Ava pood</div>
+          <div class="shops">${shops}</div>
+        `;
+        list.appendChild(d);
+      });
+
+      r.classList.add("vis");
+    }
+
+    function doCopy(btn, t) {
+      navigator.clipboard.writeText(t).then(() => {
+        btn.innerHTML = '<i class="ti ti-check" style="font-size:11px"></i>Kopeeritud!';
+        setTimeout(() => {
+          btn.innerHTML = '<i class="ti ti-copy" style="font-size:11px"></i>Kopeeri';
+        }, 1800);
+      });
+    }
+  </script>
+
+</body>
+</html>
