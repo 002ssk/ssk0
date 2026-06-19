@@ -288,7 +288,7 @@ const galleryItems=[
   {src:'img/e46/päike e46.jpeg',alt:'E46 Sun',brand:'BMW'},
   {src:'img/e46/sügis e46 veel.jpeg',alt:'E46 Autumn',brand:'BMW'},
   {src:'img/e46/tuli sügis e46.jpeg',alt:'E46 Light',brand:'BMW'},
-  {src:'img/seitsmene rahinge.png',alt:'BMW seitsmene',brand:'BMW'},
+  {src:'img/seitsmene rahinge.png',alt:'BMW seitsmene',brand:'BMW',pos:'center 35%'},
   {src:'img/e46 rool.JPG',alt:'E46 Rool',brand:'BMW'},
   {src:'img/f10/f10 ihaste.jpeg',alt:'BMW F10',brand:'BMW'},
   {src:'img/f10/f10 pori.jpg',alt:'F10',brand:'BMW'},
@@ -335,7 +335,7 @@ const brandsEn={'Kõik':'All'};
 galleryFilters.innerHTML=brands.map(b=>`<button class="filter-btn${b==='Kõik'?' active':''}" data-brand="${b==='Kõik'?'all':b}" data-et="${b}" data-en="${brandsEn[b]||b}">${b}</button>`).join('');
 
 function renderGallery(){
-  galleryGrid.innerHTML=galleryItems.map((item,index)=>`<div class="gallery-item reveal visible${activeFilter!=='all'&&item.brand!==activeFilter?' hidden':''}" data-src="${item.src}" data-index="${index}" data-brand="${item.brand}"><img src="${item.src}" alt="${item.alt}" loading="lazy"><div class="gallery-overlay"><i class="fas fa-expand"></i><span>${item.alt}</span></div></div>`).join('');
+  galleryGrid.innerHTML=galleryItems.map((item,index)=>`<div class="gallery-item reveal visible${activeFilter!=='all'&&item.brand!==activeFilter?' hidden':''}" data-src="${item.src}" data-index="${index}" data-brand="${item.brand}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.pos?` style="object-position:${item.pos}"`:''}><div class="gallery-overlay"><i class="fas fa-expand"></i><span>${item.alt}</span></div></div>`).join('');
   document.querySelectorAll('.gallery-item').forEach(item=>item.addEventListener('click',()=>openLightbox(parseInt(item.dataset.index))));
 }
 renderGallery();
