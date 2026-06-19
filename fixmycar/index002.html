@@ -3,251 +3,303 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FixMyCar – Tüüpvead ja varuosad</title>
-<link rel="stylesheet" href="style.css">
+<title>FixMyCar – Lihtne prototüüp</title>
+<style>
+    body {
+        margin: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+        background: #f8fafc;
+        color: #1e2937;
+        line-height: 1.6;
+    }
+    header {
+        background: white;
+        padding: 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    h1 { margin: 0; color: #1e40af; }
+    
+    .search-box {
+        margin: 2rem 0;
+        position: relative;
+    }
+    #carSearch {
+        width: 100%;
+        padding: 16px 50px 16px 20px;
+        font-size: 1.1rem;
+        border: 2px solid #cbd5e1;
+        border-radius: 12px;
+        outline: none;
+        background: white;
+    }
+    #carSearch:focus {
+        border-color: #1e40af;
+        box-shadow: 0 0 0 4px rgba(30,64,175,0.15);
+    }
+
+    .clear-btn {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        font-size: 1.6rem;
+        color: #94a3b8;
+        cursor: pointer;
+        padding: 4px 8px;
+        line-height: 1;
+        display: none;
+    }
+    .clear-btn:hover {
+        color: #475569;
+    }
+    .clear-btn.visible {
+        display: block;
+    }
+
+    .car-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 2rem;
+    }
+    .car-btn {
+        padding: 12px 18px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: all 0.2s;
+    }
+    .car-btn:hover, .car-btn.active {
+        background: #1e40af;
+        color: white;
+        border-color: #1e40af;
+    }
+
+    #results {
+        display: none;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    .results-header {
+        background: #1e40af;
+        color: white;
+        padding: 1.5rem;
+        font-size: 1.4rem;
+        font-weight: 700;
+    }
+    .fault-list {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+    .fault-card {
+        background: #f8fafc;
+        padding: 1.25rem;
+        border-radius: 10px;
+        border-left: 5px solid #64748b;
+    }
+    .fault-card.kallis { border-left-color: #e11d48; }
+    .fault-card.kesk { border-left-color: #ca8a04; }
+    .fault-card.odav { border-left-color: #10b981; }
+
+    .cost {
+        font-weight: bold;
+        font-size: 0.9rem;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        display: inline-block;
+        margin-top: 8px;
+    }
+    .odav { background: #ecfdf5; color: #10b981; }
+    .kesk { background: #fefce8; color: #ca8a04; }
+    .kallis { background: #fee2e2; color: #e11d48; }
+
+    .copy-btn {
+        margin-top: 10px;
+        padding: 8px 14px;
+        background: white;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .copy-btn.copied {
+        background: #10b981;
+        color: white;
+        border-color: #10b981;
+    }
+
+    .stores {
+        padding: 1.5rem;
+        background: #f1f5f9;
+        text-align: center;
+    }
+    .stores a {
+        margin: 0 8px;
+        color: #1e40af;
+        text-decoration: none;
+        font-weight: 500;
+    }
+</style>
 </head>
 <body>
+
 <header>
-  <div class="header-inner">
-    <div class="header-logo">
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="9" fill="#2D5F8A"/>
-        <path d="M8 25.5L11.8 15.2C12.1 14.2 13 13.5 14.1 13.5H25.9C27 13.5 27.9 14.2 28.2 15.2L32 25.5V28C32 28.8 31.3 29.5 30.5 29.5H29C28.2 29.5 27.5 28.8 27.5 28V27.5H12.5V28C12.5 28.8 11.8 29.5 11 29.5H9.5C8.7 29.5 8 28.8 8 28V25.5Z" fill="white"/>
-        <circle cx="13" cy="26.5" r="2.5" fill="#1B2B4A"/>
-        <circle cx="27" cy="26.5" r="2.5" fill="#1B2B4A"/>
-        <path d="M9 22.5H31" stroke="#1B2B4A" stroke-width="1.5"/>
-        <path d="M12.5 18L13.5 14H26.5L27.5 18H12.5Z" fill="#93C5FD" opacity="0.65"/>
-      </svg>
-    </div>
-    <div class="header-text">
-      <div class="header-top">
-        <h1>FixMyCar</h1>
-      </div>
-      <p class="header-sub">Vali oma auto mudel → vaata tüüpvead → otsi õige varuosa kohe.</p>
-    </div>
-  </div>
+    <h1>FixMyCar – Lihtne prototüüp</h1>
 </header>
-<main>
-  <div class="selector-card">
-    <label for="carSearch">Otsi automudelit</label>
+
+<div class="container">
     <div class="search-box">
-      <input type="text" id="carSearch" autocomplete="off" placeholder="Kirjuta mudel (nt Toyota, Golf, A4)...">
-      <div class="search-suggestions" id="searchSuggestions"></div>
+        <input type="text" id="carSearch" placeholder="Otsi mudelit (nt BMW E46, Volvo V70...)">
+        <button class="clear-btn" id="clearBtn">✕</button>
     </div>
-    <p class="selector-hint">80+ populaarset mudelit Eesti teedel (2026)</p>
-  </div>
-  <div id="emptyState">
-    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.4">
-      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-      <polyline points="9 22 9 12 15 12 15 22"/>
-    </svg>
-    <p>Vali automudel, et näha levinumaid probleeme.</p>
-    <p>Andmebaasis üle 80 populaarse Eesti automudeli.</p>
-  </div>
-  <div id="results">
-    <div class="results-title" id="carTitle"></div>
-    <p class="results-sub">Levinumad probleemid, mida tasub kontrollida enne ostu või remonti.</p>
-    <div class="fault-list" id="faultList"></div>
-    <div class="stores-card">
-      <p class="stores-label">Otsi varuosi Eesti poodidest</p>
-      <div class="stores-grid">
-        <a href="https://www.aeromotors.eu/" target="_blank" rel="noopener" class="store-btn">Aeromotors</a>
-        <a href="https://www.alvadi.ee/" target="_blank" rel="noopener" class="store-btn">Alvadi</a>
-        <a href="https://www.iparts.ee/" target="_blank" rel="noopener" class="store-btn">iParts</a>
-        <a href="https://www.fixus.ee/" target="_blank" rel="noopener" class="store-btn">Fixus</a>
-        <a href="https://www.autodoc.ee/" target="_blank" rel="noopener" class="store-btn">Autodoc</a>
-        <a href="https://www.forss.ee/" target="_blank" rel="noopener" class="store-btn">Forss</a>
-        <a href="https://www.automaailm.ee/" target="_blank" rel="noopener" class="store-btn">Automaailm</a>
-      </div>
+
+    <div class="car-list" id="carList"></div>
+
+    <div id="results">
+        <div class="results-header" id="carTitle"></div>
+        
+        <div class="fault-list" id="faultList"></div>
+        
+        <div class="stores">
+            <p><strong>Otsi varuosi:</strong></p>
+            <a href="https://www.alvadi.ee/" target="_blank">Alvadi</a>
+            <a href="https://www.aeromotors.eu/" target="_blank">Aeromotors</a>
+            <a href="https://www.iparts.ee/" target="_blank">iParts</a>
+            <a href="https://www.autodoc.ee/" target="_blank">Autodoc</a>
+            <a href="https://www.fixus.ee/" target="_blank">Fixus</a>
+        </div>
     </div>
-  </div>
-</main>
-<footer>
-  FixMyCar — info on ligikaudne ja hariduslikel eesmärkidel. Enne remonti konsulteeri alati spetsialistiga.
-</footer>
+</div>
 
 <script>
 const CARS = {
-  "Audi A3 8L (1997–2003)":[{title:"1.9 TDI survejuhtrihm kulub kiiresti",desc:"Survejuhtrihma komplekt vajab regulaarset vahetust. Purunemine tähendab täielikku mootori häving. Kontrolli viimase vahetuse aega.",cost:"kesk",search:"Audi A3 8L 1.9 TDI survejuhtrihm timing belt"},{title:"Rooliliigend kulub ja tekitab koputust",desc:"Esirehv koputab madalal kiirusel keerates — tüüpiline rooliots või alumine liigend. Odav osa, kiire vahetus.",cost:"odav",search:"Audi A3 8L rooliliigend rooliots ball joint"},{title:"Elektriakna käitis keeldub",desc:"Esiaknakäitis jääb seisma — mootorite hammasrattad kuluvad. Komplekti vahetus on lihtsam kui üksikosade otsimine.",cost:"odav",search:"Audi A3 8L aknamasin käitis window regulator"}],
-  "Audi A3 8P (2003–2012)":[{title:"2.0 TDI kolvikäepide (EA189) — tuntud probleem",desc:"Teatud EA189 partii kolvikäepidemed purunevad. Ohtlik ja kallis. Kontrolli mootorikoodi enne ostu.",cost:"kallis",search:"Audi A3 8P 2.0 TDI kolvikäepide conrod EA189"},{title:"DSG6 mechatronic tõmbleb",desc:"VAG DSG6 haldusplokk annab alla — auto ei vaheta käike sujuvalt, tõmbab. Sageli repareeritav spetsialistil.",cost:"kallis",search:"Audi A3 8P DSG mechatronic DQ250"},{title:"Roolivõimendi elektrimootor suriseb",desc:"EPS moodul hakkab soojal surisema või kaotab lühidalt rooliabi. Sageli parandatav.",cost:"kesk",search:"Audi A3 8P EPS roolivõimendi moodul"}],
-  "Audi A4 B6 (2001–2005)":[{title:"Veepump ja termostat lähevad katki",desc:"Mootor läheb üle kuuma, sest plastist veepump puruneb. Termostaadiga tasub koos vahetada.",cost:"kesk",search:"Audi A4 B6 1.8T veepump termostat"},{title:"1.8T DV-klapp (diverter valve) lekib",desc:"Turboga autol kaob kiirenduse ajal rõhk ja auto tõmbab halvasti. Süüdlane on turbo liigventiil.",cost:"odav",search:"Audi A4 B6 1.8T diverter valve DV klapp"},{title:"Käigukasti tihendid lekivad",desc:"Manuaalsel käigukastil tühjub õli aeglaselt tihendite kaudu. Tihti ei pane seda tähele enne, kui kast hakkab klaaksuma.",cost:"odav",search:"Audi A4 B6 käigukast tihend"}],
-  "Audi A4 B7 (2005–2008)":[{title:"2.0 TDI turbokompressor kulub välja",desc:"Turbo annab alla kõrgete temperatuuride ja õlirõhu probleemide tõttu.",cost:"kallis",search:"Audi A4 B7 2.0 TDI turbo"},{title:"Sidurikomplekt kulub linnasõidus kiiresti",desc:"Siduri plaat kulub kiiremini kui oodatud, eriti linnasõidus.",cost:"kesk",search:"Audi A4 B7 2.0 TDI sidurikomplekt"},{title:"Rooliots ja esiliigend kuluvad",desc:"Esivõll ja rooliots annavad alla, mis tekitab roolis tunda vibratsioon 100–120 km/h juures.",cost:"odav",search:"Audi A4 B7 rooliots esiliigend"}],
-  "Audi A4 B8 (2008–2016)":[{title:"S-tronic / DSG haldusplokk (mechatronic) ebaõnnestub",desc:"Automaadikas valib käike valesti või tõmbab käivitudes. Sageli repareeritav.",cost:"kallis",search:"Audi A4 B8 S-tronic mechatronic"},{title:"2.0 TDI kolvikäepide puruneb (EA189)",desc:"Teatud mootoripartii kolvikäepidemed on tuntud purunemiste poolest. Täielik mootoririke.",cost:"kallis",search:"Audi A4 B8 2.0 TDI kolvikäepide conrod EA189"},{title:"Multifunktsionaalsete roolinuppude kontaktid riknevad",desc:"Elektroonilised nupud roolil kaotavad kontakti — raadio ei reageeri.",cost:"kesk",search:"Audi A4 B8 rool multifunktsionaalne nupud moodul"}],
-  "Audi A6 C5 (1997–2004)":[{title:"2.5 TDI V6 turbo ebaõnnestub enneaegselt",desc:"V6 diisel on tuntud turboprobleemide poolest. Õlikanal ummistub ja turbo annab enneaegselt alla.",cost:"kallis",search:"Audi A6 C5 2.5 TDI turbo V6"},{title:"Automaatkast Multitronic libiseb",desc:"CVT tüüpi Multitronic käigukast libiseb linnasõidus. Õlivahetus pikendab eluiga.",cost:"kallis",search:"Audi A6 C5 multitronic käigukast"},{title:"EGR-klapp ummistub tahma tõttu",desc:"EGR-klapp jääb kinni, mootor kaotab jõudu. Puhastamine aitab esialgu.",cost:"odav",search:"Audi A6 C5 EGR klapp"}],
-  "Audi A6 C6 (2004–2011)":[{title:"Õhkvedrustuse kompressor sureb",desc:"C6 A6-l on sageli õhkvedrustus, mille pump kulub aastatega välja. Auto vajub ühele küljele.",cost:"kallis",search:"Audi A6 C6 õhkvedrustus kompressor pump"},{title:"Multitronic variator lühikese elueaga",desc:"Pidev variator kulub väga kiiresti ilma regulaarse hoolduseta.",cost:"kallis",search:"Audi A6 C6 multitronic variator käigukast"},{title:"2.0 TDI EGR-klapp ummistub",desc:"EGR-klapp täitub tahma ja jääb kinni, tekitades suitsu ja jõukaotust.",cost:"odav",search:"Audi A6 C6 2.0 TDI EGR klapp"}],
-  "BMW 3-seeria E46 (1999–2006)":[{title:"Tagaosa aluspinna laagripesad murduvad läbi",desc:"Tagumine subframe kaevub rooste tõttu kerest välja — E46 kõige tuntum ohukoht. Kontrolli tagajala kinnituskohad.",cost:"kallis",search:"BMW E46 subframe laager rear kinnitus"},{title:"Jahutussüsteemi plastosad pragevad",desc:"Plastikust ekspansioonipaak, jahutustorud ja termostatimaja pragevad. Mootor läheb üle kuuma.",cost:"kesk",search:"BMW E46 jahutustorud veepump termostat ekspansioonipaak"},{title:"Aknatihendusnurk lekib ja rikub elektrit",desc:"Tagaklaasi tihend laseb niiskuse ukse sisse ja edasi salongi elektroonika juurde.",cost:"odav",search:"BMW E46 tagumine klaas tihend window seal"}],
-  "BMW 3-seeria E90/E91 (2005–2012)":[{title:"N47D20 diisel — ketikomplekt katki mootori tagant",desc:"N47 2.0d on kurikuulsaim BMW mootor: kett asub tagaküljel ja puruneb tihti. Täielik häving.",cost:"kallis",search:"BMW E90 N47 ketikomplekt timing chain"},{title:"Küünaldejuhtimisplaat (glow plug controller) ebaõnnestub",desc:"Külmal hommikul käivitub auto vaevaliselt. Süüdlane on küünaldjuhtimisplaat.",cost:"odav",search:"BMW E90 glow plug controller küünald juhtplaat"},{title:"EGR-moodul ummistub ja kinni jääb",desc:"EGR-klapp hangub kinni asendisse, mootor tõmbab halvasti ja suitsetab.",cost:"odav",search:"BMW E90 2.0d EGR klapp moodul"}],
-  "BMW 5-seeria E39 (1996–2003)":[{title:"Veepump sureb ootamatult",desc:"E39 veepump annab alla sageli, eriti plastiga mootoril. Eelista alumiiniumsisuga pumpa.",cost:"kesk",search:"BMW E39 veepump alumiinium"},{title:"Tagumise vasaku nurga laager kulub",desc:"Tagasild saab tunda koputust tasasel kurvis. Laagripesa kulub.",cost:"odav",search:"BMW E39 tagumine laager laagripesa"},{title:"Kliimakompressor lekib freoni",desc:"Kliimaseade ei tööta — kompressor lekib freoni. Sageli piisab tihendi vahetusest.",cost:"kesk",search:"BMW E39 kliima kompressor freoon leke"}],
-  "BMW 5-seeria E60/E61 (2003–2010)":[{title:"N47 diisel — kettikomplekt puruneb tagant",desc:"Nagu E90-l, on ka E60-l N47 mootori kettikomplekt tagant ja puruneb. Kontrollida enne ostu.",cost:"kallis",search:"BMW E60 N47 ketikomplekt timing chain"},{title:"Elektroniline vedrustus (EDC) annab tõrkeid",desc:"Elektroonilise vedrustuse juhtplokk annab tõrkekoode ja auto vajub.",cost:"kallis",search:"BMW E60 EDC vedrustus juhtplokk"},{title:"VANOS nurkmõõtur kulub",desc:"Väiksed VANOS tihendid ja nurkmõõtur kuluvad, mootor kaotab jõudu madalatel pöörlemistel.",cost:"kesk",search:"BMW E60 VANOS valvetronic nurkmõõtur"}],
-  "Dacia Logan/Sandero Mk1 (2004–2012)":[{title:"1.5 dCi injektor lekib kütust",desc:"Injektori tagasijooksutoru tihend laseb kütust läbi — haiseb kütuse järele. Tuleohtlik lahendamata.",cost:"odav",search:"Dacia Logan 1.5 dCi injektor tihend leke"},{title:"Esiratta laager kulub ruttu",desc:"Esilaager annab märku varsti — kohin keeramise ajal. Odav vahetus.",cost:"odav",search:"Dacia Logan esilaager"},{title:"Käigukastiühendus (orb) kandub välja",desc:"Manuaalse käigukasti orb kulub, käiguvahetus muutub raskeks.",cost:"odav",search:"Dacia Logan käigukast orb sidurikaabel"}],
-  "Ford Focus Mk2 (2004–2011)":[{title:"1.6 TDCi kõrgsurveump ebaõnnestub",desc:"Kõrgsurveump annab alla ja auto läheb hädaolekurežiimi — kiirust on ainult 2000 p/min jagu.",cost:"kallis",search:"Ford Focus Mk2 1.6 TDCi kütusepump kõrgsurveump"},{title:"Tagaosa kandekonstruktsioon roostetab läbi",desc:"Tagumine aluspinna armatuur roostetab kiiresti Eesti soolas. Enne ostmist vaata alt.",cost:"kesk",search:"Ford Focus Mk2 tagumine raam rooste"},{title:"Esitule liikumisandur (actuator) läheb katki",desc:"Keskvalgustuse mootor märgub sisse ja keeldub töötamast, valgustus jääb viltuseks.",cost:"odav",search:"Ford Focus Mk2 esitule mootor actuator korrektsioon"}],
-  "Ford Focus Mk3 (2011–2018)":[{title:"PowerShift 6DCT topeltsiduri käigukast libiseb",desc:"See topeltsiduri kast on Fordi kõige probleemsem toode: tõmbab, libiseb, väriseb madalatel kiirustel.",cost:"kallis",search:"Ford Focus Mk3 PowerShift 6DCT käigukast sidur"},{title:"1.0 EcoBoost jahutussüsteem lekib",desc:"Väike kolmesilindriline mootor on kurikuulus jahutuse lekete poolest — plastikplokid pragevad.",cost:"kesk",search:"Ford Focus Mk3 1.0 EcoBoost jahutus leke silindripea"},{title:"Tagumised pidurialusplaadid roostetavad kokku",desc:"Tagapiduri alused roostetavad kinni ja pidurid hakkavad peksma.",cost:"odav",search:"Ford Focus Mk3 tagumine pidur tugiplaadid alusraud"}],
-  "Ford Mondeo Mk3 (2000–2007)":[{title:"2.0 TDCi EGR ja sisselaskekollektori ummistus",desc:"Sisselaskekollektori klapp ummistub — EGR tahm koguneb. Auto kaotab jõudu.",cost:"kesk",search:"Ford Mondeo Mk3 2.0 TDCi sisselaskekollektori EGR ummistus"},{title:"Automaatkast (4F27E) libiseb",desc:"4-käiguline automaat libiseb ja reageerib hilinemisega, eriti külmalt.",cost:"kallis",search:"Ford Mondeo Mk3 automaatkast 4F27E"},{title:"Esirooliots kulub alla 150 000 km",desc:"Rooliots annab alla — tuntav vabakäik roolil.",cost:"odav",search:"Ford Mondeo Mk3 rooliots esiots"}],
-  "Honda Civic 7. gen (2001–2005)":[{title:"1.7 CTDI EGR ummistub",desc:"Diisel-Civic ummistab EGR-klapi kiiresti. Jõukaotus ja kütusekulu kasv on esimesed märgid.",cost:"odav",search:"Honda Civic 1.7 CTDI EGR klapp"},{title:"Küünaldejuhtmoodul läheb katki",desc:"Külmal käivitusel veab auto halvasti — küünalde juhtmoodul on nõrk koht.",cost:"odav",search:"Honda Civic 7 küünald soojendusküünlad moodul"},{title:"Esiratta laager annab alla",desc:"Esilaager kulub ja kohin muutub tugevamaks keeramise ajal.",cost:"odav",search:"Honda Civic 7 esilaager"}],
-  "Honda Civic 8. gen (2006–2011)":[{title:"2.2 CDTi EGR ummistub kiiresti",desc:"Diisel-Civicul ummistub EGR tihedamini kui tavaliselt. Puhastamine aitab.",cost:"odav",search:"Honda Civic 2.2 CDTi EGR klapp"},{title:"1.8 VTEC kulutab rohkem õli kui peaks",desc:"Kõrgema läbisõiduga auto kulutab üle normi õli — tihti männirõngad.",cost:"kesk",search:"Honda Civic 1.8 VTEC õlikulu männirõngad"},{title:"Tagumised pidurikettad roostetavad kinni",desc:"Tagapiduri ketaste ja klotside vahele tekib talvel rooste, mis põhjustab pekslemist.",cost:"odav",search:"Honda Civic 8 tagumine piduriklots piduriketas"}],
-  "Hyundai i30 Mk1 (2007–2012)":[{title:"1.6 CRDi kütusepump ja injektorid ebaõnnestuvad",desc:"Pump annab alla, auto kaotab võimsuse järsult. Injektorid kannatavad halva kütuse all eriti.",cost:"kallis",search:"Hyundai i30 1.6 CRDi kütusepump injector"},{title:"Kere alumine osa roostetab kiiresti",desc:"Uste all ja tagaosas on rooste sagedane probleem 7–10 aasta vanustel autodel.",cost:"kesk",search:"Hyundai i30 Mk1 rooste uks künnised"},{title:"Esiratta laager kulub alla 150 000 km",desc:"Esilaagreid tuleb vahetada suhteliselt varakult. Kohin keeramise ajal on märk.",cost:"odav",search:"Hyundai i30 Mk1 esilaager esiliigend"}],
-  "Hyundai i30 Mk2 (2012–2017)":[{title:"1.6 CRDi injektori kinnijäämine",desc:"Injektorid jäävad tihedalt kinni ja neid on raske eemaldada. Ploki tihendid vajavad hoolt.",cost:"kesk",search:"Hyundai i30 Mk2 1.6 CRDi injektor"},{title:"Rooliots kulub enneaegselt",desc:"Esirooliots annab alla ja tekitab vabakäigu. Kontrolli mõlemalt poolt korraga.",cost:"odav",search:"Hyundai i30 Mk2 rooliots esiots"},{title:"1.4 bensiini küünlakaablid pragevad",desc:"Küünlakaablid pragevad ja auto hakkab käivitusel vedama. Komplektkomplekti vahetus on lihtsaim.",cost:"odav",search:"Hyundai i30 Mk2 1.4 küünlakaabel spark plug wire"}],
-  "Kia Ceed Mk1 (2007–2012)":[{title:"1.6 CRDi kütusesüsteem ebaõnnestub",desc:"i30 ja Ceed jagavad platvormi — kütusepump ja injektorid on nõrk koht.",cost:"kallis",search:"Kia Ceed 1.6 CRDi kütusepump injector"},{title:"1.6 G4FC klapikaane tihend lekib õli",desc:"Bensiinimootor lekib õli klapikaane alt, eriti kõrgema läbisõiduga autodel.",cost:"odav",search:"Kia Ceed 1.6 G4FC klapikate tihend"},{title:"Elektriaknakäitised keelduvad",desc:"Elektrilised aknamootorid, eriti esiakendel, jäävad seisma.",cost:"odav",search:"Kia Ceed Mk1 aknamasin mootor"}],
-  "Kia Sportage Mk2 (2004–2010)":[{title:"2.0 CRDi turbo lekib õli",desc:"Turbo õlileke on sage probleem — mootor teeb suitsu, eriti külmalt käivitudes.",cost:"kallis",search:"Kia Sportage Mk2 2.0 CRDi turbo leke"},{title:"4WD ülekandekabiini mootor kulub",desc:"Nelikvedu lülitav transfer case kulub ja auto ei lülitu 4WD-sse.",cost:"kesk",search:"Kia Sportage Mk2 4WD transfer case mootor"},{title:"Esiratta laager annab alla",desc:"Esilaager koriseb, eriti keerates. Odav vahetus, kontrolli mõlemat korraga.",cost:"odav",search:"Kia Sportage Mk2 esilaager"}],
-  "Mazda 3 BK (2003–2009)":[{title:"Kere alt roostetab läbi kiiresti",desc:"BK Mazda 3 on Eesti soola vastu kehv: põhja kaitsekate kulub ära ja kere roostetab.",cost:"kesk",search:"Mazda 3 BK rooste põhi"},{title:"2.0 MZR hammasrihm tuleb õigel ajal vahetada",desc:"Hammasrihm peab saama õigeaegse hoolduse — vastasel juhul katkeb ja mootor kannatab.",cost:"odav",search:"Mazda 3 BK 2.0 MZR hammasrihm"},{title:"Automaatkast ülekuumeneb linnasõidus",desc:"Vanem automaat ülekuumeneb linnasõidus. Õlivahetusega saab eluiga pikendada.",cost:"kallis",search:"Mazda 3 BK automaatkast ülekuumenemine"}],
-  "Mazda 6 GG (2002–2008)":[{title:"2.0 MZR hammasrihm peab saama õigeaegse vahetuse",desc:"Hammasrihma komplekt on ajatundlik — ülekäinud auto mootor kannatab.",cost:"odav",search:"Mazda 6 GG 2.0 hammasrihm"},{title:"2.0 CD turbokompressor kulub",desc:"Diisel-Mazda 6 turbo annab alla enneaegselt. Vilin ja suitsutamine on esimesed märgid.",cost:"kallis",search:"Mazda 6 GG 2.0 CD turbo"},{title:"Käigukastikaabel kulub",desc:"Käiguvahetus muutub raskeks või ebatäpseks — käigukaabel on kulunud.",cost:"odav",search:"Mazda 6 GG käigukastikaabel gearshift cable"}],
-  "Mercedes C-klass W203 (2000–2007)":[{title:"C200 Kompressor klapimasin läheb katki",desc:"C200 kompressori klapimasin ebaõnnestub — mootor hakkab tõmblema.",cost:"kallis",search:"Mercedes W203 C200 Kompressor klapimasin"},{title:"Elektroonikaplokk (EIS) läheb katki",desc:"Süütelukk elektroonikaga annab alla — auto ei käivitu. EIS vajab reparatsiooni.",cost:"kallis",search:"Mercedes W203 EIS süütelukk elektroonika"},{title:"Esirami polüplaat (subframe mount) kulub",desc:"Esirami kinnituspunktid kuluvad ja tekitab koputuse madalal kiirusel.",cost:"odav",search:"Mercedes W203 esiraam polüplaat subframe mount"}],
-  "Mercedes C-klass W204 (2007–2014)":[{title:"OM651 2.2 CDI — swirl flap plokk ummistub",desc:"Sisselaskekollektori klapimootorid ummistuvad ja lähevad katki, plastik satub mootorisse.",cost:"kesk",search:"Mercedes W204 OM651 swirl flap 2.2 CDI"},{title:"OM651 kolvikäepidemed purunevad",desc:"Teatud tootmispartii OM651 mootori kolvikäepidemed on purunemiskalduvusega. Täielik mootoririke.",cost:"kallis",search:"Mercedes W204 OM651 conrod kolvikäepide"},{title:"7G-Tronic käigukasti ventiilikorp ebaõnnestub",desc:"Käigukast ei vaheta käike õigesti, tõmbab või vajub hädaolekurežiimi.",cost:"kallis",search:"Mercedes W204 7G-Tronic valve body"}],
-  "Mercedes E-klass W211 (2002–2009)":[{title:"Tagumine õhkvedrustus annab alla",desc:"Tagumine õhkpatjad lõhkevad ja auto vajub — sageli juba seismise ajal.",cost:"kallis",search:"Mercedes W211 õhkvedrustus tagumine"},{title:"SBC elektrooniline pidurisüsteem (varased mudelid)",desc:"Enne 2006. aastat toodetud W211-l on SBC pidur, mille pump ebaõnnestub.",cost:"kallis",search:"Mercedes W211 SBC pidurisüsteem pump"},{title:"Künniste ja põhja rooste",desc:"W211 on tuntud künniste alt roostumise poolest. Tihti varjul plastikkaitsete all.",cost:"kesk",search:"Mercedes W211 rooste künnised põhi"}],
-  "Mitsubishi Outlander XL (2006–2012)":[{title:"4WD elektriline haagis ebaõnnestub",desc:"Nelikvedu lülitub välja. Süüdlane on transfer case elektrimootor või juhtplaat.",cost:"kallis",search:"Mitsubishi Outlander XL 4WD transfer case mootor"},{title:"2.0 DI-D EGR-klapp ummistub",desc:"Diiselil ummistub EGR-klapp tahma tõttu. Puhastamine aitab esialgu.",cost:"odav",search:"Mitsubishi Outlander 2.0 DID EGR klapp"},{title:"Tagumiste pooltelgede tihendid lekivad",desc:"Poolteljevõllide tihendid lekivad õli aeglaselt — jääb tihti märkamata.",cost:"odav",search:"Mitsubishi Outlander tagumine pooltelg tihend"}],
-  "Nissan Qashqai J10 (2007–2013)":[{title:"CVT variator ebaõnnestub alla 150 000 km",desc:"CVT käigukast on J10 Qashqai kõige kallim rike — variator kulub, eriti 1.6 bensiinil.",cost:"kallis",search:"Nissan Qashqai J10 CVT variator käigukast"},{title:"2.0 dCi DPF partiklifilter ummistub",desc:"Linnasõidus hakkab DPF ummistuma — auto läheb hädaolekurežiimi.",cost:"kesk",search:"Nissan Qashqai J10 2.0 dCi DPF partiklifilter"},{title:"Esipõlveliigend kulub",desc:"Esipoolsilla põlveliiges annab alla, tuntav koputus väikestel kiirustel keeramise ajal.",cost:"odav",search:"Nissan Qashqai J10 esipõlv ball joint"}],
-  "Nissan Qashqai J11 (2013–2021)":[{title:"1.2 DIG-T termostat tõrgub talvel",desc:"Väike turbomootor ei saavuta kiiresti töötemperatuuri ja kulutab rohkem kütust. Termostat tasub kontrollida.",cost:"kesk",search:"Nissan Qashqai J11 1.2 DIG-T termostat"},{title:"CVT variator nõuab õigeaegset õlivahetust",desc:"J11 CVT kast nõuab ranget hooldust. Hilinenud õlivahetus lühendab eluiga oluliselt.",cost:"kesk",search:"Nissan Qashqai J11 CVT variator õlivahetus"},{title:"Esiraam polüplaat kulub",desc:"Esirami polüplaat kulub ja auto hakkab madalal kiirusel kolksuma.",cost:"odav",search:"Nissan Qashqai J11 esiraam polüplaat subframe mount"}],
-  "Opel Astra H (2004–2010)":[{title:"Elektriline roolivõimendi (EPS) rikki",desc:"Rool muutub äkitselt raskeks või saadab hoiatuse. EPS moodul on tuntud rike.",cost:"kallis",search:"Opel Astra H EPS roolivõimendi moodul"},{title:"1.7 CDTI DPF ummistub linnasõidus",desc:"Diisel-Astral ummistub DPF enamasti alla 100 000 km.",cost:"kesk",search:"Opel Astra H 1.7 CDTI DPF"},{title:"Soojendusküünlad kestavad lühikest aega",desc:"1.7 CDTI küünlad põlevad läbi sageli. Külmal käivitub auto vaevaliselt.",cost:"odav",search:"Opel Astra H 1.7 CDTI soojendusküünlad"}],
-  "Opel Astra J (2010–2015)":[{title:"CDC40 infotainment ekraan tõrgub",desc:"Raadioekraan sulab, vajub või läheb mustaks. Süsteem taaskäivitub sõidu ajal.",cost:"odav",search:"Opel Astra J CDC40 ekraan rike"},{title:"2.0 CDTI EGR klapp ummistub",desc:"Suure diisel-mootori EGR-klapp jääb tahma tõttu kinni.",cost:"odav",search:"Opel Astra J 2.0 CDTI AGR EGR klapp"},{title:"Tagumise piduri vedrud katkevad",desc:"Tagapiduri vedruklamber murdub ja tekitab pekslemist piduramisel.",cost:"odav",search:"Opel Astra J tagumine pidur vedru klamber"}],
-  "Opel Vectra C (2002–2008)":[{title:"2.2 DTI EGR-klapp ummistub regulaarselt",desc:"EGR-klapp täitub tahma — mootor kaotab jõudu. Puhastamine aitab mõneks ajaks.",cost:"odav",search:"Opel Vectra C 2.2 DTI EGR klapp"},{title:"Roolivõimendi (EPS) tõrked",desc:"Elektriline roolivõimendi annab tõrkeid — rool raskeneb sõidu ajal ootamatult.",cost:"kallis",search:"Opel Vectra C EPS roolivõimendi plokk"},{title:"Esirami polüplaatide kulumine",desc:"Esirami polüplaat kulub ja hakkab kolksuma madalal liikusel keerates.",cost:"odav",search:"Opel Vectra C esiraam polüplaat subframe"}],
-  "Peugeot 307 (2001–2008)":[{title:"2.0 HDi EGR-klapp vajab tihedat puhastust",desc:"Prantsuse diiselmootor ummistab EGR-klapi kiiresti.",cost:"odav",search:"Peugeot 307 2.0 HDi EGR klapp"},{title:"FAP partiklifilter ummistub",desc:"FAP vajab erikütuse lisandit regenereerimiseks. Süsteem kulub aja jooksul välja.",cost:"kallis",search:"Peugeot 307 FAP DPF partiklifilter"},{title:"Esiaknakäitised keelduvad",desc:"Elektriakna mootorid, eriti esiakendel, lähevad katki. Hammasratas puruneb.",cost:"odav",search:"Peugeot 307 aknamasin mootor"}],
-  "Peugeot 308 Mk1 (2007–2013)":[{title:"1.6 HDi EGR ja DPF ummistuvad linnas",desc:"Väikesel diiselmootori EGR ja DPF ummistuvad koos linnasõidus. Vajab regulaarselt pikemat kiirsõitu.",cost:"kesk",search:"Peugeot 308 1.6 HDi EGR DPF ummistus"},{title:"FAP Eolys-pulber tühjub enne aega",desc:"FAP regenereerimiseks vajalik Eolys-pulber saab otsa. Süsteem annab hoiatuse.",cost:"kesk",search:"Peugeot 308 FAP Eolys pulber"},{title:"1.6 THP kõrge õlikulu",desc:"1.6 THP turbobensiin on tuntud kõrge õlikulu poolest. Kontrolli küünalde värvust enne ostu.",cost:"kallis",search:"Peugeot 308 1.6 THP turbo kolb õlikulu"}],
-  "Renault Megane 2 (2002–2009)":[{title:"1.5 dCi injektori tagasijooksutoru tihend lekib",desc:"Kütus lekib injektorite juures kummitihendi alt — haiseb kütuse järele. Tuleohtlik.",cost:"odav",search:"Renault Megane 2 1.5 Dci injektor tihend"},{title:"Tagaklaasi tihend laseb niiskust salongi",desc:"Tagaklaas tihendab halvasti, niiskus jõuab salongi elektroonikani.",cost:"odav",search:"Renault Megane 2 tagumine klaas tihend"},{title:"EDC topeltsiduri käigukast probleemne",desc:"Renault topeltsidur tõmbab ja libiseb madala kiiruse juures.",cost:"kallis",search:"Renault Megane 2 EDC käigukast"}],
-  "Renault Megane 3 (2009–2016)":[{title:"Elektriline rool (EPS) võib järsku keelduda",desc:"EPS moodul ebaõnnestub ja rool muutub raskeks sõidu ajal. Sageli repareeritav.",cost:"kallis",search:"Renault Megane 3 EPS elektriline rool"},{title:"1.5 dCi kõrgsurveump läheb katki",desc:"Pump ebaõnnestub ja auto läheb limp-modei.",cost:"kallis",search:"Renault Megane 3 1.5 Dci kütusepump"},{title:"1.6 bensiini klapikaane tihend lekib",desc:"Mootor lekib õli klapikaane alt — tuntav lõhn.",cost:"odav",search:"Renault Megane 3 1.6 klapikate tihend"}],
-  "Seat Leon Mk2 (2005–2012)":[{title:"DSG6 mechatronic tõmbleb ja tõrgub",desc:"VAG-grupi käigukast — mechatronic moodul annab alla. Repareerida saab spetsialistil.",cost:"kallis",search:"Seat Leon Mk2 DSG6 mechatronic"},{title:"2.0 TDI kolvikäepidemed katki (EA189)",desc:"Teatud EA189 mootoripartiil on tuntud kolvikäepideme probleemid. Kontrolli mootorikoodi.",cost:"kallis",search:"Seat Leon Mk2 2.0 TDI kolvikäepide conrod EA189"},{title:"Rooliliigend kulub ja tekitab vabakäiku",desc:"Esipoolsilla rooliliigend annab alla, rool saab tunda õõtsumist.",cost:"odav",search:"Seat Leon Mk2 rooliliigend ots"}],
-  "Škoda Fabia Mk1 (2000–2007)":[{title:"1.4 TDI PD pumpadüüs vajab hooldust",desc:"Väikese TDI pumpa-düüs-süsteem nõuab täpset reguleerimist. Vale surve tähendab ebaühtlast tööd.",cost:"kesk",search:"Skoda Fabia 1.4 TDI PD pumpadüüs"},{title:"Käigukaabel kulub",desc:"Käiguvahetus muutub raskeks — käigukaabel kulub. Vahetus annab kohe parema tunnetuse.",cost:"odav",search:"Skoda Fabia Mk1 käigukaabel gearshift"},{title:"1.2 HTP klapid vajavad reguleerimist",desc:"3-silindriline mootor vajab perioodilist klappide reguleerimist — muidu hakkab kolama.",cost:"odav",search:"Skoda Fabia 1.2 HTP klapid reguleerimine"}],
-  "Škoda Fabia Mk2 (2007–2014)":[{title:"1.2 TSI ketikomplekt vajab ennetavat vahetust",desc:"Väikese TSI mootori kettikomplekt kulub kiiresti, eriti pika vaheajaga. Kolina käivitusel on hoiatus.",cost:"kesk",search:"Skoda Fabia Mk2 1.2 TSI ketikomplekt"},{title:"1.6 TDI EGR-klapp ummistub",desc:"TDI diisel ummistab EGR-klapi linnasõidus. Puhastamine aitab.",cost:"odav",search:"Skoda Fabia Mk2 1.6 TDI EGR klapp"},{title:"Esiratta laager annab alla enneaegselt",desc:"Fabia esilaager kulub sageli enne 150 000 km. Kohin keeramise ajal on esimene märk.",cost:"odav",search:"Skoda Fabia Mk2 esilaager"}],
-  "Škoda Octavia 1 (1996–2010)":[{title:"1.9 TDI PD klapikaane tihend lekib",desc:"Pumpa-düüsi mootor lekib klapikaane alt — tihend vajab regulaarset kontrolli.",cost:"odav",search:"Skoda Octavia 1 1.9 TDI PD klapikaane tihend"},{title:"5. käik hüppab välja",desc:"Manuaalne käigukast kulub — eriti 5. käik hakkab välja hüppama. Remont on võimalik.",cost:"kesk",search:"Skoda Octavia 1 käigukast 5. käik"},{title:"Esiraam ja tagahoidikud roostetavad",desc:"Eestis kasutatavatel Octavia 1-del roostetavad esiraam ja tagahoidikud. Kontrolli alt.",cost:"kesk",search:"Skoda Octavia 1 esiraam rooste tagumine"}],
-  "Škoda Octavia 2 (2004–2013)":[{title:"2.0 TDI EGR-klapp ummistub ~100 000 km",desc:"EGR-klapp täitub tahma ja mootor kaotab jõudu. Puhastamine aitab, aga ummistunud klapp vajab vahetust.",cost:"odav",search:"Skoda Octavia 2 2.0 TDI EGR klapp"},{title:"DSG7 mechatronic (DQ200) keeldub",desc:"7-käiguline kuiv topeltsiduri kast on see auto kõige probleemne koht.",cost:"kallis",search:"Skoda Octavia 2 DSG7 mechatronic DQ200"},{title:"Esirami polüplaat kulub ja koputab",desc:"Esirami polüplaat pehmendab tänavakõmpsumust, aga kulub aja jooksul.",cost:"odav",search:"Skoda Octavia 2 esiraam polüplaat subframe"}],
-  "Škoda Octavia 3 (2013–2020)":[{title:"DSG7 sidurikettad kuluvad linnasõidus",desc:"Kuiv topeltsidur (DQ200) kulub linnasõidus kiiremini kui peaks. Vibratsioon käivitusel.",cost:"kallis",search:"Skoda Octavia 3 DSG7 sidurikomplekt DQ200"},{title:"1.6 TDI EGR klapp ummistub",desc:"Säästudiisel ummistab EGR-klapi linnasõidus kiiresti.",cost:"odav",search:"Skoda Octavia 3 1.6 TDI EGR klapp"},{title:"2.0 TDI AdBlue süsteemi andurid tõrguvad",desc:"EA288 mootoriga mudelil hakkab AdBlue andur või pump andma tõrketeateid.",cost:"kesk",search:"Skoda Octavia 3 2.0 TDI AdBlue andur pump EA288"}],
-  "Subaru Forester SG (2002–2008)":[{title:"EJ mootori silindripea tihend läbi põleb",desc:"Subaru boksermootor on kurikuulus silindripea tihendi probleemide poolest. Kontroll kohustuslik.",cost:"kallis",search:"Subaru Forester SG EJ205 head gasket silindritihend"},{title:"Turbokompressor lekib õli sisselaskesse",desc:"Turbo lekib õli imusüsteemi, mootor teeb käivitusel musta suitsu.",cost:"kesk",search:"Subaru Forester SG turbo leke"},{title:"Tagumise diferentsiaali tihendid lekivad",desc:"Tagumise difi tihendid lasevad õli aeglaselt välja. Märk on õlilaik auto all.",cost:"odav",search:"Subaru Forester SG tagumine diifer tihend"}],
-  "Toyota Avensis T25 (2003–2009)":[{title:"2.2 D-4D kütuseliist (fuel rail) praguneb",desc:"Kõrgsurveliist praguneb ja kütus pihustab mootoriruumi — tuleohtlik! Kontrolli kindlasti.",cost:"kallis",search:"Toyota Avensis T25 2.2 D4D fuel rail kütusepump pragu"},{title:"2.2 D-4D turbo ebaõnnestub enneaegselt",desc:"Turbo annab alla tavaliselt 150 000–200 000 km piires.",cost:"kallis",search:"Toyota Avensis T25 2.2 D4D turbo"},{title:"EGR-klapp ummistub linnasõidus",desc:"EGR ummistub ja mootor hakkab suitsetama.",cost:"odav",search:"Toyota Avensis T25 EGR klapp"}],
-  "Toyota Avensis T27 (2009–2018)":[{title:"2.0 D-4D EGR ja sisselaskekollektori ummistus",desc:"Uuema Avensis diisel ummistab EGR ja sisselaskekollektori regulaarselt linnasõidus.",cost:"kesk",search:"Toyota Avensis T27 2.0 D4D EGR sisselaskekollektori ummistus"},{title:"6AT automaatkast tõmbleb käivahetus ajal",desc:"6AT käigukast vahetas käike tõmblemisega enne 2012. aastat. Tarkvarauuendus aitab.",cost:"kesk",search:"Toyota Avensis T27 6AT automaatkast tõmblus"},{title:"Esiratta laager annab alla",desc:"Esilaager kulub — tuntav kohin, mis tugevneb keeramise ajal.",cost:"odav",search:"Toyota Avensis T27 esilaager"}],
-  "Toyota Corolla E12 (2002–2007)":[{title:"1.4 D-4D hammasrihm tuleb vahetada õigel ajal",desc:"Diisel-Corolla hammasrihm peab saama õigeaegse vahetuse — muidu katkeb ja mootor kannatab.",cost:"odav",search:"Toyota Corolla E12 1.4 D4D hammasrihm"},{title:"Generaatori vooluregulaat ebaõnnestub",desc:"Aku laadimistuli süttib. Tihti piisab vaid voolureglulaadi vahetusest.",cost:"odav",search:"Toyota Corolla E12 generaator vooluregulaat"},{title:"Esiratta laager kulub alla 150 000 km",desc:"Esilaager annab märku kohinaga, mis tugevneb keeramise ajal.",cost:"odav",search:"Toyota Corolla E12 esilaager"}],
-  "Toyota Corolla E15 (2007–2013)":[{title:"1.6 bensiini klapikaane tihend lekib",desc:"Klapikaane tihend lekib kõrgema läbisõiduga autodel. Odav vahetus.",cost:"odav",search:"Toyota Corolla E15 1.6 klapikaane tihend"},{title:"1.4 D-4D EGR ummistub linnasõidus",desc:"Diiselmootor ummistab EGR kiiresti linnasõidus. Puhastamine aitab.",cost:"odav",search:"Toyota Corolla E15 1.4 D4D EGR klapp"},{title:"Tagumised pidurikettad roostetavad talvel",desc:"Piduriklotside ja ketaste vahele tekib rooste — pekslemine ja ebaühtlane pidurdus.",cost:"odav",search:"Toyota Corolla E15 tagumine piduriklots rooste"}],
-  "Toyota RAV4 Mk2 (2000–2006)":[{title:"2.0 D-4D EGR-klapp ummistub",desc:"Vanem RAV4 diisel ummistab EGR-klapi linnasõidus regulaarselt.",cost:"odav",search:"Toyota RAV4 Mk2 2.0 D4D EGR klapp"},{title:"4WD ülekandemehhanism kulub",desc:"Tagasilla lülituse mehhanism kulub ja nelikvedu ei tule sisse.",cost:"kesk",search:"Toyota RAV4 Mk2 4WD ülekanne transfer case"},{title:"Tagumise diferentsiaali tihendid lekivad",desc:"Tagumine difi lekib õli aeglaselt. Märk on õlilaik parkimiskohal.",cost:"odav",search:"Toyota RAV4 Mk2 tagumine diferentsiaal tihend"}],
-  "Toyota RAV4 Mk3 (2006–2012)":[{title:"2.2 D-4D EGR ja DPF ummistuvad koos",desc:"EGR ja DPF töötavad koos linnasõidus halvasti — mootor läheb hädaolekurežiimi.",cost:"kesk",search:"Toyota RAV4 Mk3 2.2 D4D EGR DPF ummistus"},{title:"Tagaakna puhastaja mootor sureb",desc:"Tagaklaasi puhastaja mootor sureb — tavaline odav vahetus.",cost:"odav",search:"Toyota RAV4 Mk3 tagaklaas puhastaja mootor"},{title:"Esiratta laager kulub",desc:"Esilaager annab märku kohinaga keeramise ajal.",cost:"odav",search:"Toyota RAV4 Mk3 esilaager"}],
-  "Toyota Yaris Mk1 (1999–2005)":[{title:"1.4 D-4D pumpa-düüs vajab regulaarset hooldust",desc:"Väike diisel vajab regulaarset pumpa-düüside seisukorra kontrolli.",cost:"kesk",search:"Toyota Yaris 1.4 D4D pumpadüüs hooldus"},{title:"Kliimakompressori veolüliti kulub",desc:"Kliimakompressori magnet-veolüliti kulub — kliima ei tööta.",cost:"odav",search:"Toyota Yaris Mk1 kliima kompressor veolüliti"},{title:"Esiratta laager annab alla",desc:"Esilaager kulub alla 150 000 km — kohin keeramise ajal.",cost:"odav",search:"Toyota Yaris Mk1 esilaager"}],
-  "Toyota Yaris Mk2 (2005–2011)":[{title:"1.4 D-4D EGR ummistub linnasõidus",desc:"Väike diisel ummistab EGR kiiresti. Linnasõitjatele soovituslik regulaarne puhastus.",cost:"odav",search:"Toyota Yaris Mk2 1.4 D4D EGR klapp"},{title:"Tagumiste pidurite rooste talvel",desc:"Tagapiduri kettad roostetavad kinni talvel. Pekslemine on esimene märk.",cost:"odav",search:"Toyota Yaris Mk2 tagumine pidur rooste"},{title:"Esirooliots kulub",desc:"Rooliots annab alla — tuntav vabakäik roolil.",cost:"odav",search:"Toyota Yaris Mk2 rooliots esiots"}],
-  "Volkswagen Golf 4 (1997–2004)":[{title:"1.9 TDI PD klapikaane tihend lekib",desc:"Pumpa-düüsi mootor lekib klapikaane alt — tihend vajab vahetust kõrgema läbisõiduga autodel.",cost:"odav",search:"VW Golf 4 1.9 TDI PD klapikaane tihend"},{title:"Elektriakna käitis keeldub",desc:"Aknamootorid jäävad seisma — hammasratas puruneb.",cost:"odav",search:"VW Golf 4 aknamasin käitis window regulator"},{title:"Jahutusvedeliku temperatuuriandur vale näitu annab",desc:"Jahutusvedeliku andur annab valet näitu ja auto käib rikaselt — kütusekulu kasvab.",cost:"odav",search:"VW Golf 4 jahutusvedelik temperatuuriandur"}],
-  "Volkswagen Golf 5 (2004–2008)":[{title:"1.9 TDI PD klapikaane tihend lekib",desc:"Pumpa-düüsiga PD-mootor lekib õli klapikaane alt. Tihend on odav, aga vale paigaldus tekitab uue leke.",cost:"odav",search:"VW Golf 5 1.9 TDI PD klapikate tihend"},{title:"DSG6 mechatronic ebaõnnestub",desc:"DSG6 mechatronic on tuntud rike. Auto tõmbab ja ei vaheta käike sujuvalt.",cost:"kallis",search:"VW Golf 5 DSG6 mechatronic DQ250"},{title:"1.4 TSI ketikomplekt kulub",desc:"1.4 TSI topeltkompressori ketisüsteem on nõrk ja vajab vahetust enne purunemist.",cost:"kesk",search:"VW Golf 5 1.4 TSI ketikomplekt"}],
-  "Volkswagen Golf 6 (2009–2013)":[{title:"DSG7 (DQ200) kuiv topeltsidur tõmbab ja vibreerib",desc:"DQ200 on Golf 6 nõrgim koht — libiseb, väriseb, tõmbab madalatel kiirustel.",cost:"kallis",search:"VW Golf 6 DSG7 DQ200 sidurikomplekt"},{title:"1.2 TSI kett kulub kiiresti",desc:"Väikese 1.2 TSI ketikomplekt kulub kiiremini kui peaks.",cost:"kesk",search:"VW Golf 6 1.2 TSI ketikomplekt"},{title:"1.6 TDI EGR klapp ummistub",desc:"Uuem TDI on sama EGR-probleemiga mis vanemad mootorid.",cost:"odav",search:"VW Golf 6 1.6 TDI EGR klapp"}],
-  "Volkswagen Passat B5 (1996–2005)":[{title:"1.9 TDI PD klapikaane tihend lekib",desc:"PD-pumpadüüsi mootori klapikaane tihend lekib kõrgema läbisõiduga autodel.",cost:"odav",search:"VW Passat B5 1.9 TDI PD klapikaane tihend"},{title:"2.5 V6 TDI survejuhtrihm kulub",desc:"V6 TDI survejuhtrihm peab saama õigeaegse vahetuse. Purunemine on kallis.",cost:"kesk",search:"VW Passat B5 2.5 V6 TDI survejuhtrihm"},{title:"4Motion Haldex-klupp vajab regulaarset õlivahetust",desc:"Haldex nelikveo klupp vajab õlivahetust iga 60 000 km tagant. Hilinenud hooldus tähendab riket.",cost:"kesk",search:"VW Passat B5 4Motion Haldex kluppi õlivahetus"}],
-  "Volkswagen Passat B6 (2005–2010)":[{title:"DSG mechatronic — kõige levinum rike",desc:"B6 Passat DSG-käigukasti haldusplokk on kõige sagedam rikkeleid. Auto tõmbab, ei vaheta käike.",cost:"kallis",search:"VW Passat B6 DSG mechatronic"},{title:"2.0 TDI EGR-klapp kinni tahma tõttu",desc:"EGR jääb kinni asendisse, mootor kaotab jõudu.",cost:"odav",search:"VW Passat B6 2.0 TDI EGR klapp"},{title:"Tagumine teljelaagriplokk kulub",desc:"Tagumine telg saab tunda keksumist halval teel.",cost:"odav",search:"VW Passat B6 tagumine telg laagripesa"}],
-  "Volkswagen Passat B7 (2011–2015)":[{title:"DSG7 DQ200 — kuiv topeltsidur libiseb",desc:"Sama DQ200 kast mis Golf 6-l — linnasõidus tõmbleb ja vibreerib.",cost:"kallis",search:"VW Passat B7 DSG7 DQ200 sidur"},{title:"1.4 TSI kett vajab ennetavat vahetust",desc:"1.4 TSI ketikomplekt kulub — klapid hakkavad tegema kolinat käivitusel.",cost:"kesk",search:"VW Passat B7 1.4 TSI ketikomplekt"},{title:"PCV-klapp lekib ja tekitab liigset rõhku",desc:"Mootori ventilatsiooniklapp laseb liiga suure rõhu, tulemuseks on tihendite lekked.",cost:"odav",search:"VW Passat B7 PCV klapp ventilatsioon"}],
-  "Volkswagen Polo 9N (2002–2009)":[{title:"1.4 TDI PD klapikaane tihend lekib",desc:"Väikese TDI pumpa-düüs lekib klapikaane alt kõrgemal läbisõidul.",cost:"odav",search:"VW Polo 9N 1.4 TDI PD klapikaane tihend"},{title:"Aknamasin keeldub",desc:"Aknamootorid jäävad seisma — hammasratas puruneb. Lihtsaim on komplekti vahetus.",cost:"odav",search:"VW Polo 9N aknamasin window regulator"},{title:"Käigukaabel kulub",desc:"Käiguvahetus muutub raskeks või ebatäpseks — käigukaabel on kulunud.",cost:"odav",search:"VW Polo 9N käigukaabel gearshift cable"}],
-  "Volvo S40/V50 (2004–2012)":[{title:"1.6D kõrgsurveump (Bosch CP1) ebaõnnestub",desc:"Ford/Peugeot päritolu kõrgsurveump annab alla — auto läheb limp-modei.",cost:"kallis",search:"Volvo V50 1.6D kütusepump CP1 Bosch"},{title:"Esisilla alumine tugivarras kulub kiiresti",desc:"Alumine tugivarras kulub ja koputab madalal kiirusel keerates.",cost:"odav",search:"Volvo V50 esisild tugivarras lower arm"},{title:"D5 mootori termostat tõrgub",desc:"D5 termostat ebaõnnestub sagedamini kui peaks — ülekuumenemine või töötemp ei saavutata.",cost:"odav",search:"Volvo V50 D5 termostat jahutus"}],
-  "Volvo S60/V70 Mk2 (2000–2009)":[{title:"AW55 automaatkast libiseb külmalt",desc:"Automaatkast AW55-51SN libiseb ja reageerib hilinemisega külmalt.",cost:"kallis",search:"Volvo V70 Mk2 AW55 automaatkast"},{title:"ETM-moodul (elektronkäiviti) sureb sõidu ajal",desc:"Volvo kurikuulus ETM moodul lülitab mootori välja sõidu ajal.",cost:"kesk",search:"Volvo V70 ETM throttle module"},{title:"Mootori tagumised tihendid lekivad õli",desc:"Tagumised tihendid lasevad õli välja — tilgub parkimise ajal alla.",cost:"odav",search:"Volvo V70 mootori tagumised tihendid rear seal"}],
-  "Volvo XC90 Mk1 (2002–2014)":[{title:"AW55 automaatkast libiseb",desc:"Sama AW55 kast kui V70-l — libiseb külmalt, reageerib hilinemisega.",cost:"kallis",search:"Volvo XC90 Mk1 AW55 automaatkast"},{title:"Transfer case mootor kulub",desc:"Nelikveo transfer case mootor kulub — auto ei lülitu AWD-sse.",cost:"kallis",search:"Volvo XC90 transfer case mootor AWD"},{title:"Tagasilla polüplaat kulub",desc:"Tagasilla polüplaat kulub ja tekitab koputuse. Tagasild tuleb täielikult lahti võtta.",cost:"kesk",search:"Volvo XC90 tagasild polüplaat rear bushing"}]
+  "BMW 3-seeria E46 (1999–2006)": [{title:"Tagaosa aluspinna laagripesad murduvad läbi", desc:"Tagumine subframe kaevub rooste tõttu kerest välja — E46 kõige tuntum ohukoht.", cost:"kallis", search:"BMW E46 subframe laager"}, {title:"Jahutussüsteemi plastosad pragevad", desc:"Plastikust ekspansioonipaak ja torud lähevad katki.", cost:"kesk", search:"BMW E46 veepump termostat"}, {title:"Aknatihendusnurk lekib", desc:"Tagaklaasi tihend laseb niiskust sisse.", cost:"odav", search:"BMW E46 tagumine klaas tihend"}],
+  
+  "BMW 3-seeria E90/E91 (2005–2012)": [{title:"N47 diisel — ketikomplekt katki tagant", desc:"Kurikuulus N47 mootor, kett puruneb tihti. Täielik mootoririke.", cost:"kallis", search:"BMW E90 N47 timing chain"}, {title:"EGR-moodul ummistub", desc:"Mootor kaotab jõudu ja suitsetab.", cost:"odav", search:"BMW E90 EGR klapp"}],
+  
+  "BMW 5-seeria E39 (1996–2003)": [{title:"Veepump sureb ootamatult", desc:"Eriti plastosaga versioonidel.", cost:"kesk", search:"BMW E39 veepump"}, {title:"Tagumise vasaku nurga laager kulub", desc:"Koputus kurvis.", cost:"odav", search:"BMW E39 tagumine laager"}],
+  
+  "BMW 5-seeria E60/E61 (2003–2010)": [{title:"N47 diisel — ketikomplekt puruneb", desc:"Sama probleem kui E90-l.", cost:"kallis", search:"BMW E60 N47 timing chain"}, {title:"Elektroniline vedrustus (EDC) tõrked", desc:"Auto vajub.", cost:"kallis", search:"BMW E60 EDC vedrustus"}],
+  
+  "Volkswagen Golf 4 (1997–2004)": [{title:"1.9 TDI PD klapikaane tihend lekib", desc:"Kõrgema läbisõiduga autod.", cost:"odav", search:"VW Golf 4 PD klapikaane tihend"}, {title:"Elektriakna käitis keeldub", desc:"Hammasratas puruneb.", cost:"odav", search:"VW Golf 4 aknamasin"}],
+  
+  "Volkswagen Golf 5 (2004–2008)": [{title:"DSG6 mechatronic ebaõnnestub", desc:"Kõige sagedasem rike.", cost:"kallis", search:"VW Golf 5 DSG mechatronic"}, {title:"1.9 TDI PD klapikaane tihend", desc:"Õlileke.", cost:"odav", search:"VW Golf 5 PD tihend"}],
+  
+  "Volkswagen Golf 6 (2009–2013)": [{title:"DSG7 DQ200 tõmbleb ja vibreerib", desc:"Linnasõidus kiire kulumine.", cost:"kallis", search:"VW Golf 6 DSG7 sidur"}, {title:"1.2 TSI ketikomplekt kulub", desc:"Ennetav vahetus soovitatav.", cost:"kesk", search:"VW Golf 6 1.2 TSI ketikomplekt"}],
+  
+  "Volkswagen Passat B6 (2005–2010)": [{title:"DSG mechatronic — kõige levinum rike", desc:"Auto tõmbab ja ei vaheta käike.", cost:"kallis", search:"VW Passat B6 DSG mechatronic"}],
+  
+  "Volvo S40/V50 (2004–2012)": [{title:"1.6D kõrgsurvepump ebaõnnestub", desc:"Auto läheb limp-modei.", cost:"kallis", search:"Volvo V50 1.6D kütusepump"}, {title:"Esisilla tugivarras kulub", desc:"Koputab madalal kiirusel.", cost:"odav", search:"Volvo V50 lower arm"}],
+  
+  "Volvo S60/V70 Mk2 (2000–2009)": [{title:"AW55 automaatkast libiseb", desc:"Külmalt eriti.", cost:"kallis", search:"Volvo V70 AW55 automaatkast"}, {title:"ETM-moodul sureb", desc:"Mootor võib sõidu ajal seiskuda.", cost:"kesk", search:"Volvo V70 ETM"}],
+  
+  "Volvo XC90 Mk1 (2002–2014)": [{title:"AW55 automaatkast libiseb", desc:"Sama probleem kui V70-l.", cost:"kallis", search:"Volvo XC90 AW55"}, {title:"Transfer case mootor kulub", desc:"4WD ei lülitu sisse.", cost:"kallis", search:"Volvo XC90 transfer case"}]
 };
 
-const searchInput = document.getElementById('carSearch');
-const suggestions = document.getElementById('searchSuggestions');
+const carSearch = document.getElementById('carSearch');
+const clearBtn = document.getElementById('clearBtn');
+const results = document.getElementById('results');
+const carTitle = document.getElementById('carTitle');
+const faultList = document.getElementById('faultList');
+const carListEl = document.getElementById('carList');
 
-function populateSuggestions(filtered, term) {
-  suggestions.innerHTML = ''; 
-  if (!term || filtered.length === 0) {
-    suggestions.classList.remove('open');
-    if (term) {
-      const empty = document.createElement('div');
-      empty.className = 'search-no-results';
-      empty.textContent = 'Pole vasteid.';
-      suggestions.appendChild(empty);
-      suggestions.classList.add('open');
-    }
-    return;
-  }
+// Autode nimekiri
+Object.keys(CARS).forEach(model => {
+    const btn = document.createElement('button');
+    btn.className = 'car-btn';
+    btn.textContent = model;
+    btn.onclick = () => {
+        document.querySelectorAll('.car-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        showCar(model);
+    };
+    carListEl.appendChild(btn);
+});
 
-  filtered.slice(0, 12).forEach(name => {
-    const item = document.createElement('div');
-    item.className = 'search-suggestion';
-    item.textContent = name;
-    item.addEventListener('mousedown', () => {
-      searchInput.value = name;
-      showCar(name);
-      suggestions.classList.remove('open');
+function showCar(name) {
+    if (!CARS[name]) return;
+    
+    carTitle.textContent = name;
+    faultList.innerHTML = '';
+    
+    CARS[name].forEach(fault => {
+        const div = document.createElement('div');
+        div.className = `fault-card ${fault.cost}`;
+        div.innerHTML = `
+            <strong>${fault.title}</strong>
+            <p>${fault.desc}</p>
+            <div class="cost ${fault.cost}">${fault.cost.toUpperCase()}</div>
+            <button class="copy-btn" data-text="${fault.search}">📋 Kopeeri otsingufraas</button>
+        `;
+        faultList.appendChild(div);
     });
-    suggestions.appendChild(item);
-  });
-  suggestions.classList.add('open');
+    
+    results.style.display = 'block';
+    results.scrollIntoView({ behavior: "smooth" });
 }
 
-searchInput.addEventListener('input', () => {
-  const term = searchInput.value.trim().toLowerCase();
-  const filtered = Object.keys(CARS)
-    .filter(name => name.toLowerCase().includes(term))
-    .sort((a,b) => a.localeCompare(b, 'et'));
-  populateSuggestions(filtered, term);
+// Kopeerimine
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('copy-btn')) {
+        const btn = e.target;
+        const text = btn.getAttribute('data-text');
+        
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Kopeeritud!';
+            btn.classList.add('copied');
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
 });
 
-searchInput.addEventListener('focus', () => {
-  const term = searchInput.value.trim().toLowerCase();
-  const filtered = Object.keys(CARS)
-    .filter(name => name.toLowerCase().includes(term))
-    .sort((a,b) => a.localeCompare(b, 'et'));
-  populateSuggestions(filtered, term);
+// Otsing + X nupp
+carSearch.addEventListener('input', () => {
+    const term = carSearch.value.trim();
+    if (term.length > 0) {
+        clearBtn.classList.add('visible');
+    } else {
+        clearBtn.classList.remove('visible');
+        resetToStart();
+    }
+    
+    const found = Object.keys(CARS).find(key => 
+        key.toLowerCase().includes(term.toLowerCase())
+    );
+    
+    if (found) showCar(found);
 });
 
-searchInput.addEventListener('blur', () => {
-  setTimeout(() => suggestions.classList.remove('open'), 150);
+clearBtn.addEventListener('click', () => {
+    carSearch.value = '';
+    clearBtn.classList.remove('visible');
+    resetToStart();
+    carSearch.focus();
 });
 
-const ICONS = {
-  odav: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',
-  kesk: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-  kallis: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
-};
-
-const LABELS = {odav:'Odav', kesk:'Keskmine', kallis:'Kallis'};
-
-function showCar(name){
-  const r = document.getElementById('results');
-  const e = document.getElementById('emptyState');
-  if(!name || !CARS[name]){ r.style.display='none'; e.style.display='block'; return; }
-  e.style.display='none'; r.style.display='block';
-  document.getElementById('carTitle').textContent = name;
-  const list = document.getElementById('faultList');
-  list.innerHTML = '';
-  CARS[name].forEach((f,i) => {
-    const card = document.createElement('div');
-    card.className = 'fault-card ' + f.cost;
-    card.style.animationDelay = (i*65) + 'ms';
-    const escapedSearch = f.search.replace(/'/g,"\\'");
-    card.innerHTML = `
-      <div class="fault-head">
-        <div class="fault-title">${f.title}</div>
-        <div class="cost-badge ${f.cost}">${ICONS[f.cost]} Kulu: ${LABELS[f.cost]}</div>
-      </div>
-      <p class="fault-desc">${f.desc}</p>
-      <div class="search-wrap" onclick="selectText(this)">
-        <div class="search-label">Kopeeri otsingufraas</div>
-        <div class="search-text">${f.search}</div>
-      </div>
-      <button class="copy-btn" onclick="copyText(this,'${escapedSearch}')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        <span>Kopeeri lõikelauale</span>
-      </button>`;
-    list.appendChild(card);
-  });
-  setTimeout(() => r.scrollIntoView({behavior:'smooth', block:'start'}), 60);
-}
-
-function selectText(el){
-  const t = el.querySelector('.search-text');
-  const range = document.createRange();
-  range.selectNodeContents(t);
-  const sel = window.getSelection();
-  sel.removeAllRanges();
-  sel.addRange(range);
-}
-
-function copyText(btn,text){
-  navigator.clipboard.writeText(text).then(() => {
-    const span = btn.querySelector('span');
-    span.textContent = 'Kopeeritud ✓';
-    btn.style.color = '#16a34a';
-    setTimeout(() => {span.textContent='Kopeeri lõikelauale'; btn.style.color='';}, 2200);
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); document.body.removeChild(ta);
-    const span = btn.querySelector('span');
-    span.textContent = 'Kopeeritud ✓';
-    btn.style.color = '#16a34a';
-    setTimeout(() => {span.textContent='Kopeeri lõikelauale'; btn.style.color='';}, 2200);
-  });
+function resetToStart() {
+    results.style.display = 'none';
+    document.querySelectorAll('.car-btn').forEach(b => b.classList.remove('active'));
 }
 </script>
+
 </body>
 </html>
