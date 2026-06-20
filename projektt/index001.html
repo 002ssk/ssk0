@@ -10,6 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="img/e46/e46 8k.jpeg">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23080808'/%3E%3Ccircle cx='50' cy='50' r='22' fill='none' stroke='%23f1c40f' stroke-width='6'/%3E%3Cpath d='M50 28 L50 38 M50 62 L50 72 M28 50 L38 50 M62 50 L72 50' stroke='%23f1c40f' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -110,21 +111,30 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .filter-btn{padding:9px 20px;background:var(--input-bg);border:1px solid var(--border);color:var(--dim);font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;border-radius:30px;transition:.25s var(--ease);font-family:'DM Sans',sans-serif}
 .filter-btn:hover{color:var(--text);border-color:var(--accent)}
 .filter-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.filter-fav-btn{display:inline-flex;align-items:center;gap:7px}
+.filter-fav-btn i{font-size:.8rem}
+.filter-fav-btn.active{background:#ff4d6d;border-color:#ff4d6d;color:#fff}
+.filter-fav-btn .fav-count{opacity:.85;font-weight:600}
 .gallery-grid{column-count:4;column-gap:20px}
 .gallery-item{position:relative;overflow:hidden;border-radius:22px;background:var(--bg2);box-shadow:0 28px 80px rgba(0,0,0,.18);cursor:pointer;transition:transform .35s var(--ease),opacity .3s;break-inside:avoid;margin-bottom:20px;display:inline-block;width:100%}
 .gallery-item.hidden{display:none}
 .gallery-item img{width:100%;height:auto;display:block;transition:transform .35s var(--ease),filter .6s var(--ease)}
 .gallery-item:hover img{filter:brightness(1.05)}
-.gallery-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0);transition:.35s ease}
+.gallery-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0);transition:.35s ease;z-index:1}
 .gallery-brand-badge{position:absolute;top:14px;left:14px;background:var(--accent);color:#000;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:30px;opacity:0;transform:translateY(-8px);transition:.3s var(--ease);z-index:2}
 .gallery-item:hover .gallery-brand-badge{opacity:1;transform:translateY(0)}
 .gallery-overlay i{font-size:2rem;color:#fff;opacity:0;transform:translateY(10px);transition:.25s ease}
 .gallery-overlay span{color:#fff;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:.25s ease;margin-top:10px;text-align:center;padding:0 10px}
 .gallery-item:hover .gallery-overlay{background:rgba(0,0,0,.38)}
 .gallery-item:hover .gallery-overlay i,.gallery-item:hover .gallery-overlay span{opacity:1;transform:translateY(0)}
-/* On touch devices the brand badge should always be visible since there is no hover state */
+.fav-btn{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem;cursor:pointer;z-index:4;opacity:0;transform:translateY(-8px);transition:.25s var(--ease);border:none}
+.gallery-item:hover .fav-btn{opacity:1;transform:translateY(0)}
+.fav-btn:hover{background:rgba(0,0,0,.7);transform:translateY(0) scale(1.08)}
+.fav-btn.active{color:#ff4d6d}
+/* On touch devices the brand badge and favorite button should always be visible since there is no hover state */
 @media(hover:none){
   .gallery-brand-badge{opacity:1;transform:translateY(0)}
+  .fav-btn{opacity:1;transform:translateY(0)}
 }
 .lightbox{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0);pointer-events:none;transition:.4s;overflow:hidden}
 .lightbox.open{background:rgba(0,0,0,.95);pointer-events:all}
@@ -145,6 +155,13 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .lightbox-prev{left:20px}
 .lightbox-next{right:20px}
 .lightbox-nav:hover{color:var(--accent)}
+.lightbox-actions{position:absolute;top:22px;right:74px;display:none;gap:10px;z-index:10001}
+.lightbox.open .lightbox-actions{display:flex}
+.lightbox-action-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;font-size:.92rem}
+.lightbox-action-btn:hover{background:var(--accent);color:#000;border-color:var(--accent)}
+.lightbox-action-btn.active{color:#ff4d6d;border-color:#ff4d6d}
+.lightbox-toast{position:absolute;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(0,0,0,.85);color:#fff;padding:10px 22px;border-radius:30px;font-size:.78rem;letter-spacing:1px;opacity:0;pointer-events:none;transition:.3s var(--ease);white-space:nowrap;z-index:10002}
+.lightbox-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:900px){
   .lightbox-close{top:20px;right:16px}
   .lightbox-counter{top:20px;left:16px;font-size:.7rem}
@@ -152,6 +169,8 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
   .lightbox-prev{left:8px}
   .lightbox-next{right:8px}
   .lightbox-img{max-width:94vw;max-height:74vh}
+  .lightbox-actions{top:20px;right:62px;gap:6px}
+  .lightbox-action-btn{width:36px;height:36px;font-size:.82rem}
 }
 .contact-info h2,footer p{margin-bottom:20px}
 .contact-social{display:flex;gap:16px}
@@ -171,7 +190,7 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .form-field textarea{resize:vertical;min-height:120px}
 .form-field select{appearance:none;cursor:pointer;color:var(--text);background:var(--input-bg)}
 .form-field select option{background:var(--option-bg);color:var(--text);}
-
+.form-honeypot{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden}
 .form-success{display:none;padding:16px;border:1px solid var(--accent);background:var(--accent-dim);color:var(--accent);font-size:.9rem;letter-spacing:1px}
 .btn-submit{padding:16px 36px;background:var(--accent);color:#000;font-weight:600;text-transform:uppercase;letter-spacing:2px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;align-self:flex-start;transition:.3s var(--ease)}
 .btn-submit:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(241,196,15,.3)}
@@ -184,6 +203,7 @@ body.light section#galerii .section-title,body.light section#galerii .section-la
 body.light section#galerii p{color:#525252}
 body.light .filter-btn{background:#fff;border-color:rgba(0,0,0,.14);color:#525252}
 body.light .filter-btn.active{background:var(--accent);color:#000}
+body.light .filter-fav-btn.active{background:#ff4d6d;border-color:#ff4d6d;color:#fff}
 body.light #kontakt{background:#f6f6f6;color:#111}
 body.light section#kontakt .section-title,body.light section#kontakt .section-label{color:var(--accent)}
 body.light section#kontakt p{color:#525252}
@@ -318,6 +338,10 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 </div>
 <div class="reveal reveal-delay-1">
 <form class="contact-form" id="contactForm" method="POST">
+<div class="form-field form-honeypot" aria-hidden="true">
+<label for="fwebsite">Website</label>
+<input type="text" id="fwebsite" name="website" tabindex="-1" autocomplete="off">
+</div>
 <div class="form-row">
 <div class="form-field"><label data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" name="name" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required><div class="field-msg" id="fnameMsg"></div></div>
 <div class="form-field"><label data-et="E-post" data-en="Email">E-post</label><input type="email" id="femail" name="email" placeholder="sinu@email.com" data-et="sinu@email.com" data-en="you@email.com" required><div class="field-msg" id="femailMsg"></div></div>
@@ -340,11 +364,17 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 </footer>
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
 <div class="lightbox-counter" id="lbCounter"></div>
+<div class="lightbox-actions" id="lbActions">
+<button class="lightbox-action-btn" id="lbFav" aria-label="Lemmik"><i class="far fa-heart"></i></button>
+<button class="lightbox-action-btn" id="lbDownload" aria-label="Laadi alla"><i class="fas fa-download"></i></button>
+<button class="lightbox-action-btn" id="lbShare" aria-label="Jaga"><i class="fas fa-share-nodes"></i></button>
+</div>
 <button class="lightbox-close" id="lbClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
 <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">‹</button>
 <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">›</button>
 <img class="lightbox-img" id="lbImg" src="" alt="">
 <div class="lightbox-caption" id="lbCaption"></div>
+<div class="lightbox-toast" id="lbToast"></div>
 </div>
 <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
@@ -406,7 +436,38 @@ const lbClose=document.getElementById('lbClose');
 const lbPrev=document.getElementById('lbPrev');
 const lbNext=document.getElementById('lbNext');
 const lbCounter=document.getElementById('lbCounter');
-let currentLang='et',currentTheme=localStorage.getItem('theme')||'dark',currentImg=0,activeFilter='all';
+const lbFav=document.getElementById('lbFav');
+const lbDownload=document.getElementById('lbDownload');
+const lbShare=document.getElementById('lbShare');
+const lbToast=document.getElementById('lbToast');
+let currentLang='et',currentTheme=localStorage.getItem('theme')||'dark',currentImg=0,activeFilter='all',showFavoritesOnly=false;
+
+// ---- Favorites (stored locally in this browser only) ----
+const FAV_KEY='ssk_favorites';
+function getFavorites(){
+  try{ const v=JSON.parse(localStorage.getItem(FAV_KEY)); return Array.isArray(v)?v:[]; }catch(e){ return []; }
+}
+function saveFavorites(arr){
+  try{ localStorage.setItem(FAV_KEY, JSON.stringify(arr)); }catch(e){}
+}
+function isFavorited(src){ return getFavorites().indexOf(src)!==-1; }
+function toggleFavorite(src){
+  let favs=getFavorites();
+  const idx=favs.indexOf(src);
+  if(idx===-1){ favs.push(src); } else { favs.splice(idx,1); }
+  saveFavorites(favs);
+  return favs.indexOf(src)!==-1;
+}
+function updateFavCount(){
+  const btn=document.getElementById('favFilterBtn');
+  if(!btn)return;
+  const count=getFavorites().length;
+  let countEl=btn.querySelector('.fav-count');
+  if(count>0){
+    if(!countEl){ countEl=document.createElement('span'); countEl.className='fav-count'; btn.appendChild(countEl); }
+    countEl.textContent=' ('+count+')';
+  }else if(countEl){ countEl.remove(); }
+}
 
 const testimonials=[
   {nameEt:'Markus K.',nameEn:'Markus K.',carEt:'BMW E46 omanik',carEn:'BMW E46 owner',textEt:'Pildid tulid uskumatult head, kõik detailid said kenasti esile toodud. Soovitan soojalt!',textEn:'The photos turned out incredibly good, every detail was nicely highlighted. Highly recommend!'},
@@ -445,18 +506,57 @@ if(particlesEl && !reducedMotion){
   }
 }
 
-// Build filter buttons dynamically from the brands present in galleryItems
+// Build filter buttons dynamically from the brands present in galleryItems, plus a Favorites toggle
 const brands=['Kõik',...new Set(galleryItems.map(i=>i.brand))];
 const brandsEn={'Kõik':'All'};
-galleryFilters.innerHTML=brands.map(b=>`<button class="filter-btn${b==='Kõik'?' active':''}" data-brand="${b==='Kõik'?'all':b}" data-et="${b}" data-en="${brandsEn[b]||b}">${b}</button>`).join('');
+galleryFilters.innerHTML=brands.map(b=>`<button class="filter-btn${b==='Kõik'?' active':''}" data-brand="${b==='Kõik'?'all':b}" data-et="${b}" data-en="${brandsEn[b]||b}">${b}</button>`).join('')
+  + `<button class="filter-btn filter-fav-btn" id="favFilterBtn" type="button" aria-pressed="false"><i class="far fa-heart"></i><span data-et="Lemmikud" data-en="Favorites">Lemmikud</span></button>`;
+
+function updateGalleryVisibility(){
+  let anyVisible=false;
+  document.querySelectorAll('.gallery-item').forEach(item=>{
+    const brandHidden=activeFilter!=='all' && item.dataset.brand!==activeFilter;
+    const favHidden=showFavoritesOnly && !isFavorited(item.dataset.src);
+    const hide=brandHidden||favHidden;
+    item.classList.toggle('hidden',hide);
+    if(!hide)anyVisible=true;
+  });
+  let emptyMsg=document.getElementById('galleryEmptyMsg');
+  if(!anyVisible && showFavoritesOnly){
+    if(!emptyMsg){
+      emptyMsg=document.createElement('p');
+      emptyMsg.id='galleryEmptyMsg';
+      emptyMsg.style.cssText='color:var(--dim);text-align:center;padding:30px 0;font-size:.9rem;';
+      galleryGrid.insertAdjacentElement('afterend',emptyMsg);
+    }
+    emptyMsg.textContent=currentLang==='en' ? 'No favorites yet — tap the heart on a photo to save it here.' : 'Lemmikuid pole veel — vajuta pildil südamele, et see siia salvestada.';
+    emptyMsg.style.display='block';
+  }else if(emptyMsg){
+    emptyMsg.style.display='none';
+  }
+}
 
 function renderGallery(){
-  galleryGrid.innerHTML=galleryItems.map((item,index)=>`<div class="gallery-item reveal visible${activeFilter!=='all'&&item.brand!==activeFilter?' hidden':''}" data-src="${item.src}" data-index="${index}" data-brand="${item.brand}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.pos?` style="object-position:${item.pos}"`:''} onerror="this.closest('.gallery-item').style.display='none'"><div class="gallery-brand-badge">${item.brand}</div><div class="gallery-overlay"><i class="fas fa-expand"></i><span>${item.alt}</span></div></div>`).join('');
+  galleryGrid.innerHTML=galleryItems.map((item,index)=>{
+    const fav=isFavorited(item.src);
+    return `<div class="gallery-item reveal visible" data-src="${item.src}" data-index="${index}" data-brand="${item.brand}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.pos?` style="object-position:${item.pos}"`:''} onerror="this.closest('.gallery-item').style.display='none'"><div class="gallery-brand-badge">${item.brand}</div><button class="fav-btn${fav?' active':''}" type="button" data-fav-src="${item.src}" aria-label="Lemmik"><i class="${fav?'fas':'far'} fa-heart"></i></button><div class="gallery-overlay"><i class="fas fa-expand"></i><span>${item.alt}</span></div></div>`;
+  }).join('');
   document.querySelectorAll('.gallery-item').forEach(item=>{
     item.addEventListener('click',()=>openLightbox(parseInt(item.dataset.index)));
     const img=item.querySelector('img');
     if(img.complete)img.classList.add('loaded');
     else img.addEventListener('load',()=>img.classList.add('loaded'));
+    const favBtn=item.querySelector('.fav-btn');
+    favBtn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const src=favBtn.dataset.favSrc;
+      const nowFav=toggleFavorite(src);
+      favBtn.classList.toggle('active',nowFav);
+      favBtn.querySelector('i').className=nowFav?'fas fa-heart':'far fa-heart';
+      if(images[currentImg]===src)updateLbFavButton();
+      updateFavCount();
+      updateGalleryVisibility();
+    });
     if(!reducedMotion && window.matchMedia('(pointer: fine)').matches){
       item.addEventListener('mousemove',e=>{
         const rect=item.getBoundingClientRect();
@@ -473,21 +573,29 @@ function renderGallery(){
       });
     }
   });
+  updateGalleryVisibility();
 }
 renderGallery();
+updateFavCount();
 
 galleryFilters.addEventListener('click',e=>{
+  const favBtn=e.target.closest('#favFilterBtn');
+  if(favBtn){
+    showFavoritesOnly=!showFavoritesOnly;
+    favBtn.classList.toggle('active',showFavoritesOnly);
+    favBtn.setAttribute('aria-pressed',String(showFavoritesOnly));
+    updateGalleryVisibility();
+    return;
+  }
   const btn=e.target.closest('.filter-btn');
   if(!btn)return;
   activeFilter=btn.dataset.brand;
-  galleryFilters.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b===btn));
-  document.querySelectorAll('.gallery-item').forEach(item=>{
-    item.classList.toggle('hidden',activeFilter!=='all'&&item.dataset.brand!==activeFilter);
-  });
+  galleryFilters.querySelectorAll('.filter-btn').forEach(b=>{ if(b.id!=='favFilterBtn') b.classList.toggle('active',b===btn); });
+  updateGalleryVisibility();
 });
 
 const images=galleryItems.map(item=>item.src);
-function setLang(lang){currentLang=lang;langBtns.forEach(btn=>btn.classList.toggle('active',btn.dataset.lang===lang));document.querySelectorAll('[data-et]').forEach(el=>{const text=el.dataset[lang];if(text){if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=text;else el.textContent=text}});renderTestimonials()}
+function setLang(lang){currentLang=lang;langBtns.forEach(btn=>btn.classList.toggle('active',btn.dataset.lang===lang));document.querySelectorAll('[data-et]').forEach(el=>{const text=el.dataset[lang];if(text){if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=text;else el.textContent=text}});renderTestimonials();updateGalleryVisibility()}
 function setTheme(theme){currentTheme=theme;document.body.classList.toggle('light',theme==='light');themeBtns.forEach(btn=>btn.classList.toggle('active',btn.dataset.theme===theme));localStorage.setItem('theme',theme)}
 langBtns.forEach(btn=>btn.addEventListener('click',()=>setLang(btn.dataset.lang)));
 themeBtns.forEach(btn=>btn.addEventListener('click',()=>setTheme(btn.dataset.theme)));
@@ -550,7 +658,13 @@ const statObserver=new IntersectionObserver((entries)=>{
   });
 },{threshold:.5});
 statEls.forEach(el=>statObserver.observe(el));
-function updateLightbox(){lbImg.src=images[currentImg];lbCaption.textContent=galleryItems[currentImg].alt;lbCounter.textContent=(currentImg+1)+' / '+images.length;resetZoom()}
+function updateLbFavButton(){
+  const src=images[currentImg];
+  const fav=isFavorited(src);
+  lbFav.classList.toggle('active',fav);
+  lbFav.querySelector('i').className=fav?'fas fa-heart':'far fa-heart';
+}
+function updateLightbox(){lbImg.src=images[currentImg];lbCaption.textContent=galleryItems[currentImg].alt;lbCounter.textContent=(currentImg+1)+' / '+images.length;updateLbFavButton();resetZoom()}
 function openLightbox(index){currentImg=index;updateLightbox();lightbox.classList.add('open');document.body.style.overflow='hidden'}
 function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';resetZoom()}
 function step(dir){currentImg=(currentImg+dir+images.length)%images.length;updateLightbox()}
@@ -591,6 +705,48 @@ lbPrev.addEventListener('click',()=>step(-1));
 lbNext.addEventListener('click',()=>step(1));
 lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});
 document.addEventListener('keydown',e=>{if(!lightbox.classList.contains('open'))return;if(e.key==='Escape')closeLightbox();else if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1)});
+
+function showLbToast(text){
+  lbToast.textContent=text;
+  lbToast.classList.add('show');
+  clearTimeout(showLbToast._t);
+  showLbToast._t=setTimeout(()=>lbToast.classList.remove('show'),2200);
+}
+lbFav.addEventListener('click',()=>{
+  const src=images[currentImg];
+  const nowFav=toggleFavorite(src);
+  updateLbFavButton();
+  const gridBtn=document.querySelector('.fav-btn[data-fav-src="'+CSS.escape(src)+'"]');
+  if(gridBtn){
+    gridBtn.classList.toggle('active',nowFav);
+    gridBtn.querySelector('i').className=nowFav?'fas fa-heart':'far fa-heart';
+  }
+  updateFavCount();
+  updateGalleryVisibility();
+});
+lbDownload.addEventListener('click',()=>{
+  const src=images[currentImg];
+  const a=document.createElement('a');
+  a.href=src;
+  a.download=src.split('/').pop();
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+});
+lbShare.addEventListener('click',async ()=>{
+  const src=images[currentImg];
+  const absUrl=new URL(src, window.location.href).href;
+  if(navigator.share){
+    try{ await navigator.share({title:'SSK Car Photography',text:galleryItems[currentImg].alt,url:absUrl}); }catch(e){}
+  }else if(navigator.clipboard){
+    try{
+      await navigator.clipboard.writeText(absUrl);
+      showLbToast(currentLang==='en'?'Link copied':'Link kopeeritud');
+    }catch(e){
+      showLbToast(currentLang==='en'?'Could not copy link':'Linki ei õnnestunud kopeerida');
+    }
+  }
+});
 
 // Basic swipe support for the lightbox on touch devices (left/right to navigate, only when not zoomed)
 let touchStartX=0,touchStartY=0;
@@ -638,6 +794,16 @@ const submitBtn=document.getElementById('submitBtn');
 if(contactForm){
   contactForm.addEventListener('submit',function(e){
     e.preventDefault();
+    // Honeypot check: real visitors never fill this hidden field, bots usually do.
+    const honeypot=document.getElementById('fwebsite');
+    if(honeypot && honeypot.value.trim()!==''){
+      if(formSuccess){
+        formSuccess.style.display='block';
+        formSuccess.textContent=currentLang==='en' ? "✓  Message sent! I'll reply as soon as possible." : '✓  Sõnum saadetud! Vastan esimesel võimalusel.';
+      }
+      contactForm.reset();
+      return;
+    }
     submitBtn.disabled=true;
     emailjs.sendForm('service_mxvjmxa','template_b1cga7p', this, 'CKZ5XoAUAW3QS3QRK')
       .then(function(){
