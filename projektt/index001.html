@@ -65,8 +65,8 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .lang-btn,.theme-btn{padding:6px 12px;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:1px;color:var(--dim)}
 .lang-btn.active,.theme-btn.active{background:var(--accent);color:#000;font-weight:600}
 .lang-btn:not(.active):hover,.theme-btn:not(.active):hover{color:var(--text)}
-.hamburger{display:none;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:8px;flex-shrink:0;font-size:1.4rem;color:var(--text);width:40px;height:40px}
-.hamburger i{transition:.2s}
+.hamburger{display:none;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:8px;flex-shrink:0;color:var(--text);width:40px;height:40px}
+.hamburger svg{width:24px;height:24px;display:block}
 .mobile-menu{position:fixed;inset:0;background:rgba(6,6,6,.97);backdrop-filter:blur(20px);z-index:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;opacity:0;pointer-events:none;transition:.4s var(--ease);overflow-y:auto;padding:80px 20px}
 .mobile-menu.open{opacity:1;pointer-events:all}
 .mobile-menu a{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:4px;color:inherit;text-decoration:none;opacity:0;transform:translateY(20px);transition:.4s var(--ease),color .2s;text-align:center}
@@ -256,7 +256,13 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <div class="nav-actions">
 <div class="lang-toggle"><button class="lang-btn active" data-lang="et">ET</button><button class="lang-btn" data-lang="en">EN</button></div>
 <div class="theme-toggle"><button class="theme-btn active" data-theme="dark" data-et="Tume" data-en="Dark">Tume</button><button class="theme-btn" data-theme="light" data-et="Hele" data-en="Light">Hele</button></div>
-<button class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+<button class="hamburger" id="hamburger" aria-label="Menu">
+<svg id="hamburgerIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path class="bar bar-top" d="M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path class="bar bar-mid" d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path class="bar bar-bot" d="M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+</button>
 </div>
 </div>
 </nav>
@@ -518,9 +524,8 @@ function onBttScrollTick(){
 window.addEventListener('scroll',onBttScrollTick,{passive:true});
 updateBackToTop();
 backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-const hamburgerIcon=hamburger.querySelector('i');
-hamburger.addEventListener('click',()=>{const open=hamburger.classList.toggle('open');mobileMenu.classList.toggle('open',open);document.body.style.overflow=open?'hidden':'';if(hamburgerIcon){hamburgerIcon.classList.toggle('fa-bars',!open);hamburgerIcon.classList.toggle('fa-xmark',open)}});
-mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hamburger.classList.remove('open');mobileMenu.classList.remove('open');document.body.style.overflow='';if(hamburgerIcon){hamburgerIcon.classList.add('fa-bars');hamburgerIcon.classList.remove('fa-xmark')}}));
+hamburger.addEventListener('click',()=>{const open=hamburger.classList.toggle('open');mobileMenu.classList.toggle('open',open);document.body.style.overflow=open?'hidden':''});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hamburger.classList.remove('open');mobileMenu.classList.remove('open');document.body.style.overflow=''}));
 const revealEls=document.querySelectorAll('.reveal');
 const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.12});
 revealEls.forEach(el=>observer.observe(el));
