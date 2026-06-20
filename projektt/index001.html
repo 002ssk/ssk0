@@ -39,7 +39,7 @@ body.light .lang-btn,body.light .theme-btn{color:rgba(255,255,255,.72)}
 body.light .hamburger span{background:#f4f4f4}
 body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(255,255,255,.06)}
 .container{max-width:1200px;margin:0 auto;padding:0 32px}
-.scroll-progress{position:fixed;top:0;left:0;height:2.5px;background:var(--accent);width:0%;z-index:1000;transition:width .1s linear}
+.scroll-progress{position:fixed;top:0;left:0;height:2.5px;background:var(--accent);width:0%;z-index:1000;transition:width .25s cubic-bezier(.16,1,.3,1);will-change:width;transform:translateZ(0)}
 .back-to-top{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:var(--accent);color:#000;border:none;display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(12px);transition:.3s var(--ease);z-index:850;box-shadow:0 10px 28px rgba(0,0,0,.3)}
 .back-to-top.visible{opacity:1;pointer-events:all;transform:translateY(0)}
 .back-to-top:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(241,196,15,.35)}
@@ -277,7 +277,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <section id="minust" class="section">
 <div class="container">
 <div class="about-grid">
-<div class="about-image reveal"><img src="img/e46/vasak tuli e46.jpeg" alt="BMW E46 vasak tuli" loading="lazy"></div>
+<div class="about-image reveal"><img src="img/e46/vasak tuli e46.jpeg" alt="BMW E46 vasak tuli" loading="lazy" onerror="this.style.display='none'"></div>
 <div class="about-text reveal reveal-delay-1">
 <p class="section-label" data-et="Minust" data-en="About me">Minust</p>
 <h2 class="section-title" data-et="Hobi korras jäädvustused" data-en="Hobby photography">Hobi korras jäädvustused</h2>
@@ -298,15 +298,6 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 </div>
 <div class="gallery-filters reveal" id="galleryFilters"></div>
 <div class="gallery-grid" id="galleryGrid"></div>
-</div>
-</section>
-<section id="arvustused" class="section bg2">
-<div class="container">
-<div class="testi-header reveal">
-<p class="section-label" data-et="Tagasiside" data-en="Feedback">Tagasiside</p>
-<h2 class="section-title" data-et="Mida kliendid ütlevad" data-en="What clients say">Mida kliendid ütlevad</h2>
-</div>
-<div class="testi-grid" id="testiGrid"></div>
 </div>
 </section>
 <section id="kontakt" class="section">
@@ -358,7 +349,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 (function(){
   emailjs.init('CKZ5XoAUAW3QS3QRK'); // Replace with your EmailJS public key
 })();
-const navItems=[{href:'#kodu',et:'Kodu',en:'Home'},{href:'#minust',et:'Minust',en:'About'},{href:'#galerii',et:'Galerii',en:'Gallery'},{href:'#arvustused',et:'Arvustused',en:'Reviews'},{href:'#kontakt',et:'Kontakt',en:'Contact'}];
+const navItems=[{href:'#kodu',et:'Kodu',en:'Home'},{href:'#minust',et:'Minust',en:'About'},{href:'#galerii',et:'Galerii',en:'Gallery'},{href:'#kontakt',et:'Kontakt',en:'Contact'}];
 
 // Each item now has a "brand" field used for the gallery filter buttons.
 const galleryItems=[
@@ -457,7 +448,7 @@ const brandsEn={'Kõik':'All'};
 galleryFilters.innerHTML=brands.map(b=>`<button class="filter-btn${b==='Kõik'?' active':''}" data-brand="${b==='Kõik'?'all':b}" data-et="${b}" data-en="${brandsEn[b]||b}">${b}</button>`).join('');
 
 function renderGallery(){
-  galleryGrid.innerHTML=galleryItems.map((item,index)=>`<div class="gallery-item reveal visible${activeFilter!=='all'&&item.brand!==activeFilter?' hidden':''}" data-src="${item.src}" data-index="${index}" data-brand="${item.brand}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.pos?` style="object-position:${item.pos}"`:''}><div class="gallery-brand-badge">${item.brand}</div><div class="gallery-overlay"><i class="fas fa-expand"></i><span>${item.alt}</span></div></div>`).join('');
+  galleryGrid.innerHTML=galleryItems.map((item,index)=>`<div class="gallery-item reveal visible${activeFilter!=='all'&&item.brand!==activeFilter?' hidden':''}" data-src="${item.src}" data-index="${index}" data-brand="${item.brand}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.pos?` style="object-position:${item.pos}"`:''} onerror="this.closest('.gallery-item').style.display='none'"><div class="gallery-brand-badge">${item.brand}</div><div class="gallery-overlay"><i class="fas fa-expand"></i><span>${item.alt}</span></div></div>`).join('');
   document.querySelectorAll('.gallery-item').forEach(item=>{
     item.addEventListener('click',()=>openLightbox(parseInt(item.dataset.index)));
     const img=item.querySelector('img');
@@ -499,14 +490,35 @@ langBtns.forEach(btn=>btn.addEventListener('click',()=>setLang(btn.dataset.lang)
 themeBtns.forEach(btn=>btn.addEventListener('click',()=>setTheme(btn.dataset.theme)));
 setLang(currentLang);
 setTheme(currentTheme);
-window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>60));
+let navScrollTicking=false;
+function onNavScrollTick(){
+  if(!navScrollTicking){
+    navScrollTicking=true;
+    requestAnimationFrame(()=>{navbar.classList.toggle('scrolled',window.scrollY>60);navScrollTicking=false});
+  }
+}
+window.addEventListener('scroll',onNavScrollTick,{passive:true});
 const scrollProgress=document.getElementById('scrollProgress');
+let scrollTicking=false;
 function updateScrollProgress(){const h=document.documentElement;const scrolled=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;scrollProgress.style.width=scrolled+'%'}
-window.addEventListener('scroll',updateScrollProgress);
+function onScrollTick(){
+  if(!scrollTicking){
+    scrollTicking=true;
+    requestAnimationFrame(()=>{updateScrollProgress();scrollTicking=false});
+  }
+}
+window.addEventListener('scroll',onScrollTick,{passive:true});
 updateScrollProgress();
 const backToTop=document.getElementById('backToTop');
+let bttScrollTicking=false;
 function updateBackToTop(){backToTop.classList.toggle('visible',window.scrollY>window.innerHeight*0.8)}
-window.addEventListener('scroll',updateBackToTop);
+function onBttScrollTick(){
+  if(!bttScrollTicking){
+    bttScrollTicking=true;
+    requestAnimationFrame(()=>{updateBackToTop();bttScrollTicking=false});
+  }
+}
+window.addEventListener('scroll',onBttScrollTick,{passive:true});
 updateBackToTop();
 backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 hamburger.addEventListener('click',()=>{const open=hamburger.classList.toggle('open');mobileMenu.classList.toggle('open',open);document.body.style.overflow=open?'hidden':''});
