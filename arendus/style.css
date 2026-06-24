@@ -1,0 +1,68 @@
+/* Parandatud Hero nupud */
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.btn-primary {
+    padding: 14px 28px;
+    background-color: var(--accent); /* Sinu kollane/kuldne */
+    color: #000 !important;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition);
+    border: 2px solid var(--accent);
+}
+
+.btn-secondary {
+    padding: 14px 28px;
+    background-color: transparent;
+    color: #ffffff !important; /* Sunnime valge värvi */
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background-color: #fff;
+    color: #000 !important;
+    border-color: #fff;
+}
+
+/* Pealkirja lihv */
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 10vw, 6rem); /* Muudab suurust vastavalt ekraanile */
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.outline {
+    -webkit-text-stroke: 1px white;
+    color: transparent;
+}
+
+/* Navigatsiooni parandus, et see püsiks joones */
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+    color: var(--accent);
+}
