@@ -703,7 +703,7 @@ function updateLbFavButton(){
 }
 function updateLightbox(){lbImg.src=images[currentImg];lbCaption.textContent=galleryItems[currentImg].alt;lbCounter.textContent=(currentImg+1)+' / '+images.length;updateLbFavButton();resetZoom()}
 function openLightbox(index){currentImg=index;updateLightbox();lightbox.classList.add('open');document.body.style.overflow='hidden'}
-function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';resetZoom()}
+function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';resetZoom();lbCounter.textContent='';}
 function step(dir){currentImg=(currentImg+dir+images.length)%images.length;updateLightbox()}
 let isZoomed=false,zoomOriginX=50,zoomOriginY=50;
 function resetZoom(){isZoomed=false;lbImg.classList.remove('zoomed');lbImg.style.transform='';lbImg.style.transformOrigin='center center';lbImg.style.width='';lbImg.style.height=''}
