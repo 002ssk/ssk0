@@ -115,14 +115,26 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .filter-fav-btn i{font-size:.8rem}
 .filter-fav-btn.active{background:#ff4d6d;border-color:#ff4d6d;color:#fff}
 .filter-fav-btn .fav-count{opacity:.85;font-weight:600}
+.filter-drone-btn{display:inline-flex;align-items:center;gap:7px}
+.filter-drone-btn i{font-size:.8rem}
+.filter-drone-btn.active{background:#3da9fc;border-color:#3da9fc;color:#fff}
 .gallery-grid{column-count:4;column-gap:20px}
 .gallery-item{position:relative;overflow:hidden;border-radius:22px;background:var(--bg2);box-shadow:0 28px 80px rgba(0,0,0,.18);cursor:pointer;transition:transform .35s var(--ease),opacity .3s;break-inside:avoid;margin-bottom:20px;display:inline-block;width:100%}
 .gallery-item.hidden{display:none}
 .gallery-item img{width:100%;height:auto;display:block;transition:transform .35s var(--ease),filter .6s var(--ease)}
 .gallery-item:hover img{filter:brightness(1.05)}
+.watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:1;overflow:hidden}
+.watermark span{font-family:'Bebas Neue',sans-serif;color:rgba(255,255,255,.4);font-size:1.5rem;letter-spacing:4px;text-transform:uppercase;text-shadow:0 2px 8px rgba(0,0,0,.45);white-space:nowrap;transform:rotate(-18deg);mix-blend-mode:overlay;opacity:.85}
+.lightbox-img-wrap{position:relative;display:inline-block;max-width:90vw;max-height:80vh}
+.lightbox-img-wrap .watermark{opacity:0;transition:opacity .4s var(--ease)}
+.lightbox.open .lightbox-img-wrap .watermark{opacity:1}
+.lightbox-img-wrap .watermark span{font-size:2.6rem;letter-spacing:6px}
+@media(max-width:600px){.watermark span{font-size:1rem;letter-spacing:2px}.lightbox-img-wrap .watermark span{font-size:1.6rem;letter-spacing:3px}}
 .gallery-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0);transition:.35s ease;z-index:1}
-.gallery-brand-badge{position:absolute;top:14px;left:14px;background:var(--accent);color:#000;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:30px;opacity:0;transform:translateY(-8px);transition:.3s var(--ease);z-index:2}
+.gallery-brand-badge{position:absolute;top:14px;left:14px;background:var(--accent);color:#000;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:30px;opacity:0;transform:translateY(-8px);transition:.3s var(--ease);z-index:2;display:flex;align-items:center;gap:6px}
 .gallery-item:hover .gallery-brand-badge{opacity:1;transform:translateY(0)}
+.gallery-drone-badge{position:absolute;top:14px;left:14px;background:#3da9fc;color:#fff;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:30px;opacity:0;transform:translateY(-8px);transition:.3s var(--ease);z-index:2;display:flex;align-items:center;gap:6px}
+.gallery-item:hover .gallery-drone-badge{opacity:1;transform:translateY(0)}
 .gallery-overlay i{font-size:2rem;color:#fff;opacity:0;transform:translateY(10px);transition:.25s ease}
 .gallery-overlay span{color:#fff;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:.25s ease;margin-top:10px;text-align:center;padding:0 10px}
 .gallery-item:hover .gallery-overlay{background:rgba(0,0,0,.38)}
@@ -133,6 +145,7 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .fav-btn.active{color:#ff4d6d}
 @media(hover:none){
   .gallery-brand-badge{opacity:1;transform:translateY(0)}
+  .gallery-drone-badge{opacity:1;transform:translateY(0)}
   .fav-btn{opacity:1;transform:translateY(0)}
 }
 .lightbox{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0);pointer-events:none;transition:.4s;overflow:hidden}
@@ -203,6 +216,7 @@ body.light section#galerii p{color:#525252}
 body.light .filter-btn{background:#fff;border-color:rgba(0,0,0,.14);color:#525252}
 body.light .filter-btn.active{background:var(--accent);color:#000}
 body.light .filter-fav-btn.active{background:#ff4d6d;border-color:#ff4d6d;color:#fff}
+body.light .filter-drone-btn.active{background:#3da9fc;border-color:#3da9fc;color:#fff}
 body.light #kontakt{background:#f6f6f6;color:#111}
 body.light section#kontakt .section-title,body.light section#kontakt .section-label{color:var(--accent)}
 body.light section#kontakt p{color:#525252}
@@ -303,6 +317,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <p class="section-label" data-et="Meist" data-en="About us">Meist</p>
 <h2 class="section-title" data-et="Hobi korras jäädvustused" data-en="Hobby photography">Hobi korras jäädvustused</h2>
 <p data-et="Pildistame autosid, mis meile endile huvi pakuvad. See on viis püüda kinni detaile ja emotsioone, mida tavaline mööduja võib-olla ei märka." data-en="We photograph cars that genuinely interest us. It's a way to capture details and emotions that a casual passerby might miss.">Pildistame autosid, mis meile endile huvi pakuvad. See on viis püüda kinni detaile ja emotsioone, mida tavaline mööduja võib-olla ei märka.</p>
+<p data-et="Meie tiim on kasvanud — nüüd on meiega liitunud droonipildistaja, mistõttu saame soovi korral jäädvustada autosid ka õhust." data-en="Our team has grown — a drone photographer has now joined us, so on request we can also capture cars from the air.">Meie tiim on kasvanud — nüüd on meiega liitunud droonipildistaja, mistõttu saame soovi korral jäädvustada autosid ka õhust.</p>
 <div class="stats">
 <div><div class="stat-num" id="statCars" data-target="20" data-suffix="+">0</div><div class="stat-label" data-et="Pildistatud autot" data-en="Cars captured">Pildistatud autot</div></div>
 <div><div class="stat-num" id="statPassion" data-target="100" data-suffix="%">0</div><div class="stat-label" data-et="Kirg" data-en="Passion">Kirg</div></div>
@@ -311,6 +326,11 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <div style="margin-top:32px; padding:16px 20px; background:var(--accent-dim); border-radius:16px; border-left:4px solid var(--accent);">
 <i class="fas fa-lightbulb" style="color:var(--accent); margin-right:10px;"></i>
 <strong>Fun Fact:</strong> <span data-et="Kõik meie pildid on jäädvustatud telefoniga." data-en="All our photos are captured with a phone.">Kõik meie pildid on jäädvustatud telefoniga.</span>
+</div>
+
+<div style="margin-top:16px; padding:16px 20px; background:rgba(61,169,252,.14); border-radius:16px; border-left:4px solid #3da9fc;">
+<svg class="drone-icon" style="width:16px;height:16px;vertical-align:-2px;margin-right:10px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><circle cx="19" cy="5" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><circle cx="5" cy="19" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><circle cx="19" cy="19" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><path d="M7 7L10.3 10.3M17 7L13.7 10.3M7 17L10.3 13.7M17 17L13.7 13.7" stroke="#3da9fc" stroke-width="1.6" stroke-linecap="round"/><rect x="9.3" y="9.3" width="5.4" height="5.4" rx="1.3" fill="#3da9fc"/></svg>
+<strong data-et="Uudis:" data-en="News:">Uudis:</strong> <span data-et="Nüüd saadaval ka droonipildistus — vajuta galeriis 'Drone' filtrile, et näha näiteid!" data-en="Drone photography is now available too — tap the 'Drone' filter in the gallery to see examples!">Nüüd saadaval ka droonipildistus — vajuta galeriis 'Drone' filtrile, et näha näiteid!</span>
 </div>
 
 </div>
@@ -323,6 +343,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <div><p class="section-label" data-et="Tööd" data-en="Works">Tööd</p><h2 class="section-title" data-et="Galerii" data-en="Gallery">Galerii</h2></div>
 <p style="color:var(--dim);font-size:.85rem;" data-et="Kliki suurendamiseks" data-en="Click to enlarge">Kliki suurendamiseks</p>
 </div>
+<p style="color:var(--dim);font-size:.78rem;letter-spacing:.5px;margin-bottom:24px;display:flex;align-items:center;gap:8px;" class="reveal"><i class="fas fa-circle-info" style="color:var(--accent);"></i><span data-et="NB! Kõik fotod on autoriõigusega kaitstud. Piltide jagamine, allalaadimine või kasutamine ilma loata on keelatud." data-en="NB! All photos are copyright protected. Sharing, downloading or using these images without permission is prohibited.">NB! Kõik fotod on autoriõigusega kaitstud. Piltide jagamine, allalaadimine või kasutamine ilma loata on keelatud.</span></p>
 <div class="gallery-filters reveal" id="galleryFilters"></div>
 <div class="gallery-grid" id="galleryGrid"></div>
 </div>
@@ -350,7 +371,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <div class="form-field"><label data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" name="name" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required><div class="field-msg" id="fnameMsg"></div></div>
 <div class="form-field"><label data-et="E-post" data-en="Email">E-post</label><input type="email" id="femail" name="email" placeholder="sinu@email.com" data-et="sinu@email.com" data-en="you@email.com" required><div class="field-msg" id="femailMsg"></div></div>
 </div>
-<div class="form-field"><label data-et="Teema" data-en="Subject">Teema</label><select id="fsubject" name="subject"><option value="" data-et="Vali teema..." data-en="Select a subject...">Vali teema...</option><option value="shoot" data-et="Pildistamise broneerimine" data-en="Book a shoot">Pildistamise broneerimine</option><option value="collab" data-et="Koostöö" data-en="Collaboration">Koostöö</option><option value="other" data-et="Muu" data-en="Other">Muu</option></select></div>
+<div class="form-field"><label data-et="Teema" data-en="Subject">Teema</label><select id="fsubject" name="subject"><option value="" data-et="Vali teema..." data-en="Select a subject...">Vali teema...</option><option value="shoot" data-et="Pildistamise broneerimine" data-en="Book a shoot">Pildistamise broneerimine</option><option value="drone" data-et="Droonipildistuse broneerimine" data-en="Book a drone shoot">Droonipildistuse broneerimine</option><option value="collab" data-et="Koostöö" data-en="Collaboration">Koostöö</option><option value="other" data-et="Muu" data-en="Other">Muu</option></select></div>
 <div class="form-field"><label data-et="Sõnum" data-en="Message">Sõnum</label><textarea id="fmessage" name="message" placeholder="..." data-et="..." data-en="..." required></textarea><div class="field-msg" id="fmessageMsg"></div></div>
 <button type="submit" class="btn-submit" id="submitBtn" data-et="Saada sõnum" data-en="Send message">Saada sõnum</button>
 <div class="form-success" id="formSuccess" data-et="✓  Sõnum saadetud! Vastame esimesel võimalusel." data-en="✓  Message sent! We'll reply as soon as possible.">✓  Sõnum saadetud! Vastame esimesel võimalusel.</div>
@@ -363,7 +384,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <footer>
 <div class="container">
 <div class="logo">SSK <span>/</span> KJR</div>
-<p data-et="© 2026 SSK" data-en="© 2026 SSK">© 2026 SSK</p>
+<p data-et="© 2026 SSK / KJR — kõik fotod on autoriõigusega kaitstud. Jagamine ja kasutamine ilma loata keelatud." data-en="© 2026 SSK / KJR — all photos are copyright protected. Sharing and use without permission is prohibited.">© 2026 SSK / KJR — kõik fotod on autoriõigusega kaitstud. Jagamine ja kasutamine ilma loata keelatud.</p>
 </div>
 </footer>
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
@@ -376,7 +397,10 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <button class="lightbox-close" id="lbClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
 <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">‹</button>
 <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">›</button>
+<div class="lightbox-img-wrap" id="lbImgWrap">
 <img class="lightbox-img" id="lbImg" src="" alt="">
+<div class="watermark"><span>SSK / KJR</span></div>
+</div>
 <div class="lightbox-caption" id="lbCaption"></div>
 <div class="lightbox-toast" id="lbToast"></div>
 </div>
@@ -445,7 +469,7 @@ const lbFav=document.getElementById('lbFav');
 const lbDownload=document.getElementById('lbDownload');
 const lbShare=document.getElementById('lbShare');
 const lbToast=document.getElementById('lbToast');
-let currentLang='et',currentTheme=localStorage.getItem('theme')||'dark',currentImg=0,activeFilter='all',showFavoritesOnly=false;
+let currentLang='et',currentTheme=localStorage.getItem('theme')||'dark',currentImg=0,activeFilter='all',showFavoritesOnly=false,showDroneOnly=false;
 
 const FAV_KEY='ssk_favorites';
 function getFavorites(){
@@ -512,26 +536,32 @@ if(particlesEl && !reducedMotion){
 const brands=['Kõik',...new Set(galleryItems.map(i=>i.brand))];
 const brandsEn={'Kõik':'All'};
 galleryFilters.innerHTML=brands.map(b=>`<button class="filter-btn${b==='Kõik'?' active':''}" data-brand="${b==='Kõik'?'all':b}" data-et="${b}" data-en="${brandsEn[b]||b}">${b}</button>`).join('')
-  + `<button class="filter-btn filter-fav-btn" id="favFilterBtn" type="button" aria-pressed="false"><i class="far fa-heart"></i><span data-et="Lemmikud" data-en="Favorites">Lemmikud</span></button>`;
+  + `<button class="filter-btn filter-fav-btn" id="favFilterBtn" type="button" aria-pressed="false"><i class="far fa-heart"></i><span data-et="Lemmikud" data-en="Favorites">Lemmikud</span></button>`
+  + `<button class="filter-btn filter-drone-btn" id="droneFilterBtn" type="button" aria-pressed="false"><svg class="drone-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:13px;height:13px;vertical-align:-1px;"><circle cx="5" cy="5" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="5" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="5" cy="19" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="19" r="2.6" stroke="currentColor" stroke-width="1.8"/><path d="M7 7L10.3 10.3M17 7L13.7 10.3M7 17L10.3 13.7M17 17L13.7 13.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="9.3" y="9.3" width="5.4" height="5.4" rx="1.3" fill="currentColor"/></svg><span data-et="Drone" data-en="Drone">Drone</span></button>`;
 
 function updateGalleryVisibility(){
   let anyVisible=false;
   document.querySelectorAll('.gallery-item').forEach(item=>{
     const brandHidden=activeFilter!=='all' && item.dataset.brand!==activeFilter;
     const favHidden=showFavoritesOnly && !isFavorited(item.dataset.src);
-    const hide=brandHidden||favHidden;
+    const droneHidden=showDroneOnly && item.dataset.type!=='drone';
+    const hide=brandHidden||favHidden||droneHidden;
     item.classList.toggle('hidden',hide);
     if(!hide)anyVisible=true;
   });
   let emptyMsg=document.getElementById('galleryEmptyMsg');
-  if(!anyVisible && showFavoritesOnly){
+  if(!anyVisible && (showFavoritesOnly||showDroneOnly)){
     if(!emptyMsg){
       emptyMsg=document.createElement('p');
       emptyMsg.id='galleryEmptyMsg';
       emptyMsg.style.cssText='color:var(--dim);text-align:center;padding:30px 0;font-size:.9rem;';
       galleryGrid.insertAdjacentElement('afterend',emptyMsg);
     }
-    emptyMsg.textContent=currentLang==='en' ? 'No favorites yet — tap the heart on a photo to save it here.' : 'Lemmikuid pole veel — vajuta pildil südamele, et see siia salvestada.';
+    if(showDroneOnly){
+      emptyMsg.textContent=currentLang==='en' ? 'No drone photos yet — check back soon!' : 'Droonifotosid pole veel — vaata varsti uuesti!';
+    }else{
+      emptyMsg.textContent=currentLang==='en' ? 'No favorites yet — tap the heart on a photo to save it here.' : 'Lemmikuid pole veel — vajuta pildil südamele, et see siia salvestada.';
+    }
     emptyMsg.style.display='block';
   }else if(emptyMsg){
     emptyMsg.style.display='none';
@@ -541,7 +571,11 @@ function updateGalleryVisibility(){
 function renderGallery(){
   galleryGrid.innerHTML=galleryItems.map((item,index)=>{
     const fav=isFavorited(item.src);
-    return `<div class="gallery-item reveal visible" data-src="${item.src}" data-index="${index}" data-brand="${item.brand}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.pos?` style="object-position:${item.pos}"`:''} onerror="this.closest('.gallery-item').style.display='none'"><div class="gallery-brand-badge">${item.brand}</div><button class="fav-btn${fav?' active':''}" type="button" data-fav-src="${item.src}" aria-label="Lemmik"><i class="${fav?'fas':'far'} fa-heart"></i></button><div class="gallery-overlay"><i class="fas fa-expand"></i><span>${item.alt}</span></div></div>`;
+    const isDrone=item.type==='drone';
+    const badge=isDrone
+      ? `<div class="gallery-drone-badge"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:13px;height:13px;"><circle cx="5" cy="5" r="2.6" stroke="#fff" stroke-width="1.8"/><circle cx="19" cy="5" r="2.6" stroke="#fff" stroke-width="1.8"/><circle cx="5" cy="19" r="2.6" stroke="#fff" stroke-width="1.8"/><circle cx="19" cy="19" r="2.6" stroke="#fff" stroke-width="1.8"/><path d="M7 7L10.3 10.3M17 7L13.7 10.3M7 17L10.3 13.7M17 17L13.7 13.7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><rect x="9.3" y="9.3" width="5.4" height="5.4" rx="1.3" fill="#fff"/></svg>Drone</div>`
+      : `<div class="gallery-brand-badge">${item.brand}</div>`;
+    return `<div class="gallery-item reveal visible" data-src="${item.src}" data-index="${index}" data-brand="${item.brand}" data-type="${item.type||'ground'}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.pos?` style="object-position:${item.pos}"`:''} onerror="this.closest('.gallery-item').style.display='none'">${badge}<div class="watermark"><span>SSK / KJR</span></div><button class="fav-btn${fav?' active':''}" type="button" data-fav-src="${item.src}" aria-label="Lemmik"><i class="${fav?'fas':'far'} fa-heart"></i></button><div class="gallery-overlay"><i class="fas fa-expand"></i><span>${item.alt}</span></div></div>`;
   }).join('');
   document.querySelectorAll('.gallery-item').forEach(item=>{
     item.addEventListener('click',()=>openLightbox(parseInt(item.dataset.index)));
@@ -581,6 +615,14 @@ renderGallery();
 updateFavCount();
 
 galleryFilters.addEventListener('click',e=>{
+  const droneBtn=e.target.closest('#droneFilterBtn');
+  if(droneBtn){
+    showDroneOnly=!showDroneOnly;
+    droneBtn.classList.toggle('active',showDroneOnly);
+    droneBtn.setAttribute('aria-pressed',String(showDroneOnly));
+    updateGalleryVisibility();
+    return;
+  }
   const favBtn=e.target.closest('#favFilterBtn');
   if(favBtn){
     showFavoritesOnly=!showFavoritesOnly;
@@ -592,7 +634,7 @@ galleryFilters.addEventListener('click',e=>{
   const btn=e.target.closest('.filter-btn');
   if(!btn)return;
   activeFilter=btn.dataset.brand;
-  galleryFilters.querySelectorAll('.filter-btn').forEach(b=>{ if(b.id!=='favFilterBtn') b.classList.toggle('active',b===btn); });
+  galleryFilters.querySelectorAll('.filter-btn').forEach(b=>{ if(b.id!=='favFilterBtn' && b.id!=='droneFilterBtn') b.classList.toggle('active',b===btn); });
   updateGalleryVisibility();
 });
 
@@ -726,14 +768,58 @@ lbFav.addEventListener('click',()=>{
   updateFavCount();
   updateGalleryVisibility();
 });
-lbDownload.addEventListener('click',()=>{
-  const src=images[currentImg];
+function downloadWithWatermark(src){
+  const img=new Image();
+  img.crossOrigin='anonymous';
+  img.onload=()=>{
+    try{
+      const canvas=document.createElement('canvas');
+      canvas.width=img.naturalWidth;
+      canvas.height=img.naturalHeight;
+      const ctx=canvas.getContext('2d');
+      ctx.drawImage(img,0,0);
+      const text='SSK / KJR';
+      const fontSize=Math.max(canvas.width,canvas.height)*0.055;
+      ctx.save();
+      ctx.translate(canvas.width/2,canvas.height/2);
+      ctx.rotate(-18*Math.PI/180);
+      ctx.font='600 '+fontSize+'px "Bebas Neue", Arial, sans-serif';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillStyle='rgba(255,255,255,0.38)';
+      ctx.shadowColor='rgba(0,0,0,0.45)';
+      ctx.shadowBlur=fontSize*0.15;
+      ctx.fillText(text,0,0);
+      ctx.restore();
+      canvas.toBlob(blob=>{
+        if(!blob){ fallbackDownload(src); return; }
+        const url=URL.createObjectURL(blob);
+        const a=document.createElement('a');
+        a.href=url;
+        a.download=src.split('/').pop().replace(/\.[^.]+$/,'')+'-ssk-kjr.jpg';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),1000);
+      },'image/jpeg',0.92);
+    }catch(e){
+      console.error('Watermark download failed:',e);
+      fallbackDownload(src);
+    }
+  };
+  img.onerror=()=>fallbackDownload(src);
+  img.src=src;
+}
+function fallbackDownload(src){
   const a=document.createElement('a');
   a.href=src;
   a.download=src.split('/').pop();
   document.body.appendChild(a);
   a.click();
   a.remove();
+}
+lbDownload.addEventListener('click',()=>{
+  downloadWithWatermark(images[currentImg]);
 });
 lbShare.addEventListener('click',async ()=>{
   const src=images[currentImg];
