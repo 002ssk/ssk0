@@ -17,11 +17,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root{--accent:#f1c40f;--accent-dim:rgba(241,196,15,.18);--bg:#080808;--bg2:#121212;--text:#f4f4f4;--dim:rgba(255,255,255,.72);--ease:cubic-bezier(.16,1,.3,1);--input-bg:rgba(255,255,255,.08);--border:rgba(255,255,255,.14);--option-bg:#111}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;scroll-padding-top:90px;-webkit-text-size-adjust:100%}
-section,header{scroll-margin-top:80px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+section,header{scroll-margin-top:90px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;position:relative;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;position:relative}
 body.light{--bg:#f6f6f6;--bg2:#f2f2f2;--text:#111;--dim:#525252;--accent-dim:rgba(241,196,15,.16);--input-bg:#fff;--border:rgba(0,0,0,.14);--option-bg:#fff}
 body.light .navbar.scrolled{background:rgba(255,255,255,.95);border-bottom-color:rgba(0,0,0,.08)}
 body.light .mobile-menu{background:rgba(255,255,255,.97)}
@@ -118,8 +118,8 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .filter-drone-btn{display:inline-flex;align-items:center;gap:7px}
 .filter-drone-btn i{font-size:.8rem}
 .filter-drone-btn.active{background:#3da9fc;border-color:#3da9fc;color:#fff}
-.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:start}
-.gallery-item{position:relative;overflow:hidden;border-radius:22px;background:var(--bg2);box-shadow:0 28px 80px rgba(0,0,0,.18);cursor:pointer;transition:transform .35s var(--ease),opacity .3s;width:100%}
+.gallery-grid{column-count:4;column-gap:20px}
+.gallery-item{position:relative;overflow:hidden;border-radius:22px;background:var(--bg2);box-shadow:0 28px 80px rgba(0,0,0,.18);cursor:pointer;transition:transform .35s var(--ease),opacity .3s;break-inside:avoid;margin-bottom:20px;display:inline-block;width:100%}
 .gallery-item.hidden{display:none}
 .gallery-item img{width:100%;height:auto;display:block;transition:transform .35s var(--ease),filter .6s var(--ease)}
 .gallery-item:hover img{filter:brightness(1.05)}
@@ -159,7 +159,7 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .gallery-item img{filter:blur(12px);transform:scale(1.04)}
 .gallery-item img.loaded{filter:blur(0);transform:scale(1);transition:filter .6s var(--ease),transform .8s var(--ease)}
 .stat-num{transition:none}
-.lightbox-close{display:none;position:absolute;top:20px;right:20px;font-size:1.6rem;color:#fff;opacity:.6;background:none;border:none;cursor:pointer;transition:.2s;font-family:'DM Sans',sans-serif;z-index:10001;width:44px;height:44px;align-items:center;justify-content:center}
+.lightbox-close{display:none;position:absolute;top:20px;right:20px;font-size:1.6rem;color:#fff;opacity:.6;background:none;border:none;cursor:pointer;transition:.2s; font-family:'DM Sans',sans-serif;z-index:10001;width:44px;height:44px;align-items:center;justify-content:center}
 .lightbox.open .lightbox-close{display:flex}
 .lightbox-close:hover{opacity:1;transform:scale(1.15)}
 .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;display:none;align-items:center;justify-content:center;font-size:1.4rem;background:none;border:none;color:#fff;cursor:pointer;transition:.2s;touch-action:manipulation;z-index:10000}
@@ -241,20 +241,20 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{to{opacity:1}}
 @keyframes scrollPulse{0%,100%{opacity:.4;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
-@media(max-width:1100px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1100px){.gallery-grid{column-count:3}}
 @media(max-width:900px){
   .about-grid,.contact-grid{grid-template-columns:1fr;gap:48px}
   .about-image{order:2}
   .about-text{order:1}
-  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-grid{column-count:2}
   .nav-links{display:none}
   .hamburger{display:flex}
   .stats{gap:28px}
   .section{padding:80px 0}
 }
-@media(max-width:800px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.gallery-grid{column-count:2}}
 @media(max-width:600px){
-  .gallery-grid{grid-template-columns:1fr}
+  .gallery-grid{column-count:1}
   .form-row{grid-template-columns:1fr}
   .hero-title{font-size:3.2rem;letter-spacing:2px}
   .hero-sub{font-size:.75rem;letter-spacing:3px}
@@ -322,14 +322,17 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <div><div class="stat-num" id="statCars" data-target="20" data-suffix="+">0</div><div class="stat-label" data-et="Pildistatud autot" data-en="Cars captured">Pildistatud autot</div></div>
 <div><div class="stat-num" id="statPassion" data-target="100" data-suffix="%">0</div><div class="stat-label" data-et="Kirg" data-en="Passion">Kirg</div></div>
 </div>
+
 <div style="margin-top:32px; padding:16px 20px; background:var(--accent-dim); border-radius:16px; border-left:4px solid var(--accent);">
 <i class="fas fa-lightbulb" style="color:var(--accent); margin-right:10px;"></i>
 <strong>Fun Fact:</strong> <span data-et="Kõik meie pildid on jäädvustatud telefoniga." data-en="All our photos are captured with a phone.">Kõik meie pildid on jäädvustatud telefoniga.</span>
 </div>
+
 <div style="margin-top:16px; padding:16px 20px; background:rgba(61,169,252,.14); border-radius:16px; border-left:4px solid #3da9fc;">
 <svg class="drone-icon" style="width:16px;height:16px;vertical-align:-2px;margin-right:10px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><circle cx="19" cy="5" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><circle cx="5" cy="19" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><circle cx="19" cy="19" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><path d="M7 7L10.3 10.3M17 7L13.7 10.3M7 17L10.3 13.7M17 17L13.7 13.7" stroke="#3da9fc" stroke-width="1.6" stroke-linecap="round"/><rect x="9.3" y="9.3" width="5.4" height="5.4" rx="1.3" fill="#3da9fc"/></svg>
 <strong data-et="Uudis:" data-en="News:">Uudis:</strong> <span data-et="Nüüd saadaval ka droonipildistus — vajuta galeriis 'Drone' filtrile, et näha näiteid!" data-en="Drone photography is now available too — tap the 'Drone' filter in the gallery to see examples!">Nüüd saadaval ka droonipildistus — vajuta galeriis 'Drone' filtrile, et näha näiteid!</span>
 </div>
+
 </div>
 </div>
 </div>
@@ -338,7 +341,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <div class="container">
 <div class="gallery-header reveal">
 <div><p class="section-label" data-et="Tööd" data-en="Works">Tööd</p><h2 class="section-title" data-et="Galerii" data-en="Gallery">Galerii</h2></div>
-
+<p style="color:var(--dim);font-size:.85rem;" data-et="Kliki suurendamiseks" data-en="Click to enlarge">Kliki suurendamiseks</p>
 </div>
 <p style="color:var(--dim);font-size:.78rem;letter-spacing:.5px;margin-bottom:24px;display:flex;align-items:center;gap:8px;" class="reveal"><i class="fas fa-circle-info" style="color:var(--accent);"></i><span data-et="NB! Kõik fotod on autoriõigusega kaitstud. Piltide jagamine, allalaadimine või kasutamine ilma loata on keelatud." data-en="NB! All photos are copyright protected. Sharing, downloading or using these images without permission is prohibited.">NB! Kõik fotod on autoriõigusega kaitstud. Piltide jagamine, allalaadimine või kasutamine ilma loata on keelatud.</span></p>
 <div class="gallery-filters reveal" id="galleryFilters"></div>
@@ -390,20 +393,19 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <button class="lightbox-action-btn" id="lbFav" aria-label="Lemmik"><i class="far fa-heart"></i></button>
 </div>
 <button class="lightbox-close" id="lbClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
-<button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">&#8249;</button>
-<button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">&#8250;</button>
+<button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">‹</button>
+<button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">›</button>
 <div class="lightbox-img-wrap" id="lbImgWrap">
 <img class="lightbox-img" id="lbImg" src="" alt="">
 <div class="watermark"><span>SSK / KJR</span></div>
 </div>
 <div class="lightbox-caption" id="lbCaption"></div>
-<div class="lightbox-toast" id="lbToast"></div>
 </div>
 <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
 (function(){
-  emailjs.init('CKZ5XoAUAW3QS3QRK');
+  emailjs.init('CKZ5XoAUAW3QS3QRK'); // Replace with your EmailJS public key
 })();
 const navItems=[{href:'#kodu',et:'Kodu',en:'Home'},{href:'#minust',et:'Meist',en:'About'},{href:'#galerii',et:'Galerii',en:'Gallery'},{href:'#kontakt',et:'Kontakt',en:'Contact'}];
 
@@ -443,7 +445,12 @@ const galleryItems=[
   {src:'img/audi/mazda-eest-ulevalt.png',alt:'Mazda eest ülevalt',brand:'Mazda'},
   {src:'img/audi/mazda-vasak-velg.png',alt:'Mazda vasak velg',brand:'Mazda'},
   {src:'img/bmw-gt-eest.jpg',alt:'BMW 3 GT eest',brand:'BMW'},
-  {src:'img/bmw-gt-merk.jpg',alt:'BMW märk',brand:'BMW'}
+  {src:'img/bmw-gt-merk.jpg',alt:'BMW märk',brand:'BMW'},
+  {src:'img/69cat.png',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/batman auto.JPG',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/bitestop neljak.png',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/motika piffid syda.png',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/mustang22.png',alt:'Droonivaade',brand:'',type:'drone'}
 ];
 
 const langBtns=document.querySelectorAll('.lang-btn');
@@ -461,7 +468,6 @@ const lbPrev=document.getElementById('lbPrev');
 const lbNext=document.getElementById('lbNext');
 const lbCounter=document.getElementById('lbCounter');
 const lbFav=document.getElementById('lbFav');
-const lbToast=document.getElementById('lbToast');
 let currentLang='et',currentTheme=localStorage.getItem('theme')||'dark',currentImg=0,activeFilter='all',showFavoritesOnly=false,showDroneOnly=false;
 
 const FAV_KEY='ssk_favorites';
@@ -526,7 +532,7 @@ if(particlesEl && !reducedMotion){
   }
 }
 
-const brands=['Kõik',...new Set(galleryItems.map(i=>i.brand))];
+const brands=['Kõik',...new Set(galleryItems.map(i=>i.brand).filter(Boolean))];
 const brandsEn={'Kõik':'All'};
 galleryFilters.innerHTML=brands.map(b=>`<button class="filter-btn${b==='Kõik'?' active':''}" data-brand="${b==='Kõik'?'all':b}" data-et="${b}" data-en="${brandsEn[b]||b}">${b}</button>`).join('')
   + `<button class="filter-btn filter-fav-btn" id="favFilterBtn" type="button" aria-pressed="false"><i class="far fa-heart"></i><span data-et="Lemmikud" data-en="Favorites">Lemmikud</span></button>`
@@ -703,7 +709,7 @@ function updateLbFavButton(){
 }
 function updateLightbox(){lbImg.src=images[currentImg];lbCaption.textContent=galleryItems[currentImg].alt;lbCounter.textContent=(currentImg+1)+' / '+images.length;updateLbFavButton();resetZoom()}
 function openLightbox(index){currentImg=index;updateLightbox();lightbox.classList.add('open');document.body.style.overflow='hidden'}
-function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';resetZoom();lbCounter.textContent='';}
+function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';resetZoom()}
 function step(dir){currentImg=(currentImg+dir+images.length)%images.length;updateLightbox()}
 let isZoomed=false,zoomOriginX=50,zoomOriginY=50;
 function resetZoom(){isZoomed=false;lbImg.classList.remove('zoomed');lbImg.style.transform='';lbImg.style.transformOrigin='center center';lbImg.style.width='';lbImg.style.height=''}
@@ -742,12 +748,7 @@ lbPrev.addEventListener('click',()=>step(-1));
 lbNext.addEventListener('click',()=>step(1));
 lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});
 document.addEventListener('keydown',e=>{if(!lightbox.classList.contains('open'))return;if(e.key==='Escape')closeLightbox();else if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1)});
-function showLbToast(text){
-  lbToast.textContent=text;
-  lbToast.classList.add('show');
-  clearTimeout(showLbToast._t);
-  showLbToast._t=setTimeout(()=>lbToast.classList.remove('show'),2200);
-}
+
 lbFav.addEventListener('click',()=>{
   const src=images[currentImg];
   const nowFav=toggleFavorite(src);
@@ -760,6 +761,7 @@ lbFav.addEventListener('click',()=>{
   updateFavCount();
   updateGalleryVisibility();
 });
+
 let touchStartX=0,touchStartY=0;
 lightbox.addEventListener('touchstart',e=>{
   if(!e.touches[0])return;
@@ -774,6 +776,7 @@ lightbox.addEventListener('touchend',e=>{
     if(dx<0)step(1); else step(-1);
   }
 },{passive:true});
+
 const contactForm=document.getElementById('contactForm');
 const msgs={et:{nameShort:'Nimi peab olema vähemalt 2 tähemärki',nameOk:'Näeb hea välja',emailInvalid:'Palun sisesta korrektne e-posti aadress',emailOk:'Näeb hea välja',msgShort:'Sõnum peab olema vähemalt 10 tähemärki',msgOk:'Näeb hea välja'},en:{nameShort:'Name should be at least 2 characters',nameOk:'Looks good',emailInvalid:'Please enter a valid email address',emailOk:'Looks good',msgShort:'Message should be at least 10 characters',msgOk:'Looks good'}};
 function setFieldState(input,msgEl,valid,validText,invalidText){
@@ -808,7 +811,7 @@ if(contactForm){
     if(honeypot && honeypot.value.trim()!==''){
       if(formSuccess){
         formSuccess.style.display='block';
-        formSuccess.textContent=currentLang==='en' ? "\u2713  Message sent! We'll reply as soon as possible." : '\u2713  S\u00f5num saadetud! Vastame esimesel v\u00f5imalusel.';
+        formSuccess.textContent=currentLang==='en' ? "✓  Message sent! We'll reply as soon as possible." : '✓  Sõnum saadetud! Vastame esimesel võimalusel.';
       }
       contactForm.reset();
       return;
@@ -818,13 +821,13 @@ if(contactForm){
       .then(function(){
         if(formSuccess){
           formSuccess.style.display='block';
-          formSuccess.textContent=currentLang==='en' ? "\u2713  Message sent! We'll reply as soon as possible." : '\u2713  S\u00f5num saadetud! Vastame esimesel v\u00f5imalusel.';
+          formSuccess.textContent=currentLang==='en' ? "✓  Message sent! We'll reply as soon as possible." : '✓  Sõnum saadetud! Vastame esimesel võimalusel.';
         }
         contactForm.reset();
         submitBtn.disabled=false;
       }, function(error){
         const msg = error && (error.text || error.statusText || error.message) ? (error.text || error.statusText || error.message) : JSON.stringify(error);
-        alert('Viga e-kirja saatmisel: ' + msg + '\nVaata br\u00e4useri konsooli t\u00e4psema info jaoks.');
+        alert('Viga e-kirja saatmisel: ' + msg + '\nVaata brauseri konsooli täpsema info jaoks.');
         console.error('EmailJS error:', error);
         submitBtn.disabled=false;
       });
