@@ -619,6 +619,13 @@ galleryFilters.addEventListener('click',e=>{
     showDroneOnly=!showDroneOnly;
     droneBtn.classList.toggle('active',showDroneOnly);
     droneBtn.setAttribute('aria-pressed',String(showDroneOnly));
+    if(showDroneOnly){
+      activeFilter='all';
+      galleryFilters.querySelectorAll('.filter-btn').forEach(b=>{
+        if(b.id==='favFilterBtn'||b.id==='droneFilterBtn')return;
+        b.classList.toggle('active',b.dataset.brand==='all');
+      });
+    }
     updateGalleryVisibility();
     return;
   }
@@ -634,6 +641,11 @@ galleryFilters.addEventListener('click',e=>{
   if(!btn)return;
   activeFilter=btn.dataset.brand;
   galleryFilters.querySelectorAll('.filter-btn').forEach(b=>{ if(b.id!=='favFilterBtn' && b.id!=='droneFilterBtn') b.classList.toggle('active',b===btn); });
+  if(showDroneOnly){
+    showDroneOnly=false;
+    const droneToggle=document.getElementById('droneFilterBtn');
+    if(droneToggle){ droneToggle.classList.remove('active'); droneToggle.setAttribute('aria-pressed','false'); }
+  }
   updateGalleryVisibility();
 });
 
