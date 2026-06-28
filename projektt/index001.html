@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808" id="themeColorMeta">
 <title>SSK | Car Photography</title>
 <meta name="description" content="Hobikorras autofotograafia Eestis. Pildistame huvitavaid ja tuunitud autosid — vaata galeriid ja võta ühendust pildistuse broneerimiseks.">
 <meta property="og:title" content="SSK | Car Photography">
@@ -227,7 +228,6 @@ body.light section#kontakt .btn-submit{background:var(--accent);color:#000}
 body.light section#kontakt .social-btn{border:1px solid rgba(0,0,0,.12);color:#525252}
 body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{to{opacity:1}}
 @keyframes scrollPulse{0%,100%{opacity:.4;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
 @media(max-width:1100px){.gallery-grid{column-count:3}}
 @media(max-width:900px){
@@ -405,7 +405,7 @@ const galleryItems=[
   {src:'img/e46/e46 sygis.jpeg',alt:'BMW E46 Sügis',brand:'BMW'},
   {src:'img/e46/parem tuli e46.jpeg',alt:'E46 Light',brand:'BMW'},
   {src:'img/e46/paike e46.jpeg',alt:'E46 Sun',brand:'BMW'},
-  {src:'img/e46/sügis e46 veel.jpeg',alt:'E46 Autumn',brand:'BMW'},
+  {src:'img/e46/sygis e46 veel.jpeg',alt:'E46 Autumn',brand:'BMW'},
   {src:'img/e46/tuli sygis e46.jpeg',alt:'E46 Light',brand:'BMW'},
   {src:'img/seitsmene rahinge.png',alt:'BMW seitsmene',brand:'BMW',pos:'center 35%'},
   {src:'img/e46 rool.JPG',alt:'E46 Rool',brand:'BMW'},
@@ -631,7 +631,7 @@ galleryFilters.addEventListener('click',e=>{
 
 const images=galleryItems.map(item=>item.src);
 function setLang(lang){currentLang=lang;document.documentElement.lang=lang;langBtns.forEach(btn=>btn.classList.toggle('active',btn.dataset.lang===lang));document.querySelectorAll('[data-et]').forEach(el=>{const text=el.dataset[lang];if(text){if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=text;else el.textContent=text}});updateGalleryVisibility()}
-function setTheme(theme){currentTheme=theme;document.body.classList.toggle('light',theme==='light');themeBtns.forEach(btn=>btn.classList.toggle('active',btn.dataset.theme===theme));localStorage.setItem('theme',theme)}
+function setTheme(theme){currentTheme=theme;document.body.classList.toggle('light',theme==='light');themeBtns.forEach(btn=>btn.classList.toggle('active',btn.dataset.theme===theme));localStorage.setItem('theme',theme);const tcm=document.getElementById('themeColorMeta');if(tcm)tcm.setAttribute('content',theme==='light'?'#f6f6f6':'#080808')}
 langBtns.forEach(btn=>btn.addEventListener('click',()=>setLang(btn.dataset.lang)));
 themeBtns.forEach(btn=>btn.addEventListener('click',()=>setTheme(btn.dataset.theme)));
 setLang(currentLang);
