@@ -1,215 +1,830 @@
 <!DOCTYPE html>
 <html lang="et">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omanäoline Bootstrap Sait</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808" id="themeColorMeta">
+<title>SSK | Car Photography</title>
+<meta name="description" content="Hobikorras autofotograafia Eestis. Pildistame huvitavaid ja tuunitud autosid — vaata galeriid ja võta ühendust pildistuse broneerimiseks.">
+<meta property="og:title" content="SSK | Car Photography">
+<meta property="og:description" content="Hobikorras autofotograafia Eestis. Pildistame huvitavaid ja tuunitud autosid — vaata galeriid ja võta ühendust pildistuse broneerimiseks.">
+<meta property="og:type" content="website">
+<!-- ASENDA SINU-DOMEEN.ee oma päris domeeniga, et lingi eelvaade töötaks -->
+<meta property="og:image" content="https://SINU-DOMEEN.ee/img/hero-bg.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--accent:#f1c40f;--accent-dim:rgba(241,196,15,.18);--bg:#080808;--bg2:#121212;--text:#f4f4f4;--dim:rgba(255,255,255,.72);--ease:cubic-bezier(.16,1,.3,1);--input-bg:rgba(255,255,255,.08);--border:rgba(255,255,255,.14);--option-bg:#111}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+section,header{scroll-margin-top:90px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;position:relative}
+body.light{--bg:#f6f6f6;--bg2:#f2f2f2;--text:#111;--dim:#525252;--accent-dim:rgba(241,196,15,.16);--input-bg:#fff;--border:rgba(0,0,0,.14);--option-bg:#fff}
+body.light .navbar.scrolled{background:rgba(255,255,255,.95);border-bottom-color:rgba(0,0,0,.08)}
+body.light .mobile-menu{background:rgba(255,255,255,.97)}
+body.light .hero{background:url('img/hero-bg.png') no-repeat center 60%/cover;color:#f4f4f4}
+body.light .hero-title,body.light .hero-sub{color:rgba(255,255,255,.72) !important}
+body.light #minust{background:#f6f6f6;color:#111}
+body.light #minust .section-title{color:var(--accent)}
+body.light #minust .section-label{color:var(--accent)}
+body.light #minust p{color:#525252}
+body.light #minust .stat-label{color:#525252}
+body.light .hero-title .outline{-webkit-text-stroke:1.5px #fff;color:transparent}
+body.light .navbar{color:#f4f4f4;background:rgba(6,6,6,.95)}
+body.light .logo{color:#f4f4f4}
+body.light .nav-links a{color:#f4f4f4}
+body.light .lang-btn,body.light .theme-btn{color:rgba(255,255,255,.72)}
+body.light .hamburger span{background:#f4f4f4}
+body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(255,255,255,.06)}
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+.scroll-progress{position:fixed;top:0;left:0;height:2.5px;background:var(--accent);width:0%;z-index:1000;transition:width .25s cubic-bezier(.16,1,.3,1);will-change:width;transform:translateZ(0)}
+.back-to-top{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:var(--accent);color:#000;border:none;display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(12px);transition:.3s var(--ease);z-index:850;box-shadow:0 10px 28px rgba(0,0,0,.3)}
+.back-to-top.visible{opacity:1;pointer-events:all;transform:translateY(0)}
+.back-to-top:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(241,196,15,.35)}
+@media(max-width:600px){.back-to-top{bottom:20px;right:20px;width:44px;height:44px}}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:url('img/hero-bg.png') no-repeat center 60%/cover;position:relative;overflow:hidden}
+.particles{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.particle{position:absolute;bottom:-20px;width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:0;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(0) translateX(0);opacity:0}8%{opacity:.7}92%{opacity:.45}100%{transform:translateY(-110%) translateX(var(--drift,20px));opacity:0}}
+@media(prefers-reduced-motion:reduce){.particle{display:none}}
+.navbar{position:fixed;top:0;width:100%;z-index:900;padding:22px 0;transition:.4s var(--ease)}
+.navbar.scrolled{padding:14px 0;background:rgba(6,6,6,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;position:relative}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;flex-shrink:0;display:flex;align-items:center}
+.logo span{color:var(--accent)}
+.nav-actions{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.nav-links{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:32px;list-style:none}
+.nav-links a,.lang-btn,.theme-btn{font-size:.78rem;font-weight:500;text-transform:uppercase;letter-spacing:2.5px;opacity:.6;color:inherit;text-decoration:none;transition:.25s,color .25s}
+.nav-links a{position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:.3s var(--ease)}
+.nav-links a:hover{opacity:1;color:var(--accent)}
+.nav-links a:hover::after{width:100%}
+.lang-toggle,.theme-toggle{display:flex;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
+.lang-btn,.theme-btn{padding:6px 12px;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:1px;color:var(--dim)}
+.lang-btn.active,.theme-btn.active{background:var(--accent);color:#000;font-weight:600}
+.lang-btn:not(.active):hover,.theme-btn:not(.active):hover{color:var(--text)}
+.hamburger{display:none;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:8px;flex-shrink:0;color:var(--text);width:40px;height:40px}
+.hamburger svg{width:24px;height:24px;display:block}
+.mobile-menu{position:fixed;inset:0;background:rgba(6,6,6,.97);backdrop-filter:blur(20px);z-index:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;opacity:0;pointer-events:none;transition:.4s var(--ease);overflow-y:auto;padding:80px 20px}
+.mobile-menu.open{opacity:1;pointer-events:all}
+.mobile-menu a{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:4px;color:inherit;text-decoration:none;opacity:0;transform:translateY(20px);transition:.4s var(--ease),color .2s;text-align:center}
+.mobile-menu.open a{opacity:1;transform:translateY(0)}
+.mobile-menu.open a:nth-child(1){transition-delay:.05s}
+.mobile-menu.open a:nth-child(2){transition-delay:.1s}
+.mobile-menu.open a:nth-child(3){transition-delay:.15s}
+.mobile-menu.open a:nth-child(4){transition-delay:.2s}
+.mobile-menu.open a:nth-child(5){transition-delay:.25s}
+.mobile-menu a:hover{color:var(--accent)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.16) 0%,rgba(6,6,6,.75) 100%)}
+.hero-content{position:relative;z-index:1;max-width:900px;padding:0 16px}
+.hero-title,.section-title{font-family:'Bebas Neue',sans-serif}
+.hero-title{font-size:clamp(4rem,11vw,8rem);line-height:.9;letter-spacing:4px;text-transform:uppercase;opacity:0;transform:translateY(24px);animation:fadeUp .9s var(--ease) .35s forwards}
+.hero-title .outline{-webkit-text-stroke:1.5px #fff;color:transparent}
+.hero-sub{color:var(--dim);font-size:.9rem;text-transform:uppercase;letter-spacing:5px;margin:20px 0 48px;opacity:0;transform:translateY(16px);animation:fadeUp .8s var(--ease) .5s forwards}
+.hero-cta{opacity:0;transform:translateY(16px);animation:fadeUp .8s var(--ease) .65s forwards}
+.btn-primary{display:inline-block;padding:16px 44px;background:var(--accent);color:#000;font-weight:600;text-transform:uppercase;letter-spacing:2px;text-decoration:none;font-size:.85rem;transition:.35s var(--ease)}
+.btn-primary:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(241,196,15,.3)}
+.reveal{opacity:0;transform:translateY(40px);transition:.8s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.section{padding:120px 0}
+.about-grid,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-image{position:relative;overflow:hidden;border-radius:28px}
+.about-image::before{content:'';position:absolute;top:-16px;left:-16px;width:60%;height:60%;border-top:1px solid var(--accent);border-left:1px solid var(--accent);opacity:.5;pointer-events:none}
+.about-image img{width:100%;height:480px;object-fit:cover;display:block;transition:.8s var(--ease);border-radius:inherit}
+.about-image:hover img{transform:scale(1.04)}
+.section-label{font-size:.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.section-title{font-size:clamp(2.4rem,5vw,3.8rem);letter-spacing:2px;line-height:1;margin-bottom:24px}
+.about-text p,.contact-info p{color:var(--dim);line-height:1.8;font-size:1rem;margin-bottom:16px}
+.stats{display:flex;gap:40px;margin-top:40px}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:2px;color:var(--accent);line-height:1}
+.stat-label{font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-top:4px}
+.bg2{background:var(--bg2)}
+.gallery-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:34px;flex-wrap:wrap;gap:16px}
+.gallery-header p{color:var(--dim);font-size:.85rem}
+.gallery-filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.filter-btn{padding:9px 20px;background:var(--input-bg);border:1px solid var(--border);color:var(--dim);font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;border-radius:30px;transition:.25s var(--ease);font-family:'DM Sans',sans-serif}
+.filter-btn:hover{color:var(--text);border-color:var(--accent)}
+.filter-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.filter-fav-btn{display:inline-flex;align-items:center;gap:7px}
+.filter-fav-btn i{font-size:.8rem}
+.filter-fav-btn.active{background:#ff4d6d;border-color:#ff4d6d;color:#fff}
+.filter-fav-btn .fav-count{opacity:.85;font-weight:600}
+.filter-drone-btn{display:inline-flex;align-items:center;gap:7px}
+.filter-drone-btn i{font-size:.8rem}
+.filter-drone-btn.active{background:#3da9fc;border-color:#3da9fc;color:#fff}
+.gallery-grid{column-count:4;column-gap:20px}
+.gallery-item{position:relative;overflow:hidden;border-radius:22px;background:var(--bg2);box-shadow:0 28px 80px rgba(0,0,0,.18);cursor:pointer;transition:transform .35s var(--ease),opacity .3s;break-inside:avoid;margin-bottom:20px;display:inline-block;width:100%}
+.gallery-item.hidden{display:none}
+.gallery-item img{width:100%;height:auto;display:block;transition:transform .35s var(--ease),filter .6s var(--ease)}
+.gallery-item:hover img{filter:brightness(1.05)}
+.watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:1;overflow:hidden}
+.watermark span{font-family:'Bebas Neue',sans-serif;color:rgba(255,255,255,.4);font-size:1.5rem;letter-spacing:4px;text-transform:uppercase;text-shadow:0 2px 8px rgba(0,0,0,.45);white-space:nowrap;transform:rotate(-18deg);mix-blend-mode:overlay;opacity:.85}
+.lightbox-img-wrap{position:relative;display:inline-block;max-width:90vw;max-height:80vh}
+.lightbox-img-wrap .watermark{opacity:0;transition:opacity .4s var(--ease)}
+.lightbox.open .lightbox-img-wrap .watermark{opacity:1}
+.lightbox-img-wrap .watermark span{font-size:2.6rem;letter-spacing:6px}
+@media(max-width:600px){.watermark span{font-size:1rem;letter-spacing:2px}.lightbox-img-wrap .watermark span{font-size:1.6rem;letter-spacing:3px}}
+.gallery-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0);transition:.35s ease;z-index:1}
+.gallery-brand-badge{position:absolute;top:14px;left:14px;background:var(--accent);color:#000;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:30px;opacity:0;transform:translateY(-8px);transition:.3s var(--ease);z-index:2;display:flex;align-items:center;gap:6px}
+.gallery-item:hover .gallery-brand-badge{opacity:1;transform:translateY(0)}
+.gallery-drone-badge{position:absolute;top:14px;left:14px;background:#3da9fc;color:#fff;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:30px;opacity:0;transform:translateY(-8px);transition:.3s var(--ease);z-index:2;display:flex;align-items:center;gap:6px}
+.gallery-item:hover .gallery-drone-badge{opacity:1;transform:translateY(0)}
+.gallery-overlay i{font-size:2rem;color:#fff;opacity:0;transform:translateY(10px);transition:.25s ease}
+.gallery-overlay span{color:#fff;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:.25s ease;margin-top:10px;text-align:center;padding:0 10px}
+.gallery-item:hover .gallery-overlay{background:rgba(0,0,0,.38)}
+.gallery-item:hover .gallery-overlay i,.gallery-item:hover .gallery-overlay span{opacity:1;transform:translateY(0)}
+.fav-btn{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem;cursor:pointer;z-index:4;opacity:0;transform:translateY(-8px);transition:.25s var(--ease);border:none}
+.gallery-item:hover .fav-btn{opacity:1;transform:translateY(0)}
+.fav-btn:hover{background:rgba(0,0,0,.7);transform:translateY(0) scale(1.08)}
+.fav-btn.active{color:#ff4d6d}
+@media(hover:none){
+  .gallery-brand-badge{opacity:1;transform:translateY(0)}
+  .gallery-drone-badge{opacity:1;transform:translateY(0)}
+  .fav-btn{opacity:1;transform:translateY(0)}
+}
+.lightbox{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0);pointer-events:none;transition:.4s;overflow:hidden}
+.lightbox.open{background:rgba(0,0,0,.95);pointer-events:all}
+.lightbox-img{max-width:90vw;max-height:80vh;object-fit:contain;opacity:0;transform:scale(.92);transition:opacity .4s var(--ease),transform .4s var(--ease);cursor:zoom-in}
+.lightbox.open .lightbox-img{opacity:1;transform:scale(1)}
+.lightbox-img.zoomed{cursor:zoom-out;max-width:none;max-height:none;width:90vw;height:auto;transition:transform .15s linear}
+.lightbox-caption{margin-top:18px;color:#fff;font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:.4s var(--ease) .1s;text-align:center;padding:0 20px}
+.lightbox.open .lightbox-caption{opacity:.75}
+.lightbox-counter{position:absolute;top:24px;left:32px;color:#fff;opacity:.55;font-size:.8rem;letter-spacing:2px;font-family:'DM Sans',sans-serif}
+.gallery-item img{filter:blur(12px);transform:scale(1.04)}
+.gallery-item img.loaded{filter:blur(0);transform:scale(1);transition:filter .6s var(--ease),transform .8s var(--ease)}
+.stat-num{transition:none}
+.lightbox-close{display:none;position:absolute;top:20px;right:20px;font-size:1.6rem;color:#fff;opacity:.6;background:none;border:none;cursor:pointer;transition:.2s; font-family:'DM Sans',sans-serif;z-index:10001;width:44px;height:44px;align-items:center;justify-content:center}
+.lightbox.open .lightbox-close{display:flex}
+.lightbox-close:hover{opacity:1;transform:scale(1.15)}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;display:none;align-items:center;justify-content:center;font-size:1.4rem;background:none;border:none;color:#fff;cursor:pointer;transition:.2s;touch-action:manipulation;z-index:10000}
+.lightbox.open .lightbox-nav{display:flex}
+.lightbox-prev{left:20px}
+.lightbox-next{right:20px}
+.lightbox-nav:hover{color:var(--accent)}
+.lightbox-actions{position:absolute;top:22px;right:74px;display:none;gap:10px;z-index:10001}
+.lightbox.open .lightbox-actions{display:flex}
+.lightbox-action-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;font-size:.92rem}
+.lightbox-action-btn:hover{background:var(--accent);color:#000;border-color:var(--accent)}
+.lightbox-action-btn.active{color:#ff4d6d;border-color:#ff4d6d}
+.lightbox-toast{position:absolute;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(0,0,0,.85);color:#fff;padding:10px 22px;border-radius:30px;font-size:.78rem;letter-spacing:1px;opacity:0;pointer-events:none;transition:.3s var(--ease);white-space:nowrap;z-index:10002}
+.lightbox-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){
+  .lightbox-close{top:20px;right:16px}
+  .lightbox-counter{top:20px;left:16px;font-size:.7rem}
+  .lightbox-nav{width:56px;height:56px;font-size:1.8rem;background:none}
+  .lightbox-prev{left:8px}
+  .lightbox-next{right:8px}
+  .lightbox-img{max-width:94vw;max-height:74vh}
+  .lightbox-actions{top:20px;right:62px;gap:6px}
+  .lightbox-action-btn{width:36px;height:36px;font-size:.82rem}
+}
+.contact-info h2,footer p{margin-bottom:20px}
+.contact-social{display:flex;gap:16px}
+.social-btn{width:44px;height:44px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:1.1rem;text-decoration:none;transition:.3s var(--ease)}
+.social-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-field{display:flex;flex-direction:column;gap:8px}
+.form-field label{font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+.form-field input,.form-field textarea,.form-field select{background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:14px 16px;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .3s}
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus{border-color:var(--accent)}
+.form-field input.field-valid,.form-field textarea.field-valid{border-color:#2ecc71}
+.form-field input.field-invalid,.form-field textarea.field-invalid{border-color:#e74c3c}
+.field-msg{font-size:.72rem;letter-spacing:.5px;min-height:14px;margin-top:-4px}
+.field-msg.error{color:#e74c3c}
+.field-msg.ok{color:#2ecc71}
+.form-field textarea{resize:vertical;min-height:120px}
+.form-field select{appearance:none;cursor:pointer;color:var(--text);background:var(--input-bg)}
+.form-field select option{background:var(--option-bg);color:var(--text);}
+.form-honeypot{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden}
+.form-success{display:none;padding:16px;border:1px solid var(--accent);background:var(--accent-dim);color:var(--accent);font-size:.9rem;letter-spacing:1px}
+.btn-submit{padding:16px 36px;background:var(--accent);color:#000;font-weight:600;text-transform:uppercase;letter-spacing:2px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;align-self:flex-start;transition:.3s var(--ease)}
+.btn-submit:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(241,196,15,.3)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+footer{padding:50px 0;background:#000;border-top:1px solid rgba(255,255,255,.05);text-align:center}
+footer .logo{font-size:1.6rem;margin-bottom:16px;display:block}
+footer p{color:var(--dim);font-size:.82rem;letter-spacing:1px}
+body.light #galerii{background:#f6f6f6}
+body.light section#galerii .section-title,body.light section#galerii .section-label{color:var(--accent)}
+body.light section#galerii p{color:#525252}
+body.light .filter-btn{background:#fff;border-color:rgba(0,0,0,.14);color:#525252}
+body.light .filter-btn.active{background:var(--accent);color:#000}
+body.light .filter-fav-btn.active{background:#ff4d6d;border-color:#ff4d6d;color:#fff}
+body.light .filter-drone-btn.active{background:#3da9fc;border-color:#3da9fc;color:#fff}
+body.light #kontakt{background:#f6f6f6;color:#111}
+body.light section#kontakt .section-title,body.light section#kontakt .section-label{color:var(--accent)}
+body.light section#kontakt p{color:#525252}
+body.light section#kontakt input,body.light section#kontakt textarea,body.light section#kontakt select{background:#fff;border:1px solid rgba(0,0,0,.14);color:#111}
+body.light section#kontakt input:focus,body.light section#kontakt textarea:focus,body.light section#kontakt select:focus{border-color:var(--accent)}
+body.light section#kontakt .btn-submit{background:var(--accent);color:#000}
+body.light section#kontakt .social-btn{border:1px solid rgba(0,0,0,.12);color:#525252}
+body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes scrollPulse{0%,100%{opacity:.4;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
+@media(max-width:1100px){.gallery-grid{column-count:3}}
+@media(max-width:900px){
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:48px}
+  .about-image{order:2}
+  .about-text{order:1}
+  .gallery-grid{column-count:2}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .stats{gap:28px}
+  .section{padding:80px 0}
+}
+@media(max-width:800px){.gallery-grid{column-count:2}}
+@media(max-width:600px){
+  .gallery-grid{column-count:1}
+  .form-row{grid-template-columns:1fr}
+  .hero-title{font-size:3.2rem;letter-spacing:2px}
+  .hero-sub{font-size:.75rem;letter-spacing:3px}
+  .container{padding:0 20px}
+  .about-image img{height:320px}
+  .mobile-menu a{font-size:2.4rem}
+}
+@media(max-width:420px){
+  .hero-title{font-size:2.5rem;letter-spacing:1px}
+  .nav-actions{gap:6px}
+  .theme-toggle .theme-btn{padding:6px 8px;font-size:.65rem}
+  .lang-toggle .lang-btn{padding:6px 8px;font-size:.65rem}
+  .logo{font-size:1.6rem}
+  .mobile-menu a{font-size:2rem;letter-spacing:2px}
+}
+@media(max-width:600px){.filter-btn{padding:8px 16px;font-size:.7rem}.gallery-filters{gap:8px}}
+.hero-title,.hero-sub{word-break:keep-all;overflow-wrap:break-word}
+@supports (height: 100dvh){
+  .hero{min-height:100dvh}
+  .mobile-menu{height:100dvh}
+}
+</style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#">OMANÄOLINE</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">Avaleht</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Teenused</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio">Portfoolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">Meist</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Kontakt</a></li>
-                </ul>
-                <button class="btn btn-outline-light ms-3">🛒 Ostukorv</button>
-            </div>
-        </div>
-    </nav>
+<div class="scroll-progress" id="scrollProgress"></div>
+<nav class="navbar" id="navbar">
+<div class="container nav-inner">
+<div class="logo">SSK <span>/</span> KJR</div>
+<ul class="nav-links" id="navLinks"></ul>
+<div class="nav-actions">
+<div class="lang-toggle"><button class="lang-btn active" data-lang="et">ET</button><button class="lang-btn" data-lang="en">EN</button></div>
+<div class="theme-toggle"><button class="theme-btn active" data-theme="dark" data-et="Tume" data-en="Dark">Tume</button><button class="theme-btn" data-theme="light" data-en="Light" data-et="Hele">Hele</button></div>
+<button class="hamburger" id="hamburger" aria-label="Menu">
+<svg id="hamburgerIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path class="bar bar-top" d="M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path class="bar bar-mid" d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path class="bar bar-bot" d="M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+</button>
+</div>
+</div>
+</nav>
+<div class="mobile-menu" id="mobileMenu"></div>
+<header id="kodu" class="hero">
+<div class="particles" id="particles"></div>
+<div class="hero-overlay"></div>
+<div class="hero-content">
+<h1 class="hero-title"><span data-et="JÄÄDVUSTAME" data-en="CAPTURING">JÄÄDVUSTAME</span><br><span class="outline" data-et="AUTOSID" data-en="CARS">AUTOSID</span></h1>
+<p class="hero-sub" data-et="Hetked • Emotsioon • Looming" data-en="Moments • Emotion • Creation">Hetked • Emotsioon • Looming</p>
+<div class="hero-cta"><a href="#galerii" class="btn-primary" data-et="Vaata galeriid" data-en="View gallery">Vaata galeriid</a></div>
+</div>
+</header>
+<main>
+<section id="minust" class="section">
+<div class="container">
+<div class="about-grid">
+<div class="about-image reveal"><img src="img/e46/vasak tuli e46.jpeg" alt="BMW E46 vasak tuli" loading="lazy" onerror="this.style.display='none'"></div>
+<div class="about-text reveal reveal-delay-1">
+<p class="section-label" data-et="Meist" data-en="About us">Meist</p>
+<h2 class="section-title" data-et="Hobi korras jäädvustused" data-en="Hobby photography">Hobi korras jäädvustused</h2>
+<p data-et="Pildistame autosid, mis meile endile huvi pakuvad. See on viis püüda kinni detaile ja emotsioone, mida tavaline mööduja võib-olla ei märka." data-en="We photograph cars that genuinely interest us. It's a way to capture details and emotions that a casual passerby might miss.">Pildistame autosid, mis meile endile huvi pakuvad. See on viis püüda kinni detaile ja emotsioone, mida tavaline mööduja võib-olla ei märka.</p>
+<p data-et="Meie tiim on kasvanud — nüüd on meiega liitunud droonipildistaja, mistõttu saame soovi korral jäädvustada autosid ka õhust." data-en="Our team has grown — a drone photographer has now joined us, so on request we can also capture cars from the air.">Meie tiim on kasvanud — nüüd on meiega liitunud droonipildistaja, mistõttu saame soovi korral jäädvustada autosid ka õhust.</p>
+<div class="stats">
+<div><div class="stat-num" id="statCars" data-target="20" data-suffix="+">0</div><div class="stat-label" data-et="Pildistatud autot" data-en="Cars captured">Pildistatud autot</div></div>
+<div><div class="stat-num" id="statPassion" data-target="100" data-suffix="%">0</div><div class="stat-label" data-et="Kirg" data-en="Passion">Kirg</div></div>
+</div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="container">
-            <div class="row align-items-center min-vh-100">
-                <div class="col-lg-6">
-                    <h1 class="display-4 fw-bold mb-4">Loov ja <span class="text-gradient">unikaalne</span> disain</h1>
-                    <p class="lead mb-4">Avastage inspireerivaid lahendusi, mis peegeldavad teie isikupära ja stiili.</p>
-                    <a href="#services" class="btn btn-primary btn-lg me-3">Vaata Teenuseid</a>
-                    <a href="#portfolio" class="btn btn-outline-light btn-lg">✨ Uus Kollektsioon</a>
-                </div>
-                <div class="col-lg-6">
-                    <div class="hero-image"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+<div style="margin-top:32px; padding:16px 20px; background:var(--accent-dim); border-radius:16px; border-left:4px solid var(--accent);">
+<i class="fas fa-lightbulb" style="color:var(--accent); margin-right:10px;"></i>
+<strong>Fun Fact:</strong> <span data-et="Kõik meie pildid on jäädvustatud telefoniga." data-en="All our photos are captured with a phone.">Kõik meie pildid on jäädvustatud telefoniga.</span>
+</div>
 
-    <!-- Services Section -->
-    <section id="services" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Meie Teenused</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <div class="service-icon mb-3">🎨</div>
-                            <h5 class="card-title">Veebi Disain</h5>
-                            <p class="card-text">Kaasaegsed ja responsiivsed veebidisainid, mis võtavad hingetõmbe.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <div class="service-icon mb-3">💻</div>
-                            <h5 class="card-title">Arendus</h5>
-                            <p class="card-text">Täisfunktsionaalsed veebirakendused ja interaktiivsed elemendid.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <div class="service-icon mb-3">📱</div>
-                            <h5 class="card-title">Mobiilirakendused</h5>
-                            <p class="card-text">Optimeeritud kogemused kõigil seadmetel ja ekraanidel.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<div style="margin-top:16px; padding:16px 20px; background:rgba(61,169,252,.14); border-radius:16px; border-left:4px solid #3da9fc;">
+<svg class="drone-icon" style="width:16px;height:16px;vertical-align:-2px;margin-right:10px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><circle cx="19" cy="5" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><circle cx="5" cy="19" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><circle cx="19" cy="19" r="2.6" stroke="#3da9fc" stroke-width="1.6"/><path d="M7 7L10.3 10.3M17 7L13.7 10.3M7 17L10.3 13.7M17 17L13.7 13.7" stroke="#3da9fc" stroke-width="1.6" stroke-linecap="round"/><rect x="9.3" y="9.3" width="5.4" height="5.4" rx="1.3" fill="#3da9fc"/></svg>
+<strong data-et="Uudis:" data-en="News:">Uudis:</strong> <span data-et="Nüüd saadaval ka droonipildistus — vajuta galeriis 'Drone' filtrile, et näha näiteid!" data-en="Drone photography is now available too — tap the 'Drone' filter in the gallery to see examples!">Nüüd saadaval ka droonipildistus — vajuta galeriis 'Drone' filtrile, et näha näiteid!</span>
+</div>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Portfoolio</h2>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <a href="#contact" class="portfolio-item text-decoration-none text-dark d-block">
-                        <div class="portfolio-img">
-                            <img src="image.png" alt="E-kaubandus Sait">
-                        </div>
-                        <h5>E-kaubandus Sait</h5>
-                        <p>Täielikult funktsionaalne veebipood.</p>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <a href="#contact" class="portfolio-item text-decoration-none text-dark d-block">
-                        <div class="portfolio-img">
-                            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Äri Veebisait">
-                        </div>
-                        <h5>Äri Veebisait</h5>
-                        <p>Professionaalne ettevõtte esitlus.</p>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <a href="#contact" class="portfolio-item text-decoration-none text-dark d-block">
-                        <div class="portfolio-img">
-                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Portfolio Leht">
-                        </div>
-                        <h5>Portfolio Leht</h5>
-                        <p>Kreatiivne isiklik portfoolio.</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+</div>
+</div>
+</div>
+</section>
+<section id="galerii" class="section bg2">
+<div class="container">
+<div class="gallery-header reveal">
+<div><p class="section-label" data-et="Tööd" data-en="Works">Tööd</p><h2 class="section-title" data-et="Galerii" data-en="Gallery">Galerii</h2></div>
+<p style="color:var(--dim);font-size:.85rem;" data-et="Kliki suurendamiseks" data-en="Click to enlarge">Kliki suurendamiseks</p>
+</div>
+<p style="color:var(--dim);font-size:.78rem;letter-spacing:.5px;margin-bottom:24px;display:flex;align-items:center;gap:8px;" class="reveal"><i class="fas fa-circle-info" style="color:var(--accent);"></i><span data-et="NB! Kõik fotod on autoriõigusega kaitstud. Piltide jagamine, allalaadimine või kasutamine ilma loata on keelatud." data-en="NB! All photos are copyright protected. Sharing, downloading or using these images without permission is prohibited.">NB! Kõik fotod on autoriõigusega kaitstud. Piltide jagamine, allalaadimine või kasutamine ilma loata on keelatud.</span></p>
+<div class="gallery-filters reveal" id="galleryFilters"></div>
+<div class="gallery-grid" id="galleryGrid"></div>
+</div>
+</section>
+<section id="kontakt" class="section">
+<div class="container">
+<div class="contact-grid">
+<div class="contact-info reveal">
+<p class="section-label" data-et="Kirjuta mulle" data-en="Get in touch">Kirjuta mulle</p>
+<h2 class="section-title" data-et="Kontakt" data-en="Contact">Kontakt</h2>
+<p data-et="Soovid enda autost pilte? Võta ühendust ning vastame esimesel võimalusel!" data-en="Do you want photos of your car? Get in touch and we'll reply as soon as possible!">Soovid enda autost pilte? Võta ühendust ning vastame esimesel võimalusel!</p>
+<div class="contact-social">
+<a href="https://www.instagram.com/ssk.kjr.photos/" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+<a href="https://www.facebook.com/siimsander.kool/" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+<a href="mailto:ssk.workss@gmail.com" class="social-btn" aria-label="Email"><i class="fas fa-envelope"></i></a>
+</div>
+</div>
+<div class="reveal reveal-delay-1">
+<form class="contact-form" id="contactForm" method="POST">
+<div class="form-field form-honeypot" aria-hidden="true">
+<label for="fwebsite">Website</label>
+<input type="text" id="fwebsite" name="website" tabindex="-1" autocomplete="off">
+</div>
+<div class="form-row">
+<div class="form-field"><label for="fname" data-et="Nimi" data-en="Name">Nimi</label><input type="text" id="fname" name="name" placeholder="Sinu nimi" data-et="Sinu nimi" data-en="Your name" required><div class="field-msg" id="fnameMsg"></div></div>
+<div class="form-field"><label for="femail" data-et="E-post" data-en="Email">E-post</label><input type="email" id="femail" name="email" placeholder="sinu@email.com" data-et="sinu@email.com" data-en="you@email.com" required><div class="field-msg" id="femailMsg"></div></div>
+</div>
+<div class="form-field"><label for="fsubject" data-et="Teema" data-en="Subject">Teema</label><select id="fsubject" name="subject"><option value="" data-et="Vali teema..." data-en="Select a subject...">Vali teema...</option><option value="shoot" data-et="Pildistamise broneerimine" data-en="Book a shoot">Pildistamise broneerimine</option><option value="drone" data-et="Droonipildistuse broneerimine" data-en="Book a drone shoot">Droonipildistuse broneerimine</option><option value="collab" data-et="Koostöö" data-en="Collaboration">Koostöö</option><option value="other" data-et="Muu" data-en="Other">Muu</option></select></div>
+<div class="form-field"><label for="fmessage" data-et="Sõnum" data-en="Message">Sõnum</label><textarea id="fmessage" name="message" placeholder="..." data-et="..." data-en="..." required></textarea><div class="field-msg" id="fmessageMsg"></div></div>
+<button type="submit" class="btn-submit" id="submitBtn" data-et="Saada sõnum" data-en="Send message">Saada sõnum</button>
+<div class="form-success" id="formSuccess" data-et="✓  Sõnum saadetud! Vastame esimesel võimalusel." data-en="✓  Message sent! We'll reply as soon as possible.">✓  Sõnum saadetud! Vastame esimesel võimalusel.</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="container">
+<div class="logo">SSK <span>/</span> KJR</div>
+<p data-et="© 2026 SSK / KJR — kõik fotod on autoriõigusega kaitstud. Jagamine ja kasutamine ilma loata keelatud." data-en="© 2026 SSK / KJR — all photos are copyright protected. Sharing and use without permission is prohibited.">© 2026 SSK / KJR — kõik fotod on autoriõigusega kaitstud. Jagamine ja kasutamine ilma loata keelatud.</p>
+</div>
+</footer>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+<div class="lightbox-counter" id="lbCounter"></div>
+<div class="lightbox-actions" id="lbActions">
+<button class="lightbox-action-btn" id="lbFav" aria-label="Lemmik"><i class="far fa-heart"></i></button>
+</div>
+<button class="lightbox-close" id="lbClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
+<button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous image">‹</button>
+<button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next image">›</button>
+<div class="lightbox-img-wrap" id="lbImgWrap">
+<img class="lightbox-img" id="lbImg" src="" alt="">
+<div class="watermark"><span>SSK / KJR</span></div>
+</div>
+<div class="lightbox-caption" id="lbCaption"></div>
+</div>
+<button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){
+  emailjs.init('CKZ5XoAUAW3QS3QRK'); // Replace with your EmailJS public key
+})();
+const navItems=[{href:'#kodu',et:'Kodu',en:'Home'},{href:'#minust',et:'Meist',en:'About'},{href:'#galerii',et:'Galerii',en:'Gallery'},{href:'#kontakt',et:'Kontakt',en:'Contact'}];
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Uus Galerii</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="gallery-card">
-                        <img src="image.png" alt="Uus projekt 1">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="gallery-card">
-                        <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=800&q=80" alt="Uus projekt 2">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="gallery-card">
-                        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80" alt="Uus projekt 3">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+const galleryItems=[
+  {src:'img/e46/e46 4k.jpeg',alt:'BMW E46',brand:'BMW'},
+  {src:'img/erm 61 kristo.jpeg',alt:'BMW E61',brand:'BMW'},
+  {src:'img/erm e61.jpeg',alt:'BMW E61',brand:'BMW'},
+  {src:'img/e46/e46.jpeg',alt:'BMW E46',brand:'BMW'},
+  {src:'img/e61 magi.jpg',alt:'BMW E61',brand:'BMW'},
+  {src:'img/e46/e46 sygis.jpeg',alt:'BMW E46 Sügis',brand:'BMW'},
+  {src:'img/e46/parem tuli e46.jpeg',alt:'E46 Light',brand:'BMW'},
+  {src:'img/e46/paike e46.jpeg',alt:'E46 Sun',brand:'BMW'},
+  {src:'img/e46/sygis e46 veel.jpeg',alt:'E46 Autumn',brand:'BMW'},
+  {src:'img/e46/tuli sygis e46.jpeg',alt:'E46 Light',brand:'BMW'},
+  {src:'img/seitsmene rahinge.png',alt:'BMW seitsmene',brand:'BMW',pos:'center 35%'},
+  {src:'img/e46 rool.JPG',alt:'E46 Rool',brand:'BMW'},
+  {src:'img/f10/f10 ihaste.jpeg',alt:'BMW F10',brand:'BMW'},
+  {src:'img/f10/f10 pori.jpg',alt:'F10',brand:'BMW'},
+  {src:'img/audi/audi a6 ilus taevas.jpeg',alt:'Audi A6',brand:'Audi'},
+  {src:'img/lexus eeden parkla.png',alt:'Lexus',brand:'Lexus'},
+  {src:'img/golf.jpeg',alt:'Golf',brand:'Volkswagen'},
+  {src:'img/999syt.JPG',alt:'999syt',brand:'BMW'},
+  {src:'img/mustang.jpeg',alt:'Mustang',brand:'Ford'},
+  {src:'img/porcshe.jpeg',alt:'Porsche',brand:'Porsche'},
+  {src:'img/skyline.jpeg',alt:'Skyline',brand:'Nissan'},
+  {src:'img/001juk nissan.JPG',alt:'Nissan',brand:'Nissan'},
+  {src:'img/volks.JPG',alt:'Volkswagen',brand:'Volkswagen'},
+  {src:'img/volks.jpeg.PNG',alt:'Volkswagen',brand:'Volkswagen'},
+  {src:'img/kollane e46.JPG',alt:'Kollane E46',brand:'BMW'},
+  {src:'img/velg/gren velg.jpeg',alt:'Wheel',brand:'BMW'},
+  {src:'img/interior/m rool.jpeg',alt:'Interior',brand:'BMW'},
+  {src:'img/audi/eest kylg.jpg',alt:'Honda Civic Type R külg',brand:'Honda'},
+  {src:'img/audi/taga honda.jpg',alt:'Honda Civic Type R tagant',brand:'Honda'},
+  {src:'img/taga (ylevalt).png',alt:'Auto tagant ülevalt',brand:'Mazda'},
+  {src:'img/audi/kolmneli honda.jpg',alt:'Honda Civic Type R',brand:'Honda'},
+  {src:'img/audi/velg honda.jpg',alt:'Honda Civic Type R velg',brand:'Honda'},
+  {src:'img/audi/mazda-eest-ulevalt.png',alt:'Mazda eest ülevalt',brand:'Mazda'},
+  {src:'img/audi/mazda-vasak-velg.png',alt:'Mazda vasak velg',brand:'Mazda'},
+  {src:'img/bmw-gt-eest.jpg',alt:'BMW 3 GT eest',brand:'BMW'},
+  {src:'img/bmw-gt-merk.jpg',alt:'BMW märk',brand:'BMW'},
+  {src:'img/69cat.jpg',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/batman auto.JPG',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/bitestop neljak.jpg',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/motika piffid syda.jpg',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/mustang22.jpg',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/neljak.JPG',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/saased.JPG',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/droon mrsu aye.png',alt:'Droonivaade',brand:'',type:'drone'},
+  {src:'img/droonivend moggib merusga.jpg',alt:'Droonivaade',brand:'',type:'drone'}
+];
 
-    <!-- About Section -->
-    <section id="about" class="py-5 bg-light">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h2 class="mb-4">Meist</h2>
-                    <p class="mb-4">Oleme kogenud veebiarendajad, kes loovad ainulaadseid digitaalseid kogemusi. Meie meeskond ühendab loomingulisuse ja tehnilise ekspertiisi.</p>
-                    <div class="row g-3">
-                        <div class="col-6">
-                            <div class="stat">
-                                <h3>50+</h3>
-                                <p>Projektid</p>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat">
-                                <h3>100%</h3>
-                                <p>Rahulolevad kliendid</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="about-image">
-                        <img src="image.png" alt="Meie meeskond">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+const langBtns=document.querySelectorAll('.lang-btn');
+const themeBtns=document.querySelectorAll('.theme-btn');
+const navbar=document.getElementById('navbar');
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+const galleryGrid=document.getElementById('galleryGrid');
+const galleryFilters=document.getElementById('galleryFilters');
+const lightbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lbImg');
+const lbCaption=document.getElementById('lbCaption');
+const lbClose=document.getElementById('lbClose');
+const lbPrev=document.getElementById('lbPrev');
+const lbNext=document.getElementById('lbNext');
+const lbCounter=document.getElementById('lbCounter');
+const lbFav=document.getElementById('lbFav');
+let currentLang='et',currentTheme=localStorage.getItem('theme')||'dark',currentImg=0,activeFilter='all',showFavoritesOnly=false,showDroneOnly=false;
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Võta Ühendust</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <form class="contact-form">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" placeholder="Nimi" required>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" placeholder="Email" required>
-                            </div>
-                            <div class="col-12">
-                                <textarea class="form-control" rows="5" placeholder="Sõnum" required></textarea>
-                            </div>
-                            <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-primary btn-lg">Saada Sõnum</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+const FAV_KEY='ssk_favorites';
+function getFavorites(){
+  try{ const v=JSON.parse(localStorage.getItem(FAV_KEY)); return Array.isArray(v)?v:[]; }catch(e){ return []; }
+}
+function saveFavorites(arr){
+  try{ localStorage.setItem(FAV_KEY, JSON.stringify(arr)); }catch(e){}
+}
+function isFavorited(src){ return getFavorites().indexOf(src)!==-1; }
+function toggleFavorite(src){
+  let favs=getFavorites();
+  const idx=favs.indexOf(src);
+  if(idx===-1){ favs.push(src); } else { favs.splice(idx,1); }
+  saveFavorites(favs);
+  return favs.indexOf(src)!==-1;
+}
+function updateFavCount(){
+  const btn=document.getElementById('favFilterBtn');
+  if(!btn)return;
+  const count=getFavorites().length;
+  let countEl=btn.querySelector('.fav-count');
+  if(count>0){
+    if(!countEl){ countEl=document.createElement('span'); countEl.className='fav-count'; btn.appendChild(countEl); }
+    countEl.textContent=' ('+count+')';
+  }else if(countEl){ countEl.remove(); }
+}
 
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-4">
-        <div class="container text-center">
-            <p>&copy; 2024 Omanäoline Disain. Kõik õigused kaitstud.</p>
-        </div>
-    </footer>
+navLinks.innerHTML=navItems.map(item=>`<li><a href="${item.href}" data-et="${item.et}" data-en="${item.en}">${item.et}</a></li>`).join('');
+mobileMenu.innerHTML=navItems.map(item=>`<a href="${item.href}" data-et="${item.et}" data-en="${item.en}">${item.et}</a>`).join('');
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/script.js"></script>
+const particlesEl=document.getElementById('particles');
+const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(particlesEl && !reducedMotion){
+  const count=window.innerWidth<700?14:26;
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const left=Math.random()*100;
+    const size=2+Math.random()*4;
+    const duration=8+Math.random()*10;
+    const delay=Math.random()*duration;
+    const drift=(Math.random()*60-30)+'px';
+    p.style.left=left+'%';
+    p.style.width=size+'px';
+    p.style.height=size+'px';
+    p.style.animationDuration=duration+'s';
+    p.style.animationDelay='-'+delay+'s';
+    p.style.setProperty('--drift',drift);
+    particlesEl.appendChild(p);
+  }
+}
+
+const brands=['Kõik',...new Set(galleryItems.map(i=>i.brand).filter(Boolean))];
+const brandsEn={'Kõik':'All'};
+galleryFilters.innerHTML=brands.map(b=>`<button class="filter-btn${b==='Kõik'?' active':''}" data-brand="${b==='Kõik'?'all':b}" data-et="${b}" data-en="${brandsEn[b]||b}">${b}</button>`).join('')
+  + `<button class="filter-btn filter-fav-btn" id="favFilterBtn" type="button" aria-pressed="false"><i class="far fa-heart"></i><span data-et="Lemmikud" data-en="Favorites">Lemmikud</span></button>`
+  + `<button class="filter-btn filter-drone-btn" id="droneFilterBtn" type="button" aria-pressed="false"><svg class="drone-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:13px;height:13px;vertical-align:-1px;"><circle cx="5" cy="5" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="5" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="5" cy="19" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="19" r="2.6" stroke="currentColor" stroke-width="1.8"/><path d="M7 7L10.3 10.3M17 7L13.7 10.3M7 17L10.3 13.7M17 17L13.7 13.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="9.3" y="9.3" width="5.4" height="5.4" rx="1.3" fill="currentColor"/></svg><span data-et="Drone" data-en="Drone">Drone</span></button>`;
+
+function updateGalleryVisibility(){
+  let anyVisible=false;
+  document.querySelectorAll('.gallery-item').forEach(item=>{
+    const brandHidden=activeFilter!=='all' && item.dataset.brand!==activeFilter;
+    const favHidden=showFavoritesOnly && !isFavorited(item.dataset.src);
+    const droneHidden=showDroneOnly && item.dataset.type!=='drone';
+    const hide=brandHidden||favHidden||droneHidden;
+    item.classList.toggle('hidden',hide);
+    if(!hide)anyVisible=true;
+  });
+  let emptyMsg=document.getElementById('galleryEmptyMsg');
+  if(!anyVisible && (showFavoritesOnly||showDroneOnly)){
+    if(!emptyMsg){
+      emptyMsg=document.createElement('p');
+      emptyMsg.id='galleryEmptyMsg';
+      emptyMsg.style.cssText='color:var(--dim);text-align:center;padding:30px 0;font-size:.9rem;';
+      galleryGrid.insertAdjacentElement('afterend',emptyMsg);
+    }
+    if(showDroneOnly){
+      emptyMsg.textContent=currentLang==='en' ? 'No drone photos yet — check back soon!' : 'Droonifotosid pole veel — vaata varsti uuesti!';
+    }else{
+      emptyMsg.textContent=currentLang==='en' ? 'No favorites yet — tap the heart on a photo to save it here.' : 'Lemmikuid pole veel — vajuta pildil südamele, et see siia salvestada.';
+    }
+    emptyMsg.style.display='block';
+  }else if(emptyMsg){
+    emptyMsg.style.display='none';
+  }
+}
+
+function renderGallery(){
+  galleryGrid.innerHTML=galleryItems.map((item,index)=>{
+    const fav=isFavorited(item.src);
+    const isDrone=item.type==='drone';
+    const badge=isDrone
+      ? `<div class="gallery-drone-badge"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:13px;height:13px;"><circle cx="5" cy="5" r="2.6" stroke="#fff" stroke-width="1.8"/><circle cx="19" cy="5" r="2.6" stroke="#fff" stroke-width="1.8"/><circle cx="5" cy="19" r="2.6" stroke="#fff" stroke-width="1.8"/><circle cx="19" cy="19" r="2.6" stroke="#fff" stroke-width="1.8"/><path d="M7 7L10.3 10.3M17 7L13.7 10.3M7 17L10.3 13.7M17 17L13.7 13.7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><rect x="9.3" y="9.3" width="5.4" height="5.4" rx="1.3" fill="#fff"/></svg>Drone</div>`
+      : `<div class="gallery-brand-badge">${item.brand}</div>`;
+    return `<div class="gallery-item reveal visible" data-src="${item.src}" data-index="${index}" data-brand="${item.brand}" data-type="${item.type||'ground'}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.pos?` style="object-position:${item.pos}"`:''} onerror="this.closest('.gallery-item').style.display='none'">${badge}<div class="watermark"><span>SSK / KJR</span></div><button class="fav-btn${fav?' active':''}" type="button" data-fav-src="${item.src}" aria-label="Lemmik"><i class="${fav?'fas':'far'} fa-heart"></i></button><div class="gallery-overlay"><i class="fas fa-expand"></i><span>${item.alt}</span></div></div>`;
+  }).join('');
+  document.querySelectorAll('.gallery-item').forEach(item=>{
+    item.addEventListener('click',()=>openLightbox(parseInt(item.dataset.index)));
+    const img=item.querySelector('img');
+    if(img.complete)img.classList.add('loaded');
+    else img.addEventListener('load',()=>img.classList.add('loaded'));
+    const favBtn=item.querySelector('.fav-btn');
+    favBtn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const src=favBtn.dataset.favSrc;
+      const nowFav=toggleFavorite(src);
+      favBtn.classList.toggle('active',nowFav);
+      favBtn.querySelector('i').className=nowFav?'fas fa-heart':'far fa-heart';
+      if(images[currentImg]===src)updateLbFavButton();
+      updateFavCount();
+      updateGalleryVisibility();
+    });
+    if(!reducedMotion && window.matchMedia('(pointer: fine)').matches){
+      item.addEventListener('mousemove',e=>{
+        const rect=item.getBoundingClientRect();
+        const x=(e.clientX-rect.left)/rect.width-0.5;
+        const y=(e.clientY-rect.top)/rect.height-0.5;
+        const rotateY=x*14;
+        const rotateX=-y*14;
+        item.style.transform=`perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+        img.style.transform=`scale(1.1) translate(${-x*10}px, ${-y*10}px)`;
+      });
+      item.addEventListener('mouseleave',()=>{
+        item.style.transform='';
+        img.style.transform='';
+      });
+    }
+  });
+  updateGalleryVisibility();
+}
+renderGallery();
+updateFavCount();
+
+galleryFilters.addEventListener('click',e=>{
+  const droneBtn=e.target.closest('#droneFilterBtn');
+  if(droneBtn){
+    showDroneOnly=!showDroneOnly;
+    droneBtn.classList.toggle('active',showDroneOnly);
+    droneBtn.setAttribute('aria-pressed',String(showDroneOnly));
+    if(showDroneOnly){
+      activeFilter='all';
+      galleryFilters.querySelectorAll('.filter-btn').forEach(b=>{
+        if(b.id==='favFilterBtn'||b.id==='droneFilterBtn')return;
+        b.classList.toggle('active',b.dataset.brand==='all');
+      });
+    }
+    updateGalleryVisibility();
+    return;
+  }
+  const favBtn=e.target.closest('#favFilterBtn');
+  if(favBtn){
+    showFavoritesOnly=!showFavoritesOnly;
+    favBtn.classList.toggle('active',showFavoritesOnly);
+    favBtn.setAttribute('aria-pressed',String(showFavoritesOnly));
+    updateGalleryVisibility();
+    return;
+  }
+  const btn=e.target.closest('.filter-btn');
+  if(!btn)return;
+  activeFilter=btn.dataset.brand;
+  galleryFilters.querySelectorAll('.filter-btn').forEach(b=>{ if(b.id!=='favFilterBtn' && b.id!=='droneFilterBtn') b.classList.toggle('active',b===btn); });
+  if(showDroneOnly){
+    showDroneOnly=false;
+    const droneToggle=document.getElementById('droneFilterBtn');
+    if(droneToggle){ droneToggle.classList.remove('active'); droneToggle.setAttribute('aria-pressed','false'); }
+  }
+  updateGalleryVisibility();
+});
+
+const images=galleryItems.map(item=>item.src);
+function setLang(lang){currentLang=lang;document.documentElement.lang=lang;langBtns.forEach(btn=>btn.classList.toggle('active',btn.dataset.lang===lang));document.querySelectorAll('[data-et]').forEach(el=>{const text=el.dataset[lang];if(text){if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=text;else el.textContent=text}});updateGalleryVisibility()}
+function setTheme(theme){currentTheme=theme;document.body.classList.toggle('light',theme==='light');themeBtns.forEach(btn=>btn.classList.toggle('active',btn.dataset.theme===theme));localStorage.setItem('theme',theme);const tcm=document.getElementById('themeColorMeta');if(tcm)tcm.setAttribute('content',theme==='light'?'#f6f6f6':'#080808')}
+langBtns.forEach(btn=>btn.addEventListener('click',()=>setLang(btn.dataset.lang)));
+themeBtns.forEach(btn=>btn.addEventListener('click',()=>setTheme(btn.dataset.theme)));
+setLang(currentLang);
+setTheme(currentTheme);
+let navScrollTicking=false;
+function onNavScrollTick(){
+  if(!navScrollTicking){
+    navScrollTicking=true;
+    requestAnimationFrame(()=>{navbar.classList.toggle('scrolled',window.scrollY>60);navScrollTicking=false});
+  }
+}
+window.addEventListener('scroll',onNavScrollTick,{passive:true});
+const scrollProgress=document.getElementById('scrollProgress');
+let scrollTicking=false;
+function updateScrollProgress(){const h=document.documentElement;const scrolled=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;scrollProgress.style.width=scrolled+'%'}
+function onScrollTick(){
+  if(!scrollTicking){
+    scrollTicking=true;
+    requestAnimationFrame(()=>{updateScrollProgress();scrollTicking=false});
+  }
+}
+window.addEventListener('scroll',onScrollTick,{passive:true});
+updateScrollProgress();
+const backToTop=document.getElementById('backToTop');
+let bttScrollTicking=false;
+function updateBackToTop(){backToTop.classList.toggle('visible',window.scrollY>window.innerHeight*0.8)}
+function onBttScrollTick(){
+  if(!bttScrollTicking){
+    bttScrollTicking=true;
+    requestAnimationFrame(()=>{updateBackToTop();bttScrollTicking=false});
+  }
+}
+window.addEventListener('scroll',onBttScrollTick,{passive:true});
+updateBackToTop();
+backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+hamburger.addEventListener('click',()=>{const open=hamburger.classList.toggle('open');mobileMenu.classList.toggle('open',open);document.body.style.overflow=open?'hidden':''});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hamburger.classList.remove('open');mobileMenu.classList.remove('open');document.body.style.overflow=''}));
+const revealEls=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.12});
+revealEls.forEach(el=>observer.observe(el));
+const statEls=document.querySelectorAll('.stat-num[data-target]');
+const statObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target;
+      const target=parseInt(el.dataset.target);
+      const suffix=el.dataset.suffix||'';
+      const duration=1200;
+      const start=performance.now();
+      function tick(now){
+        const progress=Math.min((now-start)/duration,1);
+        const eased=1-Math.pow(1-progress,3);
+        el.textContent=Math.round(eased*target)+suffix;
+        if(progress<1)requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      statObserver.unobserve(el);
+    }
+  });
+},{threshold:.5});
+statEls.forEach(el=>statObserver.observe(el));
+function updateLbFavButton(){
+  const src=images[currentImg];
+  const fav=isFavorited(src);
+  lbFav.classList.toggle('active',fav);
+  lbFav.querySelector('i').className=fav?'fas fa-heart':'far fa-heart';
+}
+function updateLightbox(){lbImg.src=images[currentImg];lbCaption.textContent=galleryItems[currentImg].alt;lbCounter.textContent=(currentImg+1)+' / '+images.length;updateLbFavButton();resetZoom()}
+function openLightbox(index){currentImg=index;updateLightbox();lightbox.classList.add('open');document.body.style.overflow='hidden'}
+function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';resetZoom()}
+function step(dir){currentImg=(currentImg+dir+images.length)%images.length;updateLightbox()}
+let isZoomed=false,zoomOriginX=50,zoomOriginY=50;
+function resetZoom(){isZoomed=false;lbImg.classList.remove('zoomed');lbImg.style.transform='';lbImg.style.transformOrigin='center center';lbImg.style.width='';lbImg.style.height=''}
+lbImg.addEventListener('click',e=>{
+  e.stopPropagation();
+  if(!isZoomed){
+    const rect=lbImg.getBoundingClientRect();
+    zoomOriginX=((e.clientX-rect.left)/rect.width)*100;
+    zoomOriginY=((e.clientY-rect.top)/rect.height)*100;
+    lbImg.style.transformOrigin=zoomOriginX+'% '+zoomOriginY+'%';
+    lbImg.classList.add('zoomed');
+    lbImg.style.transform='scale('+(window.innerWidth<700?1.8:2.4)+')';
+    isZoomed=true;
+  }else{
+    resetZoom();
+  }
+});
+lbImg.addEventListener('mousemove',e=>{
+  if(!isZoomed)return;
+  const rect=lbImg.getBoundingClientRect();
+  const x=((e.clientX-rect.left)/rect.width)*100;
+  const y=((e.clientY-rect.top)/rect.height)*100;
+  lbImg.style.transformOrigin=x+'% '+y+'%';
+});
+lbImg.addEventListener('touchmove',e=>{
+  if(!isZoomed||!e.touches[0])return;
+  e.preventDefault();
+  const t=e.touches[0];
+  const rect=lbImg.getBoundingClientRect();
+  const x=((t.clientX-rect.left)/rect.width)*100;
+  const y=((t.clientY-rect.top)/rect.height)*100;
+  lbImg.style.transformOrigin=x+'% '+y+'%';
+},{passive:false});
+lbClose.addEventListener('click',closeLightbox);
+lbPrev.addEventListener('click',()=>step(-1));
+lbNext.addEventListener('click',()=>step(1));
+lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});
+document.addEventListener('keydown',e=>{if(!lightbox.classList.contains('open'))return;if(e.key==='Escape')closeLightbox();else if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1)});
+
+lbFav.addEventListener('click',()=>{
+  const src=images[currentImg];
+  const nowFav=toggleFavorite(src);
+  updateLbFavButton();
+  const gridBtn=document.querySelector('.fav-btn[data-fav-src="'+CSS.escape(src)+'"]');
+  if(gridBtn){
+    gridBtn.classList.toggle('active',nowFav);
+    gridBtn.querySelector('i').className=nowFav?'fas fa-heart':'far fa-heart';
+  }
+  updateFavCount();
+  updateGalleryVisibility();
+});
+
+let touchStartX=0,touchStartY=0;
+lightbox.addEventListener('touchstart',e=>{
+  if(!e.touches[0])return;
+  touchStartX=e.touches[0].clientX;
+  touchStartY=e.touches[0].clientY;
+},{passive:true});
+lightbox.addEventListener('touchend',e=>{
+  if(isZoomed||!e.changedTouches[0])return;
+  const dx=e.changedTouches[0].clientX-touchStartX;
+  const dy=e.changedTouches[0].clientY-touchStartY;
+  if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)){
+    if(dx<0)step(1); else step(-1);
+  }
+},{passive:true});
+
+const contactForm=document.getElementById('contactForm');
+const msgs={et:{nameShort:'Nimi peab olema vähemalt 2 tähemärki',nameOk:'Näeb hea välja',emailInvalid:'Palun sisesta korrektne e-posti aadress',emailOk:'Näeb hea välja',msgShort:'Sõnum peab olema vähemalt 10 tähemärki',msgOk:'Näeb hea välja'},en:{nameShort:'Name should be at least 2 characters',nameOk:'Looks good',emailInvalid:'Please enter a valid email address',emailOk:'Looks good',msgShort:'Message should be at least 10 characters',msgOk:'Looks good'}};
+function setFieldState(input,msgEl,valid,validText,invalidText){
+  if(input.value.trim()===''){
+    input.classList.remove('field-valid','field-invalid');
+    msgEl.textContent='';msgEl.className='field-msg';
+    return;
+  }
+  input.classList.toggle('field-valid',valid);
+  input.classList.toggle('field-invalid',!valid);
+  msgEl.textContent=valid?validText:invalidText;
+  msgEl.className='field-msg '+(valid?'ok':'error');
+}
+const fnameInput=document.getElementById('fname');
+const femailInput=document.getElementById('femail');
+const fmessageInput=document.getElementById('fmessage');
+const fnameMsg=document.getElementById('fnameMsg');
+const femailMsg=document.getElementById('femailMsg');
+const fmessageMsg=document.getElementById('fmessageMsg');
+function validateName(){const m=msgs[currentLang];setFieldState(fnameInput,fnameMsg,fnameInput.value.trim().length>=2,m.nameOk,m.nameShort)}
+function validateEmail(){const m=msgs[currentLang];const re=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;setFieldState(femailInput,femailMsg,re.test(femailInput.value.trim()),m.emailOk,m.emailInvalid)}
+function validateMessage(){const m=msgs[currentLang];setFieldState(fmessageInput,fmessageMsg,fmessageInput.value.trim().length>=10,m.msgOk,m.msgShort)}
+if(fnameInput){fnameInput.addEventListener('input',validateName)}
+if(femailInput){femailInput.addEventListener('input',validateEmail)}
+if(fmessageInput){fmessageInput.addEventListener('input',validateMessage)}
+const formSuccess=document.getElementById('formSuccess');
+const submitBtn=document.getElementById('submitBtn');
+if(contactForm){
+  contactForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    const honeypot=document.getElementById('fwebsite');
+    if(honeypot && honeypot.value.trim()!==''){
+      if(formSuccess){
+        formSuccess.style.display='block';
+        formSuccess.textContent=currentLang==='en' ? "✓  Message sent! We'll reply as soon as possible." : '✓  Sõnum saadetud! Vastame esimesel võimalusel.';
+      }
+      contactForm.reset();
+      return;
+    }
+    submitBtn.disabled=true;
+    emailjs.sendForm('service_mxvjmxa','template_b1cga7p', this, 'CKZ5XoAUAW3QS3QRK')
+      .then(function(){
+        if(formSuccess){
+          formSuccess.style.display='block';
+          formSuccess.textContent=currentLang==='en' ? "✓  Message sent! We'll reply as soon as possible." : '✓  Sõnum saadetud! Vastame esimesel võimalusel.';
+        }
+        contactForm.reset();
+        submitBtn.disabled=false;
+      }, function(error){
+        const msg = error && (error.text || error.statusText || error.message) ? (error.text || error.statusText || error.message) : JSON.stringify(error);
+        alert('Viga e-kirja saatmisel: ' + msg + '\nVaata brauseri konsooli täpsema info jaoks.');
+        console.error('EmailJS error:', error);
+        submitBtn.disabled=false;
+      });
+  });
+}
+</script>
 </body>
 </html>
