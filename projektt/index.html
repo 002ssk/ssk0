@@ -9,9 +9,10 @@
 <meta property="og:title" content="SSK | Car Photography">
 <meta property="og:description" content="Hobikorras autofotograafia Eestis. Pildistame huvitavaid ja tuunitud autosid — vaata galeriid ja võta ühendust pildistuse broneerimiseks.">
 <meta property="og:type" content="website">
-<!-- ASENDA SINU-DOMEEN.ee oma päris domeeniga, et lingi eelvaade töötaks -->
-<meta property="og:image" content="https://SINU-DOMEEN.ee/img/hero-bg.png">
+<meta property="og:url" content="https://www.ssk-kjr.photos/">
+<meta property="og:image" content="https://www.ssk-kjr.photos/img/hero-bg.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.ssk-kjr.photos/img/hero-bg.png">
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -239,6 +240,9 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
   .hamburger{display:flex}
   .stats{gap:28px}
   .section{padding:80px 0}
+  .hero{min-height:85vh}
+  .hero-content{padding:0 16px}
+  .gallery-filters{justify-content:center}
 }
 @media(max-width:800px){.gallery-grid{column-count:2}}
 @media(max-width:600px){
@@ -247,7 +251,9 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
   .hero-title{font-size:3.2rem;letter-spacing:2px}
   .hero-sub{font-size:.75rem;letter-spacing:3px}
   .container{padding:0 20px}
-  .about-image img{height:320px}
+  .about-image img{height:auto}
+  .contact-grid{row-gap:32px}
+  .hero-content{padding:0 12px}
   .mobile-menu a{font-size:2.4rem}
 }
 @media(max-width:420px){
@@ -258,7 +264,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
   .logo{font-size:1.6rem}
   .mobile-menu a{font-size:2rem;letter-spacing:2px}
 }
-@media(max-width:600px){.filter-btn{padding:8px 16px;font-size:.7rem}.gallery-filters{gap:8px}}
+@media(max-width:600px){.filter-btn{padding:8px 16px;font-size:.7rem}.gallery-filters{gap:8px}.gallery-filters{justify-content:center}}
 .hero-title,.hero-sub{word-break:keep-all;overflow-wrap:break-word}
 @supports (height: 100dvh){
   .hero{min-height:100dvh}
@@ -312,7 +318,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 
 <div style="margin-top:32px; padding:16px 20px; background:var(--accent-dim); border-radius:16px; border-left:4px solid var(--accent);">
 <i class="fas fa-lightbulb" style="color:var(--accent); margin-right:10px;"></i>
-<strong>Fun Fact:</strong> <span data-et="Kõik meie pildid on jäädvustatud telefoni ja drooniga." data-en="All our photos are captured with a phone or a drone.">Kõik meie pildid on jäädvustatud telefoniga.</span>
+<strong>Fun Fact:</strong> <span data-et="Kõik meie pildid on jäädvustatud telefoniga." data-en="All our photos are captured with a phone.">Kõik meie pildid on jäädvustatud telefoniga.</span>
 </div>
 
 <div style="margin-top:16px; padding:16px 20px; background:rgba(61,169,252,.14); border-radius:16px; border-left:4px solid #3da9fc;">
@@ -339,7 +345,7 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
 <div class="container">
 <div class="contact-grid">
 <div class="contact-info reveal">
-<p class="section-label" data-et="Kirjuta meile" data-en="Get in touch">Kirjuta meile</p>
+<p class="section-label" data-et="Kirjuta mulle" data-en="Get in touch">Kirjuta mulle</p>
 <h2 class="section-title" data-et="Kontakt" data-en="Contact">Kontakt</h2>
 <p data-et="Soovid enda autost pilte? Võta ühendust ning vastame esimesel võimalusel!" data-en="Do you want photos of your car? Get in touch and we'll reply as soon as possible!">Soovid enda autost pilte? Võta ühendust ning vastame esimesel võimalusel!</p>
 <div class="contact-social">
@@ -512,7 +518,7 @@ if(particlesEl && !reducedMotion){
   }
 }
 
-const brands=['Kõik',...new Set(galleryItems.map(i=>i.brand).filter(Boolean))];
+const brands=['Kõik',...Array.from(new Set(galleryItems.map(i=>i.brand).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'et'))];
 const brandsEn={'Kõik':'All'};
 galleryFilters.innerHTML=brands.map(b=>`<button class="filter-btn${b==='Kõik'?' active':''}" data-brand="${b==='Kõik'?'all':b}" data-et="${b}" data-en="${brandsEn[b]||b}">${b}</button>`).join('')
   + `<button class="filter-btn filter-fav-btn" id="favFilterBtn" type="button" aria-pressed="false"><i class="far fa-heart"></i><span data-et="Lemmikud" data-en="Favorites">Lemmikud</span></button>`
