@@ -264,7 +264,10 @@ body.light section#kontakt .social-btn:hover{border-color:var(--accent);color:va
   .logo{font-size:1.6rem}
   .mobile-menu a{font-size:2rem;letter-spacing:2px}
 }
-@media(max-width:600px){.filter-btn{padding:8px 16px;font-size:.7rem}.gallery-filters{gap:8px}.gallery-filters{justify-content:center}}
+@media(max-width:600px){
+  .filter-btn{padding:10px 12px;font-size:.72rem;min-width:0;white-space:normal;text-align:center}
+  .gallery-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;justify-content:center;align-items:center}
+}
 .hero-title,.hero-sub{word-break:keep-all;overflow-wrap:break-word}
 @supports (height: 100dvh){
   .hero{min-height:100dvh}
