@@ -1,4 +1,3 @@
-mkdir -p /home/claude && cat > /home/claude/index.html << 'CLAUDE_EOF'
 <!DOCTYPE html>
 <html lang="et">
 <head>
@@ -657,61 +656,66 @@ async function downloadCurrentImage(){
   const item=galleryItems[currentImg];
   if(!item) return;
 
-  try{
-    const img=new Image();
-    img.src=item.src;
+  const img=new Image();
+  img.crossOrigin='anonymous';
+  img.src=item.src;
 
+  try{
     await new Promise((resolve,reject)=>{
       if(img.complete && img.naturalWidth){ resolve(); }
       else{ img.onload=resolve; img.onerror=reject; }
     });
-
-    const canvas=document.createElement('canvas');
-    const width=img.naturalWidth || img.width;
-    const height=img.naturalHeight || img.height;
-    canvas.width=width;
-    canvas.height=height;
-
-    const ctx=canvas.getContext('2d');
-    if(!ctx) return;
-
-    ctx.drawImage(img,0,0,width,height);
-
-    const text='SSK/KJR';
-    const fontSize=Math.max(28,Math.round(Math.min(width,height)*0.07));
-    ctx.font=`700 ${fontSize}px Arial, sans-serif`;
-    ctx.textAlign='center';
-    ctx.textBaseline='middle';
-    ctx.lineWidth=Math.max(3,Math.round(fontSize/8));
-
-    const stepX=Math.max(width/3,220);
-    const stepY=Math.max(height/3,180);
-    const offsets=[[-stepX,-stepY],[0,-stepY/1.2],[stepX,-stepY],[0,0],[stepX,stepY],[-stepX,stepY]];
-
-    offsets.forEach(([dx,dy])=>{
-      ctx.save();
-      ctx.translate(width/2 + dx, height/2 + dy);
-      ctx.rotate(-Math.PI/12);
-      ctx.globalAlpha=0.85;
-      ctx.strokeStyle='rgba(0,0,0,0.6)';
-      ctx.strokeText(text,0,0);
-      ctx.globalAlpha=0.6;
-      ctx.fillStyle='#ffffff';
-      ctx.fillText(text,0,0);
-      ctx.restore();
-    });
-
-    const link=document.createElement('a');
-    link.style.display='none';
-    link.download=`${(item.alt||'photo').replace(/[^a-z0-9]+/gi,'-').replace(/(^-|-$)/g,'').toLowerCase() || 'photo'}-watermarked.jpg`;
-    link.href=canvas.toDataURL('image/jpeg',0.95);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   }catch(err){
-    console.error('Watermarked download failed:', err);
-    alert('Allalaadimine ebaõnnestus — vaata brauseri konsooli.');
+    console.error('Image load failed for download:', err);
+    return;
   }
+
+  const canvas=document.createElement('canvas');
+  const width=img.naturalWidth || img.width;
+  const height=img.naturalHeight || img.height;
+  canvas.width=width;
+  canvas.height=height;
+
+  const ctx=canvas.getContext('2d');
+  if(!ctx) return;
+
+  ctx.drawImage(img,0,0,width,height);
+
+  const text='SSK/KJR';
+  const fontSize=Math.max(28,Math.round(Math.min(width,height)*0.07));
+  ctx.save();
+  ctx.font=`700 ${fontSize}px Arial, sans-serif`;
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.globalAlpha=0.35;
+  ctx.fillStyle='#ffffff';
+  ctx.shadowColor='rgba(0,0,0,0.65)';
+  ctx.shadowBlur=12;
+  ctx.lineWidth=Math.max(2,Math.round(fontSize/10));
+  ctx.strokeStyle='rgba(0,0,0,0.55)';
+
+  const stepX=Math.max(width/3,220);
+  const stepY=Math.max(height/3,180);
+  const offsets=[[-stepX,-stepY],[0,-stepY/1.2],[stepX,-stepY],[0,0],[stepX,stepY],[-stepX,stepY]];
+
+  offsets.forEach(([dx,dy])=>{
+    ctx.save();
+    ctx.translate(width/2 + dx, height/2 + dy);
+    ctx.rotate(-Math.PI/12);
+    ctx.strokeText(text,0,0);
+    ctx.fillText(text,0,0);
+    ctx.restore();
+  });
+
+  ctx.restore();
+
+  const link=document.createElement('a');
+  link.style.display='none';
+  link.download=`${(item.alt||'photo').replace(/[^a-z0-9]+/gi,'-').replace(/(^-|-$)/g,'').toLowerCase() || 'photo'}-watermarked.jpg`;
+  link.href=canvas.toDataURL('image/jpeg',0.95);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 let isZoomed=false,zoomOriginX=50,zoomOriginY=50;
 createLightboxActions();
@@ -826,6 +830,3 @@ if(contactForm){
 </script>
 </body>
 </html>
-CLAUDE_EOF
-cp /home/claude/index.html /mnt/user-data/outputs/index.html
-echo "done"
