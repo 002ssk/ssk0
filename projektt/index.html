@@ -458,7 +458,6 @@ const lbNext=document.getElementById('lbNext');
 const lbCounter=document.getElementById('lbCounter');
 const lbActions=document.getElementById('lbActions');
 const lbImgWrap=document.getElementById('lbImgWrap');
-let currentWatermarkedSrc='';
 let currentLang='et',currentTheme=localStorage.getItem('theme')||'dark',currentImg=0,activeFilter='all',showDroneOnly=false;
 
 navLinks.innerHTML=navItems.map(item=>`<li><a href="${item.href}" data-et="${item.et}" data-en="${item.en}">${item.et}</a></li>`).join('');
@@ -640,57 +639,8 @@ const statObserver=new IntersectionObserver((entries)=>{
   });
 },{threshold:.5});
 statEls.forEach(el=>statObserver.observe(el));
-async function createWatermarkedDataUrl(src){
-  const img=new Image();
-  img.crossOrigin='anonymous';
-  img.src=src;
-  await new Promise((resolve,reject)=>{
-    if(img.complete && img.naturalWidth) resolve();
-    else{ img.onload=resolve; img.onerror=reject; }
-  });
-  const canvas=document.createElement('canvas');
-  const width=img.naturalWidth || img.width;
-  const height=img.naturalHeight || img.height;
-  canvas.width=width;
-  canvas.height=height;
-  const ctx=canvas.getContext('2d');
-  if(!ctx) throw new Error('Canvas unsupported');
-  ctx.drawImage(img,0,0,width,height);
-  const text='SSK/KJR';
-  const fontSize=Math.max(28,Math.round(Math.min(width,height)*0.07));
-  ctx.save();
-  ctx.font=`700 ${fontSize}px Arial, sans-serif`;
-  ctx.textAlign='center';
-  ctx.textBaseline='middle';
-  ctx.globalAlpha=0.35;
-  ctx.fillStyle='#ffffff';
-  ctx.shadowColor='rgba(0,0,0,0.65)';
-  ctx.shadowBlur=12;
-  ctx.lineWidth=Math.max(2,Math.round(fontSize/10));
-  ctx.strokeStyle='rgba(0,0,0,0.55)';
-  const stepX=Math.max(width/3,220);
-  const stepY=Math.max(height/3,180);
-  const offsets=[[-stepX,-stepY],[0,-stepY/1.2],[stepX,-stepY],[0,0],[stepX,stepY],[-stepX,stepY]];
-  offsets.forEach(([dx,dy])=>{
-    ctx.save();
-    ctx.translate(width/2 + dx, height/2 + dy);
-    ctx.rotate(-Math.PI/12);
-    ctx.strokeText(text,0,0);
-    ctx.fillText(text,0,0);
-    ctx.restore();
-  });
-  ctx.restore();
-  return canvas.toDataURL('image/jpeg',0.95);
-}
-async function updateLightbox(){
-  const item=galleryItems[currentImg];
-  currentWatermarkedSrc=await createWatermarkedDataUrl(item.src);
-  lbImg.src=currentWatermarkedSrc;
-  lbCaption.textContent=item.alt;
-  lbCounter.textContent=(currentImg+1)+' / '+images.length;
-  resetZoom();
-}
-function openLightbox(index){currentImg=index;lightbox.classList.add('open');document.body.style.overflow='hidden';updateLightbox()}
+function updateLightbox(){lbImg.src=images[currentImg];lbCaption.textContent=galleryItems[currentImg].alt;lbCounter.textContent=(currentImg+1)+' / '+images.length;resetZoom()}
+function openLightbox(index){currentImg=index;updateLightbox();lightbox.classList.add('open');document.body.style.overflow='hidden'}
 function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';resetZoom()}
 function step(dir){currentImg=(currentImg+dir+images.length)%images.length;updateLightbox()}
 function createLightboxActions(){
@@ -763,8 +713,7 @@ async function downloadCurrentImage(){
   const link=document.createElement('a');
   link.style.display='none';
   link.download=`${(item.alt||'photo').replace(/[^a-z0-9]+/gi,'-').replace(/(^-|-$)/g,'').toLowerCase() || 'photo'}-watermarked.jpg`;
-  currentWatermarkedSrc = currentWatermarkedSrc || canvas.toDataURL('image/jpeg',0.95);
-  link.href=currentWatermarkedSrc;
+  link.href=canvas.toDataURL('image/jpeg',0.95);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -896,8 +845,6 @@ lbClose.addEventListener('click',closeLightbox);
 lbPrev.addEventListener('click',()=>step(-1));
 lbNext.addEventListener('click',()=>step(1));
 lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});
-lightbox.addEventListener('contextmenu',e=>{if(lightbox.classList.contains('open')) e.preventDefault();});
-lbImg.addEventListener('contextmenu',e=>{if(lightbox.classList.contains('open')) e.preventDefault();});
 document.addEventListener('keydown',e=>{if(!lightbox.classList.contains('open'))return;if(e.key==='Escape')closeLightbox();else if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1)});
 
 let touchStartX=0,touchStartY=0;
