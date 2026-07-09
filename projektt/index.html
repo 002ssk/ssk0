@@ -152,7 +152,7 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .lightbox.open{background:rgba(0,0,0,.95);pointer-events:all}
 .lightbox-img{max-width:90vw;max-height:80vh;object-fit:contain;opacity:0;transform:scale(.92);transition:opacity .4s var(--ease),transform .4s var(--ease);cursor:zoom-in;user-select:none;touch-action:none;will-change:transform}
 .lightbox.open .lightbox-img{opacity:1;transform:scale(1)}
-.lightbox-img.zoomed{cursor:grab;max-width:none;max-height:none;width:90vw;height:auto;transition:none}
+.lightbox-img.zoomed{cursor:grab;max-width:none;max-height:none;width:auto;height:auto;transition:none}
 .lightbox-caption{margin-top:18px;color:#fff;font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:.4s var(--ease) .1s;text-align:center;padding:0 20px}
 .lightbox.open .lightbox-caption{opacity:.75}
 .lightbox-counter{position:absolute;top:24px;left:32px;color:#fff;opacity:.55;font-size:.8rem;letter-spacing:2px;font-family:'DM Sans',sans-serif}
@@ -750,16 +750,21 @@ function resetZoom(){
   lbImg.style.cursor='zoom-in';
   lbImg.style.transition='opacity .4s var(--ease), transform .4s var(--ease)';
 }
-function setZoomState(zoomed){
+function setZoomState(zoomed, centerX, centerY){
   isZoomed=zoomed;
   if(zoomed){
-    zoomLevel=window.innerWidth<700?1.8:2.4;
+    const targetZoom=window.innerWidth<700?1.8:2.4;
     panX=0;
     panY=0;
     lbImg.classList.add('zoomed');
     lbImg.style.cursor='grab';
     lbImg.style.transition='transform .2s ease-out';
-    applyZoomTransform();
+    if(typeof centerX==='number' && typeof centerY==='number'){
+      zoomAroundPoint(targetZoom, centerX, centerY);
+    } else {
+      zoomLevel=targetZoom;
+      applyZoomTransform();
+    }
   }else{
     resetZoom();
   }
@@ -784,11 +789,11 @@ lbImg.addEventListener('click',e=>{
   if(isZoomed){
     resetZoom();
   }else{
-    setZoomState(true);
+    setZoomState(true,e.clientX,e.clientY);
   }
 });
 lbImg.addEventListener('pointerdown',e=>{
-  if(!isZoomed || e.button!==0) return;
+  if(!isZoomed || e.button!==0 || isPinching) return;
   dragActive=true;
   dragStartX=e.clientX;
   dragStartY=e.clientY;
@@ -834,6 +839,7 @@ let touchStartX=0,touchStartY=0;
 lightbox.addEventListener('touchstart',e=>{
   if(e.touches.length===2 && isZoomed){
     isPinching=true;
+    dragActive=false;
     pinchStartDist=getTouchDistance(e.touches[0],e.touches[1]);
     pinchStartZoom=zoomLevel;
     e.preventDefault();
@@ -865,6 +871,9 @@ lightbox.addEventListener('touchmove',e=>{
 lightbox.addEventListener('touchend',e=>{
   if(isPinching && e.touches.length<2){
     isPinching=false;
+  }
+  if(e.touches.length===0){
+    dragActive=false;
   }
   if(isZoomed||!e.changedTouches[0]) return;
   const dx=e.changedTouches[0].clientX-touchStartX;
