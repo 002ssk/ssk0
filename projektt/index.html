@@ -783,32 +783,44 @@ function zoomAroundPoint(newZoom, centerX, centerY){
   clampPan();
   applyZoomTransform();
 }
-lbImg.addEventListener('click',e=>{
-  e.stopPropagation();
-  if(isPinching) return;
-  if(isZoomed){
-    resetZoom();
-  }else{
-    setZoomState(true,e.clientX,e.clientY);
-  }
-});
+let clickStartX=0,clickStartY=0,dragMoved=false;
+const dragMoveThreshold=6;
 lbImg.addEventListener('pointerdown',e=>{
-  if(!isZoomed || e.button!==0 || isPinching) return;
-  dragActive=true;
-  dragStartX=e.clientX;
-  dragStartY=e.clientY;
-  startPanX=panX;
-  startPanY=panY;
-  lbImg.style.cursor='grabbing';
-  lbImg.setPointerCapture(e.pointerId);
+  if(e.button!==0 || isPinching) return;
+  clickStartX=e.clientX;
+  clickStartY=e.clientY;
+  dragMoved=false;
+  if(isZoomed){
+    dragActive=true;
+    dragStartX=e.clientX;
+    dragStartY=e.clientY;
+    startPanX=panX;
+    startPanY=panY;
+    lbImg.style.cursor='grabbing';
+    lbImg.setPointerCapture(e.pointerId);
+  }
   e.preventDefault();
 });
 lbImg.addEventListener('pointermove',e=>{
+  if(Math.abs(e.clientX-clickStartX)>dragMoveThreshold || Math.abs(e.clientY-clickStartY)>dragMoveThreshold){
+    dragMoved=true;
+  }
   if(!dragActive || !isZoomed) return;
   panX=startPanX + (e.clientX-dragStartX);
   panY=startPanY + (e.clientY-dragStartY);
   clampPan();
   applyZoomTransform();
+});
+lbImg.addEventListener('pointerup',e=>{
+  if(isPinching) return;
+  if(!dragMoved){
+    e.stopPropagation();
+    if(isZoomed){
+      resetZoom();
+    }else{
+      setZoomState(true,e.clientX,e.clientY);
+    }
+  }
 });
 window.addEventListener('pointerup',()=>{
   if(dragActive){
