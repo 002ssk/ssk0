@@ -122,7 +122,7 @@ body.light .navbar.scrolled{background:rgba(6,6,6,.95);border-bottom-color:rgba(
 .gallery-grid{column-count:4;column-gap:20px}
 .gallery-item{position:relative;overflow:hidden;border-radius:22px;background:var(--bg2);box-shadow:0 28px 80px rgba(0,0,0,.18);cursor:pointer;transition:transform .35s var(--ease),opacity .3s;break-inside:avoid;margin-bottom:20px;display:inline-block;width:100%}
 .gallery-item.hidden{display:none}
-.gallery-item img{width:100%;height:auto;display:block;transition:transform .35s var(--ease),filter .6s var(--ease);-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select:none}
+.gallery-item img{width:100%;height:auto;display:block;transition:transform .35s var(--ease),filter .6s var(--ease)}
 .gallery-item:hover img{filter:brightness(1.05)}
 .watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:1;overflow:hidden}
 .watermark-mark{display:flex;flex-direction:column;align-items:center;gap:5px;opacity:.8;mix-blend-mode:overlay}
@@ -415,6 +415,7 @@ const galleryItems=[
   {src:'img/audi/audi a6 ilus taevas.jpeg',alt:'Audi A6',brand:'Audi'},
   {src:'img/lexus eeden parkla.png',alt:'Lexus',brand:'Lexus'},
   {src:'img/x5.png',alt:'BMW X5',brand:'BMW'},
+  {src:'img/f10ylevalt.jpg',alt:'BMW F10 ülevalt',brand:'BMW'},
   {src:'img/mustang.png',alt:'Mustang',brand:'Ford'},
   {src:'img/skyline.png',alt:'Skyline',brand:'Nissan'},
   {src:'img/volks.png',alt:'Volkswagen',brand:'Volkswagen'},
